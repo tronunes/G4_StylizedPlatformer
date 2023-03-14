@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0128dae56431a2142b44804e7af04758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frogMesh: {fileID: 3380648355739149261}
   cameraLookTransform: {fileID: 6262107846742018078}
   movementSpeed: 6
 --- !u!114 &2070319886851112046

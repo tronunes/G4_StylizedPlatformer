@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Technical")]
+    [SerializeField] private Transform frogMesh;
+    [SerializeField] private Transform cameraLookTransform;
     private CharacterController characterController;
-    [SerializeField] Transform cameraLookTransform;
+
+    [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
 
     void Start()
@@ -35,5 +39,8 @@ public class PlayerMovement : MonoBehaviour
         // Move
         Vector3 movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.deltaTime);
         characterController.Move(movementVector);
+
+        // Rotate the character's mesh towards movement input's direction
+        frogMesh.LookAt(frogMesh.position + movementVectorForward + movementVectorRight);
     }
 }
