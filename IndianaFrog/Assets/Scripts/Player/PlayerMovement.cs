@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
+    [SerializeField] Transform cameraLookTransform;
     [SerializeField] private float movementSpeed = 6f;
 
     void Start()
@@ -23,10 +24,10 @@ public class PlayerMovement : MonoBehaviour
         );
 
         // Forward / backward input
-        Vector3 movementVectorForward = Input.GetAxis("Vertical") * transform.forward * movementSpeed * Time.deltaTime;
+        Vector3 movementVectorForward = Input.GetAxis("Vertical") * cameraLookTransform.forward * movementSpeed * Time.deltaTime;
 
         // Right / left input
-        Vector3 movementVectorRight = Input.GetAxis("Horizontal") * transform.right * movementSpeed * Time.deltaTime;
+        Vector3 movementVectorRight = Input.GetAxis("Horizontal") * cameraLookTransform.right * movementSpeed * Time.deltaTime;
 
         // Up down movement
         Vector3 movementVectorUp = characterController.isGrounded ? Vector3.zero : Vector3.up * Globals.GRAVITY;
