@@ -11,4 +11,31 @@ public class Frog : MonoBehaviour
     {
         currentHP = maxHP;
     }
+
+    void RecoverHP()
+    {
+        currentHP++;
+
+        // Clamp HP to max
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+    }
+
+    void TakeDamage()
+    {
+        currentHP--;
+
+        // Die when HP reaches zero
+        if (currentHP == 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+
+    }
 }
