@@ -8,6 +8,7 @@ public class LinearPlatform : MonoBehaviour
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
     [SerializeField] private float travelTime = 2f; // Between two waypoints
+    private float currentRemainingTime; // Time left before reaching the next waypoint 
     private float previousRemainingDistance = Mathf.Infinity; // The remaining distance between the platform and the next waypoint **last frame**
 
     void Start()
@@ -17,14 +18,18 @@ public class LinearPlatform : MonoBehaviour
 
         // Don't allow zero travel time as it would cause ZeroDivisionError
         if (travelTime == 0f) { travelTime = 0.1f; }
+
+        // Reset current time left
+        currentRemainingTime = travelTime;
     }
 
     void FixedUpdate()
     {
-        platform.transform.localPosition +=
-            ((waypoints[GetNextWaypointIndex()].localPosition - waypoints[currentWaypointIndex].localPosition) * Time.fixedDeltaTime)
-            /
-            travelTime;
+        // Set the platform position using linear interpolation
+        Vector3 start = waypoints[currentWaypointIndex].localPosition;
+        Vector3 end = waypoints[GetNextWaypointIndex()].localPosition;
+        float time = 1f - currentRemainingTime / travelTime;
+        platform.transform.localPosition = Vector3.Lerp(start, end, time);
 
         float currentRemainingDistance = Vector3.Distance(platform.transform.localPosition, waypoints[GetNextWaypointIndex()].localPosition);
 
@@ -38,6 +43,13 @@ public class LinearPlatform : MonoBehaviour
         else
         {
             previousRemainingDistance = currentRemainingDistance;
+        }
+
+        // Reduce timer or reset to original amount when reaching zero
+        currentRemainingTime -= Time.fixedDeltaTime;
+        if (currentRemainingTime < 0f)
+        {
+            currentRemainingTime = travelTime;
         }
     }
 
