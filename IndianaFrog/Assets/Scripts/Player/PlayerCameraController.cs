@@ -22,6 +22,12 @@ public class PlayerCameraController : MonoBehaviour
 
     void Update()
     {
+        // Don't control the Camera while paused
+        if (GameManager.instance.IsPaused())
+        {
+            return;
+        }
+
         // Mouse delta movement
         float pitch = Input.GetAxis("Mouse Y");
         float yaw = Input.GetAxis("Mouse X");
