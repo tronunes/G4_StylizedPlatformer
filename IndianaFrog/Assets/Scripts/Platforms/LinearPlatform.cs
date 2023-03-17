@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LinearPlatform : MonoBehaviour
 {
-    [SerializeField] private Transform platform;
+    [SerializeField] private Transform platform; // The actual moving mesh
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
     [SerializeField] private float travelTime = 3f; // Between two waypoints

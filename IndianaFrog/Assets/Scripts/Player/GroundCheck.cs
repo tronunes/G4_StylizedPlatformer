@@ -15,7 +15,7 @@ public class GroundCheck : MonoBehaviour
             playerMovement.SetGroundedState(true);
         }
 
-        // Parenting to Platform
+        // Parent Character to Platform
         if (collider.gameObject.CompareTag("Platform"))
         {
             playerMovement.ParentToPlatform(collider.transform);
@@ -24,13 +24,13 @@ public class GroundCheck : MonoBehaviour
 
     void OnTriggerExit(Collider collider)
     {
-        // Ungrounded
+        // Ungrounded (i.e. not touching ground)
         if (!collider.gameObject.CompareTag("Player"))
         {
             playerMovement.SetGroundedState(false);
         }
 
-        // Unparent from Platform
+        // Unparent Character from Platform
         if (collider.gameObject.CompareTag("Platform"))
         {
             playerMovement.ClearParent();

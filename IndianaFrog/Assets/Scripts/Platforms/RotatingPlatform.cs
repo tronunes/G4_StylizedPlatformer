@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotatingPlatform : MonoBehaviour
 {
-    [SerializeField] private Transform platform;
+    [SerializeField] private Transform platform; // The actual moving mesh
     private Quaternion meshOrignalRotation;
     [SerializeField] private Transform rotationPivot;
     private Quaternion pivotOriginalRotation;
