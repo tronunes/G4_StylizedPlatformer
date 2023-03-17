@@ -28,10 +28,20 @@ public class PlayerCameraController : MonoBehaviour
 
         cameraPivotVertical.Rotate(-pitch * verticalRotateSpeedSetting, 0f, 0f);
         cameraPivotHorizontal.Rotate(0f, yaw * horizontalRotateSpeedSetting, 0f);
-    }
 
-    private float ClampAngle(float angle, float min, float max)
-    {
-        return angle;
+        // Clamp pitch to 280 (which is in basically -80) and 80 degrees
+        // Make sure other axes are always zero
+        Vector3 currentEulerAngles = cameraPivotVertical.localRotation.eulerAngles;
+        currentEulerAngles.y = 0f;
+        currentEulerAngles.z = 0f;
+        if (currentEulerAngles.x > 80f && currentEulerAngles.x < 180f)
+        {
+            currentEulerAngles.x = 80f;
+        }
+        else if (currentEulerAngles.x > 180f && currentEulerAngles.x < 280f)
+        {
+            currentEulerAngles.x = 280f;
+        }
+        cameraPivotVertical.localRotation = Quaternion.Euler(currentEulerAngles);
     }
 }
