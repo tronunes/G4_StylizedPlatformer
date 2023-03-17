@@ -10,6 +10,12 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 
+
+# Ignore user specific stuff
+.vsconfig
+UserSettings/
+
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 
