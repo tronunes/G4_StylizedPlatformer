@@ -11,8 +11,7 @@ public class PlayerCameraController : MonoBehaviour
     [Header("Settings")]
     private float horizontalRotateSpeedSetting = 3f;
     private float verticalRotateSpeedSetting = 3f;
-    private float horizontalDeadZoneSetting = 50f;
-    private float verticalDeadZoneSetting = 30f;
+
 
     void Start()
     {
