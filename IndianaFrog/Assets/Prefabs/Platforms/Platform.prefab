@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7967826908573188153}
   - component: {fileID: 6455743334038815857}
   - component: {fileID: 5755234001796853535}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mesh
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 6748839868336672706}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
