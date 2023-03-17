@@ -22,34 +22,16 @@ public class PlayerCameraController : MonoBehaviour
 
     void Update()
     {
-        // Mouse position's offset from the center of the screen
-        float mouseHorizontalOffset = Input.mousePosition.x - Screen.width / 2f;
-        float mouseVerticalOffset = Input.mousePosition.y - Screen.height / 2f;
+        // Mouse delta movement
+        float pitch = Input.GetAxis("Mouse Y");
+        float yaw = Input.GetAxis("Mouse X");
 
-        // Adjust the camera to turn faster the more there is offset
-        float directionSign = mouseHorizontalOffset > 0 ? 1f : -1f;
-        float turnSpeedHorizontal = horizontalRotateSpeedSetting * ((mouseHorizontalOffset - directionSign * horizontalDeadZoneSetting) / Screen.width);
-        directionSign = mouseVerticalOffset > 0 ? 1f : -1f;
-        float turnSpeedVertical = verticalRotateSpeedSetting * ((mouseVerticalOffset - directionSign * verticalDeadZoneSetting) / Screen.height);
+        cameraPivotVertical.Rotate(-pitch * verticalRotateSpeedSetting, 0f, 0f);
+        cameraPivotHorizontal.Rotate(0f, yaw * horizontalRotateSpeedSetting, 0f);
+    }
 
-        // Horizontal rotation
-        if (mouseHorizontalOffset < -horizontalDeadZoneSetting)
-        {
-            cameraPivotHorizontal.Rotate(0f, turnSpeedHorizontal, 0f);
-        }
-        if (mouseHorizontalOffset > horizontalDeadZoneSetting)
-        {
-            cameraPivotHorizontal.Rotate(0f, turnSpeedHorizontal, 0f);
-        }
-
-        // Vertical rotation
-        if (mouseVerticalOffset < -verticalDeadZoneSetting)
-        {
-            cameraPivotVertical.Rotate(turnSpeedVertical, 0f, 0f);
-        }
-        if (mouseVerticalOffset > verticalDeadZoneSetting)
-        {
-            cameraPivotVertical.Rotate(turnSpeedVertical, 0f, 0f);
-        }
+    private float ClampAngle(float angle, float min, float max)
+    {
+        return angle;
     }
 }
