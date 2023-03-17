@@ -8,9 +8,8 @@ public class LinearPlatform : MonoBehaviour
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
     [SerializeField] private float travelTime = 2f; // Between two waypoints
-    private float currentRemainingTime; // Time left before reaching the next waypoint 
-    private float previousRemainingDistance = Mathf.Infinity; // The remaining distance between the platform and the next waypoint **last frame**
-    [SerializeField] private AnimationCurve travelTimeCurve;
+    private float timeLeft; // Time left before reaching the next waypoint 
+    [SerializeField] private AnimationCurve travelTimeCurve; // A curve to smooth out the movement
 
     void Start()
     {
@@ -21,34 +20,25 @@ public class LinearPlatform : MonoBehaviour
         if (travelTime == 0f) { travelTime = 0.1f; }
 
         // Reset current time left
-        currentRemainingTime = travelTime;
+        timeLeft = travelTime;
     }
 
     void FixedUpdate()
     {
         // Set the platform position using linear interpolation
-        Vector3 start = waypoints[currentWaypointIndex].localPosition;
-        Vector3 end = waypoints[GetNextWaypointIndex()].localPosition;
-        float time = travelTimeCurve.Evaluate(1f - currentRemainingTime / travelTime);
-        platform.transform.localPosition = Vector3.Lerp(start, end, time);
+        Vector3 startPosition = waypoints[currentWaypointIndex].localPosition;
+        Vector3 endPosition = waypoints[GetNextWaypointIndex()].localPosition;
+        float time = travelTimeCurve.Evaluate(1f - timeLeft / travelTime);
+        platform.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time);
 
-        float currentRemainingDistance = Vector3.Distance(platform.transform.localPosition, waypoints[GetNextWaypointIndex()].localPosition);
-
-        // Case: Close enough of the current next waypoint -> Start moving towards the next waypoint in the list
-        if (currentRemainingDistance <= 0.05f || currentRemainingDistance > previousRemainingDistance)
+        // Case: Reached the current waypoint -> Start moving towards the next waypoint in the list
+        if (timeLeft <= 0f)
         {
             currentWaypointIndex = GetNextWaypointIndex();
-            currentRemainingTime = travelTime;
-            previousRemainingDistance = Mathf.Infinity;
-        }
-        // Case: moving towards the current next waypoint
-        else
-        {
-            previousRemainingDistance = currentRemainingDistance;
+            timeLeft = travelTime;
         }
 
-        // Reduce timer or reset to original amount when reaching zero
-        currentRemainingTime -= Time.fixedDeltaTime;
+        timeLeft -= Time.fixedDeltaTime;
     }
 
     int GetNextWaypointIndex()
