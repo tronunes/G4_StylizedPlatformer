@@ -65,7 +65,42 @@ PrefabInstance:
     - target: {fileID: 9072138058411947743, guid: e1d237de8cabec346b416fa46f91fa86,
         type: 3}
       propertyPath: m_Name
-      value: Platform
+      value: RotatingPlatform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1d237de8cabec346b416fa46f91fa86, type: 3}
+--- !u!4 &1450990207492676521 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6679984290593448369, guid: e1d237de8cabec346b416fa46f91fa86,
+    type: 3}
+  m_PrefabInstance: {fileID: 5230616189174610456}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3850670905761647815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9072138058411947743, guid: e1d237de8cabec346b416fa46f91fa86,
+    type: 3}
+  m_PrefabInstance: {fileID: 5230616189174610456}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6027150385919291165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850670905761647815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cedf85f68ce18c4aa4c4c47e25d8be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platform: {fileID: 1450990207492676521}
+  rotationPivot: {fileID: 8750842383031318766}
+  onlyOrbitWithoutRotation: 0
+  counterClockwise: 0
+  orbitingTime: 4
+--- !u!4 &8750842383031318766 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3596086362965230326, guid: e1d237de8cabec346b416fa46f91fa86,
+    type: 3}
+  m_PrefabInstance: {fileID: 5230616189174610456}
+  m_PrefabAsset: {fileID: 0}
