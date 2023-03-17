@@ -97,7 +97,7 @@ MonoBehaviour:
   rotationPivot: {fileID: 8750842383031318766}
   onlyOrbitWithoutRotation: 0
   counterClockwise: 0
-  orbitingTime: 4
+  orbitingTime: 8
 --- !u!4 &8750842383031318766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3596086362965230326, guid: e1d237de8cabec346b416fa46f91fa86,

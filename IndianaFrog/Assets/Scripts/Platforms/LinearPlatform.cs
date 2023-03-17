@@ -7,7 +7,7 @@ public class LinearPlatform : MonoBehaviour
     [SerializeField] private Transform platform;
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
-    [SerializeField] private float travelTime = 2f; // Between two waypoints
+    [SerializeField] private float travelTime = 3f; // Between two waypoints
     private float timeLeft; // Time left before reaching the next waypoint 
     [SerializeField] private AnimationCurve travelTimeCurve; // A curve to smooth out the movement
 
@@ -28,8 +28,8 @@ public class LinearPlatform : MonoBehaviour
         // Set the platform position using linear interpolation
         Vector3 startPosition = waypoints[currentWaypointIndex].localPosition;
         Vector3 endPosition = waypoints[GetNextWaypointIndex()].localPosition;
-        float time = travelTimeCurve.Evaluate(1f - timeLeft / travelTime);
-        platform.transform.localPosition = Vector3.Lerp(startPosition, endPosition, time);
+        float lerpTime = travelTimeCurve.Evaluate(1f - timeLeft / travelTime);
+        platform.transform.localPosition = Vector3.Lerp(startPosition, endPosition, lerpTime);
 
         // Case: Reached the current waypoint -> Start moving towards the next waypoint in the list
         if (timeLeft <= 0f)
