@@ -7,7 +7,6 @@ public class Enemy : MonoBehaviour
 	[Header("LINKED OBJECTS")]
 	public Transform firePoint;
 	public GameObject projectile;
-	//public LayerMask detectionLayer;
 
 	[Header("MASK TYPE")]
 	public bool isStaticEnemy;
@@ -18,7 +17,7 @@ public class Enemy : MonoBehaviour
 	public float detectionRange = 5f;
 	public float rotateSpeed = 10;
 
-	private float t;
+	private float fireDelayTimer;
 	private Transform target;
 	private SphereCollider sc;
 	private Vector3 targetDirection;
@@ -32,18 +31,17 @@ public class Enemy : MonoBehaviour
 		sc = GetComponent<SphereCollider>();
 		sc.radius = detectionRange;
 
-		t = fireInterval;
+		fireDelayTimer = fireInterval;
 		defaultRotation = transform.rotation;
 	}
 
 	private void Update()
 	{
-		//DetectPlayer();
 		if(!isStaticEnemy)
 			Rotate();
 
-		t -= Time.deltaTime;
-		if(t <= 0)
+		fireDelayTimer -= Time.deltaTime;
+		if(fireDelayTimer <= 0)
 			Fire();
 	}
 
@@ -58,16 +56,15 @@ public class Enemy : MonoBehaviour
 
 			// calculate the amount to turn, if not facing player accurately enough we return
 			// from function and do not fire
-			float distanceToPlayer = Mathf.Abs(this.transform.rotation.y) - Mathf.Abs(lookRotation.y);
-			print(Mathf.Abs(distanceToPlayer));
-			if(Mathf.Abs(distanceToPlayer) > 0.025f)
+			float amountToRotate = Mathf.Abs(this.transform.rotation.y) - Mathf.Abs(lookRotation.y);
+			if(Mathf.Abs(amountToRotate) > 0.025f)
 				return;
 		}		
 
 		GameObject projectileInstance = Instantiate(projectile, firePoint.position, firePoint.rotation);
 		projectileInstance.GetComponent<Rigidbody>().velocity = projectileSpeed * firePoint.forward;
 
-		t = fireInterval;
+		fireDelayTimer = fireInterval;
 	}
 
 	private void Rotate()
@@ -86,18 +83,6 @@ public class Enemy : MonoBehaviour
 			transform.rotation = Quaternion.RotateTowards(this.transform.rotation, defaultRotation, rotateSpeed * Time.deltaTime);
 		}
 			
-	}
-
-	private void DetectPlayer()
-	{
-		//Collider[] hit = Physics.OverlapSphere(this.transform.position, detectionRange, detectionLayer);
-		//foreach(Collider playerObject in hit)
-		//	target = playerObject.transform;
-	}
-
-	private void ResetTimer()
-	{
-		//t = 1 / rateOfFire;
 	}
 
 	private void OnTriggerEnter(Collider other)

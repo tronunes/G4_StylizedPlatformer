@@ -1,30 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyTotem : MonoBehaviour
-{
-	[Header("LINKED OBJECTS")]
-	public Transform firePoint;
-	public GameObject projectile;	
-	
-	[Header("TOTEM STATS")]
+{	
+	[Header("TOTEM ATTRIBUTES")]
 	public float rotateSpeed = 10;
-	public float rotateInterval = 2f;
+	public float rotateWaitTime = 2f;
+	public float beamLength = 5f;
 
-	[Header("TEMP VARIABLES")]
-	public float fireInterval = 3f;
-	public float projectileSpeed = 1f;
-
-	private float t;
 	private bool allowRotation = true;
-	private bool isRotating = true;
+	[HideInInspector] public bool isRotating = true;
 	private Quaternion targetRotation;
 
 
 	private void Start()
 	{
-		t = fireInterval;
 		targetRotation = this.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
 	}
 
@@ -32,12 +24,8 @@ public class EnemyTotem : MonoBehaviour
 	{
 		RotateObject();
 		if(Quaternion.Angle(transform.rotation, targetRotation) < 0.001f && allowRotation)
-			StartCoroutine(Hold());			
-
-		t -= Time.deltaTime;
-		if(t <= 0 && isRotating)
-			Fire();
-	}
+			StartCoroutine(Hold());
+	}	
 
 	private void RotateObject()
 	{		
@@ -46,21 +34,13 @@ public class EnemyTotem : MonoBehaviour
 
 	public IEnumerator Hold()
 	{
-		//print("HOLD!");
 		allowRotation = false;
 		isRotating = false;		
 		
-		yield return new WaitForSeconds(rotateInterval);
+		yield return new WaitForSeconds(rotateWaitTime);
 		targetRotation = this.transform.rotation * Quaternion.Euler(0f, 90f, 0f);
 		allowRotation = true;
 		isRotating = true;		
 	}
 
-	private void Fire()
-	{
-		GameObject projectileInstance = Instantiate(projectile, firePoint.position, firePoint.rotation);
-		projectileInstance.GetComponent<Rigidbody>().velocity = projectileSpeed * firePoint.forward;
-
-		t = fireInterval;
-	}
 }
