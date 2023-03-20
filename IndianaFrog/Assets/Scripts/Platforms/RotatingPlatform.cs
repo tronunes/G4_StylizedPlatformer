@@ -23,7 +23,7 @@ public class RotatingPlatform : MonoBehaviour
         timeLeft = orbitingTime;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Calculate values for linear interpolation to get the target yaw angle
         float startYaw = pivotOriginalRotation.eulerAngles.y;
@@ -47,7 +47,10 @@ public class RotatingPlatform : MonoBehaviour
         }
 
         // Reduce timer or reset it back to original value
-        timeLeft -= Time.fixedDeltaTime;
+        timeLeft -= Time.deltaTime;
         if (timeLeft <= 0f) { timeLeft = orbitingTime; }
+
+        // In case player is parented to the platform -> update its position as well
+        Physics.SyncTransforms();
     }
 }

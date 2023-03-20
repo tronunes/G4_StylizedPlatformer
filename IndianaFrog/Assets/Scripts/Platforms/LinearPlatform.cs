@@ -23,7 +23,7 @@ public class LinearPlatform : MonoBehaviour
         timeLeft = travelTime;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Set the platform position using linear interpolation
         Vector3 startPosition = waypoints[currentWaypointIndex].localPosition;
@@ -38,7 +38,10 @@ public class LinearPlatform : MonoBehaviour
             timeLeft = travelTime;
         }
 
-        timeLeft -= Time.fixedDeltaTime;
+        timeLeft -= Time.deltaTime;
+
+        // In case player is parented to the platform -> update its position as well
+        Physics.SyncTransforms();
     }
 
     int GetNextWaypointIndex()
