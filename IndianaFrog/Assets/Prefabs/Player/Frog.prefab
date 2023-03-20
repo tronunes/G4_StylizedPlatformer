@@ -197,8 +197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c00334e795eac9244ba445b7edf2ae6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 6064914160682952955}
   cameraPivotHorizontal: {fileID: 6262107846742018078}
   cameraPivotVertical: {fileID: 6500143702850215494}
+  normalCameraPosition: {fileID: 0}
+  zoomCameraPosition: {fileID: 0}
 --- !u!54 &5575981486277436156
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -608,7 +611,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5063410377620553862}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

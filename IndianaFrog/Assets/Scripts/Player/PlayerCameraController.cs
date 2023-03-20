@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCameraController : MonoBehaviour
 {
     [Header("Technical")]
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform cameraPivotHorizontal;
     [SerializeField] private Transform cameraPivotVertical;
 
@@ -17,6 +18,8 @@ public class PlayerCameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+
+        UnZoom();
     }
 
     void Update()
@@ -25,6 +28,15 @@ public class PlayerCameraController : MonoBehaviour
         if (GameManager.instance.IsPaused())
         {
             return;
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Zoom();
+        }
+        else if (Input.GetButtonUp("Fire2"))
+        {
+            UnZoom();
         }
 
         // Mouse delta movement
@@ -48,5 +60,17 @@ public class PlayerCameraController : MonoBehaviour
             currentEulerAngles.x = 280f;
         }
         cameraPivotVertical.localRotation = Quaternion.Euler(currentEulerAngles);
+    }
+
+    void Zoom()
+    {
+        cameraTransform.localPosition = new Vector3(.4f, .3f, -2f);
+        cameraTransform.GetComponent<Camera>().fieldOfView = 50f;
+    }
+
+    void UnZoom()
+    {
+        cameraTransform.localPosition = new Vector3(0f, 0f, -3f);
+        cameraTransform.GetComponent<Camera>().fieldOfView = 60f;
     }
 }
