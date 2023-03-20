@@ -76,4 +76,15 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = newState;
     }
+
+    // To match the platform's velocity and rotation
+    public void ParentToPlatform(Transform newParent)
+    {
+        transform.SetParent(newParent, true);
+    }
+
+    public void ClearParent()
+    {
+        transform.SetParent(null, true);
+    }
 }
