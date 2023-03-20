@@ -21,7 +21,10 @@ public class GrapplingTongue : MonoBehaviour
         {
             ShootTongue();
         }
+    }
 
+    void LateUpdate()
+    {
         FixTongueVisuals();
     }
 
@@ -36,7 +39,7 @@ public class GrapplingTongue : MonoBehaviour
         tongueRb.velocity = Vector3.zero;
 
         // Shoot the tongue forwards
-        tongueRb.AddForce(tongueStart.forward * shootForce, ForceMode.Impulse);
+        tongueRb.AddForce(playerCamera.transform.forward * shootForce, ForceMode.Impulse);
 
         ShowTongue();
     }
@@ -58,7 +61,7 @@ public class GrapplingTongue : MonoBehaviour
         tongueMid.localScale = new Vector3(
             1f,
             1f,
-            (tongueEnd.position - tongueStart.position).magnitude * 10f
+            (tongueEnd.position - tongueStart.position).magnitude * 5f
         );
     }
 }
