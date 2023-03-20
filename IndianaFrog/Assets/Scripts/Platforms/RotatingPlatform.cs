@@ -49,5 +49,8 @@ public class RotatingPlatform : MonoBehaviour
         // Reduce timer or reset it back to original value
         timeLeft -= Time.fixedDeltaTime;
         if (timeLeft <= 0f) { timeLeft = orbitingTime; }
+
+        // In case player is parented to the platform -> update its position as well
+        Physics.SyncTransforms();
     }
 }

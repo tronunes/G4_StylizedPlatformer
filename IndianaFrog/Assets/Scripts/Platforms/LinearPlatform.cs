@@ -39,6 +39,9 @@ public class LinearPlatform : MonoBehaviour
         }
 
         timeLeft -= Time.fixedDeltaTime;
+
+        // In case player is parented to the platform -> update its position as well
+        Physics.SyncTransforms();
     }
 
     int GetNextWaypointIndex()
