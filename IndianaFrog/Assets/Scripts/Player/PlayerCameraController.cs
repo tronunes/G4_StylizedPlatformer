@@ -64,7 +64,7 @@ public class PlayerCameraController : MonoBehaviour
 
     void Zoom()
     {
-        cameraTransform.localPosition = new Vector3(.4f, .3f, -2f);
+        cameraTransform.localPosition = new Vector3(.6f, .3f, -1.8f);
         cameraTransform.GetComponent<Camera>().fieldOfView = 50f;
     }
 

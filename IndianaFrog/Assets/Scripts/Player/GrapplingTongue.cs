@@ -7,8 +7,9 @@ public class GrapplingTongue : MonoBehaviour
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
     [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
-    [SerializeField] private Transform tongueEnd; // The end part of the tongue which latches onto walls
-    private float shootForce = 10f;
+    [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
+    private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot.
+    private float shootForce = 35f;
 
     void Start()
     {
@@ -30,11 +31,14 @@ public class GrapplingTongue : MonoBehaviour
 
     void ShootTongue()
     {
-        Debug.Log("Shoot!");
+        // Destroy previous tongue
+        if (tongueEnd)
+        {
+            Destroy(tongueEnd);
+        }
 
-        // Reset the tongue
-        tongueStart.localRotation = Quaternion.identity;
-        tongueEnd.position = tongueStart.position + tongueStart.forward * 0.5f;
+        // Create a new tongue
+        tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, tongueStart.rotation);
         Rigidbody tongueRb = tongueEnd.GetComponent<Rigidbody>();
         tongueRb.velocity = Vector3.zero;
 
@@ -56,12 +60,15 @@ public class GrapplingTongue : MonoBehaviour
 
     void FixTongueVisuals()
     {
-        tongueStart.LookAt(tongueEnd);
+        if (tongueEnd)
+        {
+            tongueStart.LookAt(tongueEnd.transform);
 
-        tongueMid.localScale = new Vector3(
-            1f,
-            1f,
-            (tongueEnd.position - tongueStart.position).magnitude * 5f
-        );
+            tongueMid.localScale = new Vector3(
+                1f,
+                1f,
+                (tongueEnd.transform.position - tongueStart.position).magnitude * 5f
+            );
+        }
     }
 }
