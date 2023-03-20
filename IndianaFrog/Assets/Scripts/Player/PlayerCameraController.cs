@@ -11,8 +11,7 @@ public class PlayerCameraController : MonoBehaviour
     [Header("Settings")]
     private float horizontalRotateSpeedSetting = 3f;
     private float verticalRotateSpeedSetting = 3f;
-    private float horizontalDeadZoneSetting = 50f;
-    private float verticalDeadZoneSetting = 30f;
+
 
     void Start()
     {
@@ -22,34 +21,32 @@ public class PlayerCameraController : MonoBehaviour
 
     void Update()
     {
-        // Mouse position's offset from the center of the screen
-        float mouseHorizontalOffset = Input.mousePosition.x - Screen.width / 2f;
-        float mouseVerticalOffset = Input.mousePosition.y - Screen.height / 2f;
-
-        // Adjust the camera to turn faster the more there is offset
-        float directionSign = mouseHorizontalOffset > 0 ? 1f : -1f;
-        float turnSpeedHorizontal = horizontalRotateSpeedSetting * ((mouseHorizontalOffset - directionSign * horizontalDeadZoneSetting) / Screen.width);
-        directionSign = mouseVerticalOffset > 0 ? 1f : -1f;
-        float turnSpeedVertical = verticalRotateSpeedSetting * ((mouseVerticalOffset - directionSign * verticalDeadZoneSetting) / Screen.height);
-
-        // Horizontal rotation
-        if (mouseHorizontalOffset < -horizontalDeadZoneSetting)
+        // Don't control the Camera while paused
+        if (GameManager.instance.IsPaused())
         {
-            cameraPivotHorizontal.Rotate(0f, turnSpeedHorizontal, 0f);
-        }
-        if (mouseHorizontalOffset > horizontalDeadZoneSetting)
-        {
-            cameraPivotHorizontal.Rotate(0f, turnSpeedHorizontal, 0f);
+            return;
         }
 
-        // Vertical rotation
-        if (mouseVerticalOffset < -verticalDeadZoneSetting)
+        // Mouse delta movement
+        float pitch = Input.GetAxis("Mouse Y");
+        float yaw = Input.GetAxis("Mouse X");
+
+        cameraPivotVertical.Rotate(-pitch * verticalRotateSpeedSetting, 0f, 0f);
+        cameraPivotHorizontal.Rotate(0f, yaw * horizontalRotateSpeedSetting, 0f);
+
+        // Clamp pitch to 280 (which is in basically -80) and 80 degrees
+        // Make sure other axes are always zero
+        Vector3 currentEulerAngles = cameraPivotVertical.localRotation.eulerAngles;
+        currentEulerAngles.y = 0f;
+        currentEulerAngles.z = 0f;
+        if (currentEulerAngles.x > 80f && currentEulerAngles.x < 180f)
         {
-            cameraPivotVertical.Rotate(turnSpeedVertical, 0f, 0f);
+            currentEulerAngles.x = 80f;
         }
-        if (mouseVerticalOffset > verticalDeadZoneSetting)
+        else if (currentEulerAngles.x > 180f && currentEulerAngles.x < 280f)
         {
-            cameraPivotVertical.Rotate(turnSpeedVertical, 0f, 0f);
+            currentEulerAngles.x = 280f;
         }
+        cameraPivotVertical.localRotation = Quaternion.Euler(currentEulerAngles);
     }
 }
