@@ -1,0 +1,64 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GrapplingTongue : MonoBehaviour
+{
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Transform tongueStart; // Where the tongue starts
+    [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
+    [SerializeField] private Transform tongueEnd; // The end part of the tongue which latches onto walls
+    private float shootForce = 10f;
+
+    void Start()
+    {
+        HideTongue();
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            ShootTongue();
+        }
+
+        FixTongueVisuals();
+    }
+
+    void ShootTongue()
+    {
+        Debug.Log("Shoot!");
+
+        // Reset the tongue
+        tongueStart.localRotation = Quaternion.identity;
+        tongueEnd.position = tongueStart.position + tongueStart.forward * 0.5f;
+        Rigidbody tongueRb = tongueEnd.GetComponent<Rigidbody>();
+        tongueRb.velocity = Vector3.zero;
+
+        // Shoot the tongue forwards
+        tongueRb.AddForce(tongueStart.forward * shootForce, ForceMode.Impulse);
+
+        ShowTongue();
+    }
+
+    void ShowTongue()
+    {
+        tongueStart.gameObject.SetActive(true);
+    }
+
+    void HideTongue()
+    {
+        tongueStart.gameObject.SetActive(false);
+    }
+
+    void FixTongueVisuals()
+    {
+        tongueStart.LookAt(tongueEnd);
+
+        tongueMid.localScale = new Vector3(
+            1f,
+            1f,
+            (tongueEnd.position - tongueStart.position).magnitude * 10f
+        );
+    }
+}
