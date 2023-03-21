@@ -27,7 +27,12 @@ public class GroundCheck : MonoBehaviour
         // Ungrounded (i.e. not touching ground)
         if (!collider.gameObject.CompareTag("Player"))
         {
-            playerMovement.SetGroundedState(false);
+            // Check if the player is moving from on top of one collider onto another
+            var ray = new Ray(transform.parent.transform.position, Vector3.down);
+            if (!Physics.Raycast(ray, 0.1f))
+            {
+                playerMovement.SetGroundedState(false);
+            }
         }
 
         // Unparent Character from Platform
