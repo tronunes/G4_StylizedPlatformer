@@ -8,7 +8,7 @@ public class BeamAttack : MonoBehaviour
 	public LayerMask hitLayer;
 
 	public int damageAmount = 1;
-	public float damageInterval = 1f;
+	//public float damageInterval = 1f;
 
 	private LineRenderer lineRenderer;
 	private EnemyTotem enemyTotem;
@@ -23,7 +23,7 @@ public class BeamAttack : MonoBehaviour
 		lineRenderer = GetComponentInChildren<LineRenderer>();
 		enemyTotem = GetComponentInParent<EnemyTotem>();
 
-		damageTimer = damageInterval = 1f;
+		//damageTimer = damageInterval;
 	}
 
 	private void Update()
@@ -60,7 +60,7 @@ public class BeamAttack : MonoBehaviour
 				if(damageTimer <= 0)
 					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
 
-				damageTimer = damageInterval;
+				//damageTimer = damageInterval;
 			}			
 		}
 		else

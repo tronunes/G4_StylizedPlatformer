@@ -8,18 +8,36 @@ public class PlayerHealth : MonoBehaviour
 	public int maxHealth = 4;
 	public int currentHealth;
 
-	//[Header("UI")]
-	//public HealthBar healthbar;	// place holders for UI stuff later?
+	[Header("INVULNERABILITY")]
+	public float invulnerabilityTime = 1f;
+
+	[Header("UI")]
+	public HealthBar healthbar;
+
+	private float damageTimer = 0f;
+	private bool canTakeDamage = true;
 
 
 	private void Start()
 	{
+		damageTimer = invulnerabilityTime;	// might aswell...?
+
 		currentHealth = maxHealth;
-		//healthbar.SetMaxHealth(maxHealth);
+		healthbar.SetMaxHealth(maxHealth);
 	}
 
 	private void Update()
 	{
+		if(damageTimer > 0f)
+		{
+			canTakeDamage = false;
+			damageTimer -= Time.deltaTime;
+		}
+		else
+		{
+			canTakeDamage = true;
+		}
+
 		if(currentHealth <= 0)
 			KillPlayer();
 	}
@@ -29,16 +47,20 @@ public class PlayerHealth : MonoBehaviour
 		// probably not needed but should prevent integer overflow accidents if they would happen
 		healthToAdd = Mathf.Min(healthToAdd, maxHealth - currentHealth);
 		currentHealth += healthToAdd;
-		//healthbar.SetHealth(currentHealth);
+		healthbar.SetHealth(currentHealth);
 	}
 
 	public void SubtractHealth(int healthToSubtract)
 	{
-		healthToSubtract = Mathf.Min(healthToSubtract, currentHealth);
-		currentHealth -= healthToSubtract;
-		//healthbar.SetHealth(currentHealth);
+		if(canTakeDamage)
+		{
+			healthToSubtract = Mathf.Min(healthToSubtract, currentHealth);
+			currentHealth -= healthToSubtract;
+			healthbar.SetHealth(currentHealth);
 
-		print(healthToSubtract + " damage taken.");
+			damageTimer = invulnerabilityTime;
+			print(healthToSubtract + " damage taken.");
+		}		
 	}
 
 	private void KillPlayer()
