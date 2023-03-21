@@ -220,6 +220,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &506197796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7109878636362048665, guid: 243f2da2118bdb94c8a3ed9e26a76b18,
+    type: 3}
+  m_PrefabInstance: {fileID: 7109878636315953405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &506197803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506197796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df24422f232e1b348b3a016c27c7987f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+  isProjectile: 0
 --- !u!1 &512801050
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +447,7 @@ GameObject:
   - component: {fileID: 809929629}
   - component: {fileID: 809929628}
   - component: {fileID: 809929627}
+  - component: {fileID: 809929631}
   m_Layer: 6
   m_Name: TEST_PLAYER_FROG
   m_TagString: Player
@@ -513,6 +534,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &809929631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809929626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49993214468cfc4e88d0fc4706e070e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  currentHealth: 0
 --- !u!1 &1623028610
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +758,25 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!1 &1854649709 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7109878636737684122, guid: 243f2da2118bdb94c8a3ed9e26a76b18,
+    type: 3}
+  m_PrefabInstance: {fileID: 7109878636315953405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1854649714
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854649709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Center: {x: 0, y: 0, z: 0.15}
 --- !u!1 &1876648096
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,8 +806,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 100000
+  m_Color: {r: 0.7311321, g: 0.8029829, b: 1, a: 1}
+  m_Intensity: 14220.829
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -792,13 +846,13 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 6283
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: 3e-45, y: 1.078e-42, z: 1e-45, w: 2.2742e-41}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 10}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -830,7 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 100000
+  m_Intensity: 14220.829
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -859,7 +913,7 @@ MonoBehaviour:
   m_IncludeForRayTracing: 1
   m_AreaLightShadowCone: 120
   m_UseScreenSpaceShadows: 0
-  m_InteractsWithSky: 1
+  m_InteractsWithSky: 0
   m_AngularDiameter: 0.5
   m_FlareSize: 2
   m_FlareTint: {r: 1, g: 1, b: 1, a: 1}
@@ -927,7 +981,7 @@ MonoBehaviour:
   m_ShadowVariant: 0
   m_ShadowPrecision: 0
   useOldInspector: 0
-  useVolumetric: 1
+  useVolumetric: 0
   featuresFoldout: 1
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
@@ -1020,6 +1074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyMaskTracking
+      objectReference: {fileID: 0}
+    - target: {fileID: 749095189279391121, guid: c2cf10fc59ec1394b8de7706123b3bc4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 749095189279391125, guid: c2cf10fc59ec1394b8de7706123b3bc4,
         type: 3}
@@ -1282,6 +1341,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemyPatrol
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109878636737684116, guid: 243f2da2118bdb94c8a3ed9e26a76b18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7109878636737684116, guid: 243f2da2118bdb94c8a3ed9e26a76b18,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 243f2da2118bdb94c8a3ed9e26a76b18, type: 3}

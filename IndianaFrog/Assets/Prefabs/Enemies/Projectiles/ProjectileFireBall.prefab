@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 5338557950054420226}
   - component: {fileID: -3009609951851387991}
   - component: {fileID: 7994718232919342713}
-  m_Layer: 0
+  - component: {fileID: -672437383221829553}
+  m_Layer: 9
   m_Name: ProjectileFireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,3 +129,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileLifeTime: 2
+--- !u!114 &-672437383221829553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278518999649663628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df24422f232e1b348b3a016c27c7987f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
+  isProjectile: 1
