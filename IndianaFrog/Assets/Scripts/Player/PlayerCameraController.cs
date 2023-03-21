@@ -64,12 +64,14 @@ public class PlayerCameraController : MonoBehaviour
 
     void Zoom()
     {
+        gameObject.GetComponent<PlayerMovement>().ToggleZoom(true);
         cameraTransform.localPosition = new Vector3(.6f, .3f, -1.8f);
         cameraTransform.GetComponent<Camera>().fieldOfView = 50f;
     }
 
     void UnZoom()
     {
+        gameObject.GetComponent<PlayerMovement>().ToggleZoom(false);
         cameraTransform.localPosition = new Vector3(0f, 0f, -3f);
         cameraTransform.GetComponent<Camera>().fieldOfView = 60f;
     }

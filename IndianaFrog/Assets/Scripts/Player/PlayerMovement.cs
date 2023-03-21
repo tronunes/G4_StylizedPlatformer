@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform frogMesh;
     [SerializeField] private Transform cameraLookTransform;
     private CharacterController characterController;
+    private bool isZoomed = false;
 
     private Vector3 playerPreviousFramePosition;
     private Vector3 playerVelocity = Vector3.zero;
@@ -68,8 +69,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
         characterController.Move(movementVector);
 
-        // Rotate the character's mesh towards movement input's direction
-        frogMesh.LookAt(frogMesh.position + movementVectorForward + movementVectorRight);
+        // Case: zoomed -> use camera's rotation for the character's mesh
+        if (isZoomed)
+        {
+            frogMesh.rotation = cameraLookTransform.rotation;
+        }
+        // Case: NOT zoomed -> Rotate the character's mesh towards movement input's direction
+        else
+        {
+            frogMesh.LookAt(frogMesh.position + movementVectorForward + movementVectorRight);
+        }
     }
 
     public void SetGroundedState(bool newState)
@@ -86,5 +95,10 @@ public class PlayerMovement : MonoBehaviour
     public void ClearParent()
     {
         transform.SetParent(null, true);
+    }
+
+    public void ToggleZoom(bool newZoomedState)
+    {
+        isZoomed = newZoomedState;
     }
 }
