@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3081305695694721878}
   - component: {fileID: 7686503320157891275}
   - component: {fileID: 3871601725018824034}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TongueEnd
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -71,7 +71,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5486396794392725225}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.1

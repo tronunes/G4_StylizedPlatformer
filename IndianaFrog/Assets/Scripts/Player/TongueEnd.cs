@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TongueEnd : MonoBehaviour
 {
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
         gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
         // Latch onto the target
-        transform.SetParent(collider.transform);
+        transform.SetParent(collision.collider.transform);
     }
 }
