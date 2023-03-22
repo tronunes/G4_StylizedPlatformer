@@ -26,12 +26,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
     void Update()
     {
         // Case: Shoot Tongue (only when zoomed)
-        if (cameraController.IsZoomed() && !tongueEnd && Input.GetButtonDown("Fire1"))
+        if (cameraController.IsZoomed() && Input.GetButtonDown("Fire1"))
         {
             ShootTongue();
         }
         // Case: cancel reeling
-        else if (tongueEnd && Input.GetButtonDown("Fire1"))
+        else if (!cameraController.IsZoomed())
         {
             StopReeling();
         }
@@ -70,10 +70,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     void ShootTongue()
     {
         // Destroy previous tongue
-        if (tongueEnd)
-        {
-            Destroy(tongueEnd);
-        }
+        StopReeling();
 
         // Create a new tongue
         tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, tongueStart.rotation);
@@ -124,6 +121,6 @@ public class GrapplingTongueLauncher : MonoBehaviour
     public void StopReeling()
     {
         isReeling = false;
-        Destroy(tongueEnd);
+        if (tongueEnd) { Destroy(tongueEnd); }
     }
 }
