@@ -1533,11 +1533,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1450990207492676521, guid: 9e9f11c00c9315c48ba83b9b6d71731e,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 1530752923667756506, guid: 9e9f11c00c9315c48ba83b9b6d71731e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1597,6 +1592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RotatingPlatform
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850670905761647815, guid: 9e9f11c00c9315c48ba83b9b6d71731e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e9f11c00c9315c48ba83b9b6d71731e, type: 3}

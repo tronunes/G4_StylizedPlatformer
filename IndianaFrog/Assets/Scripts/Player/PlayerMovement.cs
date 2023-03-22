@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         // If the player has reached the apex of their jump, add a larger multiplier to the gravity
         verticalVelocity = isGrounded ?
             -5f :
-            playerVelocity.y + Physics.gravity.y * (playerVelocity.y < 0f ? gravityMultiplierPostApex : gravityMultiplierPreApex) * Time.fixedDeltaTime;
+            verticalVelocity + Physics.gravity.y * (playerVelocity.y < 0f ? gravityMultiplierPostApex : gravityMultiplierPreApex) * Time.fixedDeltaTime;
 
         // Jump
         if (doJump)
