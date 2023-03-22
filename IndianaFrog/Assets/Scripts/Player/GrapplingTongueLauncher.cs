@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrapplingTongueLauncher : MonoBehaviour
 {
     private PlayerMovement playerMovement;
+    private PlayerCameraController cameraController;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
     [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
@@ -12,18 +13,20 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot.
     private float shootForce = 35f;
     private float reelingSpeed = 10f;
+    private float maxTongueLength = 30f;
     private bool isReeling; // Are we reeling the Frog towards TongueEnd
 
     void Start()
     {
         playerMovement = gameObject.GetComponent<PlayerMovement>();
+        cameraController = gameObject.GetComponent<PlayerCameraController>();
         HideTongue();
     }
 
     void Update()
     {
-        // Case: Shoot Tongue
-        if (!tongueEnd && Input.GetButtonDown("Fire1"))
+        // Case: Shoot Tongue (only when zoomed)
+        if (cameraController.IsZoomed() && !tongueEnd && Input.GetButtonDown("Fire1"))
         {
             ShootTongue();
         }
@@ -33,7 +36,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
             StopReeling();
         }
 
-        // Reeling the Frog in
+        // Case: Reeling the Frog in
         if (isReeling)
         {
             playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
@@ -42,6 +45,19 @@ public class GrapplingTongueLauncher : MonoBehaviour
             if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
             {
                 StopReeling();
+            }
+        }
+        // Case: not reeling
+        else
+        {
+            // ...but tongue has been launched
+            if (tongueEnd)
+            {
+                // Stop reeling when reaching maximum Tongue length
+                if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) >= maxTongueLength)
+                {
+                    StopReeling();
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform cameraPivotHorizontal;
     [SerializeField] private Transform cameraPivotVertical;
     [SerializeField] private GameObject crosshair;
+    private bool isZoomed = false;
 
     [Header("Settings")]
     private float horizontalRotateSpeedSetting = 3f;
@@ -65,6 +66,7 @@ public class PlayerCameraController : MonoBehaviour
 
     void Zoom()
     {
+        isZoomed = true;
         gameObject.GetComponent<PlayerMovement>().ToggleZoom(true);
         cameraTransform.localPosition = new Vector3(.6f, .3f, -1.8f);
         cameraTransform.GetComponent<Camera>().fieldOfView = 50f;
@@ -74,10 +76,16 @@ public class PlayerCameraController : MonoBehaviour
 
     void UnZoom()
     {
+        isZoomed = false;
         gameObject.GetComponent<PlayerMovement>().ToggleZoom(false);
         cameraTransform.localPosition = new Vector3(0f, 0f, -3f);
         cameraTransform.GetComponent<Camera>().fieldOfView = 60f;
 
         crosshair.SetActive(false);
+    }
+
+    public bool IsZoomed()
+    {
+        return isZoomed;
     }
 }
