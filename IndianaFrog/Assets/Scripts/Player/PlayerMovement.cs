@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         // If the player has reached the apex of their jump, add a larger multiplier to the gravity
         verticalVelocity = isGrounded ?
             -5f :
-            verticalVelocity + Physics.gravity.y * (verticalVelocity < 0f ? gravityMultiplierPostApex : gravityMultiplierPreApex) * Time.fixedDeltaTime;
+            playerVelocity.y + Physics.gravity.y * (playerVelocity.y < 0f ? gravityMultiplierPostApex : gravityMultiplierPreApex) * Time.fixedDeltaTime;
 
         // Jump
         if (doJump)
@@ -60,9 +60,6 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 verticalVelocity = jumpForce;
-
-                // Redundancy for jumping on sloped surfaces
-                isGrounded = false;
             }
         }
 

@@ -6,13 +6,18 @@ public class GroundCheck : MonoBehaviour
 {
     [SerializeField] private SphereCollider groundCheckCollider;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private int overlaps = 0;
 
     void OnTriggerEnter(Collider collider)
     {
         // Grounded
         if (!collider.gameObject.CompareTag("Player"))
         {
-            playerMovement.SetGroundedState(true);
+            overlaps++;
+            if (overlaps > 0)
+            {
+                playerMovement.SetGroundedState(true);
+            }
         }
 
         // Parent Character to Platform
@@ -27,9 +32,8 @@ public class GroundCheck : MonoBehaviour
         // Ungrounded (i.e. not touching ground)
         if (!collider.gameObject.CompareTag("Player"))
         {
-            // Check if the player is moving from on top of one collider onto another
-            var ray = new Ray(transform.parent.transform.position, Vector3.down);
-            if (!Physics.Raycast(ray, 0.1f))
+            overlaps--;
+            if (overlaps == 0)
             {
                 playerMovement.SetGroundedState(false);
             }
