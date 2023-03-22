@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerVelocity = Vector3.zero;
     [SerializeField] private bool isGrounded;
     private bool doJump = false;
+    private Vector3 externalVelocity = Vector3.zero;
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
@@ -37,36 +38,53 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector3 movementVector = Vector3.zero;
+        Vector3 movementVectorForward = Vector3.zero;
+        Vector3 movementVectorRight = Vector3.zero;
+
         // Calculate Player's velocity
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-        float verticalVelocity = isGrounded ?
-            0f :
-            playerVelocity.y + Globals.GRAVITY * Time.fixedDeltaTime;
-
-        // Jump
-        if (doJump)
+        // Case: external velocity given -> don't calculate velocity from movement or gravity
+        if (externalVelocity != Vector3.zero)
         {
-            doJump = false;
+            movementVector = externalVelocity * Time.fixedDeltaTime;
 
-            if (isGrounded)
+            // Reset the external velocity (it should only affect this frame)
+            externalVelocity = Vector3.zero;
+        }
+        // Case: No external velocities given
+        else
+        {
+            float verticalVelocity = isGrounded ?
+                0f :
+                playerVelocity.y + Globals.GRAVITY * Time.fixedDeltaTime;
+
+            // Jump
+            if (doJump)
             {
-                verticalVelocity = jumpForce;
+                doJump = false;
+
+                if (isGrounded)
+                {
+                    verticalVelocity = jumpForce;
+                }
             }
+
+            // Add vertical velocity to Player's movement
+            characterController.Move(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
+
+            // Forward / backward input
+            movementVectorForward = Input.GetAxis("Vertical") * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
+
+            // Right / left input
+            movementVectorRight = Input.GetAxis("Horizontal") * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
+
+            movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
         }
 
-        // Add vertical velocity to Player's movement
-        characterController.Move(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
-
-        // Forward / backward input
-        Vector3 movementVectorForward = Input.GetAxis("Vertical") * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
-
-        // Right / left input
-        Vector3 movementVectorRight = Input.GetAxis("Horizontal") * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
-
         // Move
-        Vector3 movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
         characterController.Move(movementVector);
 
         // Case: zoomed -> use camera's rotation for the character's mesh
@@ -100,5 +118,10 @@ public class PlayerMovement : MonoBehaviour
     public void ToggleZoom(bool newZoomedState)
     {
         isZoomed = newZoomedState;
+    }
+
+    public void AddExternalVelocity(Vector3 additionalExternalVelocity)
+    {
+        externalVelocity += additionalExternalVelocity;
     }
 }
