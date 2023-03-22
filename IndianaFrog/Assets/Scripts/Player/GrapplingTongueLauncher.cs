@@ -36,7 +36,13 @@ public class GrapplingTongueLauncher : MonoBehaviour
         // Reeling the Frog in
         if (isReeling)
         {
-            playerMovement.AddExternalVelocity((tongueEnd.transform.position - transform.position).normalized * reelingSpeed);
+            playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
+
+            // Stop reeling when reaching the end
+            if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
+            {
+                StopReeling();
+            }
         }
     }
 
