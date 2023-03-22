@@ -5,20 +5,13 @@ using UnityEngine;
 public class DamageScript : MonoBehaviour
 {
 	public int damageAmount = 1;
-	public bool isProjectile = false;
 
 
-	private void OnTriggerEnter(Collider other)
+	// using OnTriggerStay instead of OnTriggerEnter because of continuous lava damage,
+	// having both modes makes player take damage twice on the first frame of contact
+	private void OnTriggerStay(Collider other)
 	{
 		if(other.CompareTag("Player"))
 			other.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
-
-		// destroy this this object if its projectile and collides with anything
-		if(isProjectile)
-		{			
-			// can instantiate destroy particle here
-			//
-			Destroy(this.gameObject);
-		}
 	}
 }
