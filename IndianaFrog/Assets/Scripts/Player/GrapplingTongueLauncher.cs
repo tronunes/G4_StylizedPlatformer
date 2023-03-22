@@ -26,7 +26,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     void Update()
     {
         // Case: Shoot Tongue (only when zoomed)
-        if (cameraController.IsZoomed() && Input.GetButtonDown("Fire1"))
+        if (cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f)
         {
             ShootTongue();
         }

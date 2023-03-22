@@ -32,11 +32,11 @@ public class PlayerCameraController : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetAxisRaw("Fire2") > 0f)
         {
             Zoom();
         }
-        else if (Input.GetButtonUp("Fire2"))
+        else if (Input.GetAxisRaw("Fire2") <= 0f)
         {
             UnZoom();
         }
