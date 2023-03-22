@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrapplingTongue : MonoBehaviour
+public class GrapplingTongueLauncher : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
@@ -39,6 +39,7 @@ public class GrapplingTongue : MonoBehaviour
 
         // Create a new tongue
         tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, tongueStart.rotation);
+        tongueEnd.GetComponent<TongueEnd>().SetLauncher(this);
         Rigidbody tongueRb = tongueEnd.GetComponent<Rigidbody>();
         tongueRb.velocity = Vector3.zero;
 
@@ -70,5 +71,10 @@ public class GrapplingTongue : MonoBehaviour
                 (tongueEnd.transform.position - tongueStart.position).magnitude * 5f
             );
         }
+    }
+
+    public void StartReeling()
+    {
+
     }
 }

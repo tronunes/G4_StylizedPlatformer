@@ -5,6 +5,8 @@ using UnityEngine.Animations;
 
 public class TongueEnd : MonoBehaviour
 {
+    private GrapplingTongueLauncher launcher;
+
     void OnCollisionEnter(Collision collision)
     {
         // Prevent further collisions
@@ -17,5 +19,13 @@ public class TongueEnd : MonoBehaviour
 
         // Orient the tongue to face the surface
         transform.LookAt(collision.contacts[0].point - collision.contacts[0].normal);
+
+        // Start reeling the Frog
+        launcher.StartReeling();
+    }
+
+    public void SetLauncher(GrapplingTongueLauncher givenLauncher)
+    {
+        launcher = givenLauncher;
     }
 }
