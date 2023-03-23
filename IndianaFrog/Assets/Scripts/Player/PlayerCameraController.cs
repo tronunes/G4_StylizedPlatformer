@@ -17,7 +17,7 @@ public class PlayerCameraController : MonoBehaviour
     private Vector3 normalCameraPosition = new Vector3(0f, 0f, -3f);
     private Vector3 zoomedCameraPosition = new Vector3(.6f, .3f, -1.8f);
     private float normalCameraFov = 60f;
-    private float zoomedCameraFov = 50f;
+    private float zoomedCameraFov = 45f;
     private float zoomTransitionTime = 0.15f;
     private float currentTransitionTime = 0f;
     private bool isZoomingIn = false;
@@ -70,11 +70,11 @@ public class PlayerCameraController : MonoBehaviour
                 zoomAnimationCurve.Evaluate(1f - currentTransitionTime / zoomTransitionTime)
             );
 
-            // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
-            //     normalCameraFov,
-            //     zoomedCameraFov,
-            //     1f - currentTransitionTime / zoomTransitionTime
-            // );
+            cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
+                normalCameraFov,
+                zoomedCameraFov,
+                zoomAnimationCurve.Evaluate(1f - currentTransitionTime / zoomTransitionTime)
+            );
 
             // Fully zoomed in
             if (currentTransitionTime <= 0f)
@@ -92,11 +92,11 @@ public class PlayerCameraController : MonoBehaviour
                 zoomAnimationCurve.Evaluate(currentTransitionTime / zoomTransitionTime)
             );
 
-            // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
-            //     normalCameraFov,
-            //     zoomedCameraFov,
-            //     currentTransitionTime / zoomTransitionTime
-            // );
+            cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
+                normalCameraFov,
+                zoomedCameraFov,
+                zoomAnimationCurve.Evaluate(currentTransitionTime / zoomTransitionTime)
+            );
 
             // Fully zoomed out
             if (currentTransitionTime <= 0f)
