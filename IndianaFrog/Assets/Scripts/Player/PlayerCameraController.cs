@@ -46,6 +46,7 @@ public class PlayerCameraController : MonoBehaviour
         // Case: Start zooming in
         if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f && currentTransitionTime < 0f)
         {
+            isZoomed = true;
             isZoomingIn = true;
             currentTransitionTime = zoomTransitionTime;
         }
@@ -80,7 +81,6 @@ public class PlayerCameraController : MonoBehaviour
             {
                 currentTransitionTime = 0f;
                 isZoomingIn = false;
-                isZoomed = true;
             }
         }
         // Case: Zooming out
