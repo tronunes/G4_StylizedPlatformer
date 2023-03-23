@@ -6,6 +6,12 @@ using UnityEngine.Animations;
 public class TongueEnd : MonoBehaviour
 {
     private GrapplingTongueLauncher launcher;
+    private Rigidbody tongueRb;
+
+    void Start()
+    {
+        tongueRb = gameObject.GetComponent<Rigidbody>();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -27,5 +33,15 @@ public class TongueEnd : MonoBehaviour
     public void SetLauncher(GrapplingTongueLauncher givenLauncher)
     {
         launcher = givenLauncher;
+    }
+
+    void FixedUpdate()
+    {
+        // Prevent the Tongue from going through surfaces when velocity is very high and surface very thin
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude))
+        {
+            tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.fixedDeltaTime);
+        }
     }
 }
