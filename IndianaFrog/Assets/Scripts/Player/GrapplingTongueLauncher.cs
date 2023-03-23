@@ -15,6 +15,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float reelingSpeed = 10f;
     private float maxTongueLength = 30f;
     private bool isReeling; // Are we reeling the Frog towards TongueEnd
+    private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
 
     void Start()
     {
@@ -25,15 +26,23 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     void Update()
     {
+        // Check if Fire1 "button" is released
+        if (fire1PressedButNotReleased && Input.GetAxis("Fire1") <= 0f)
+        {
+            fire1PressedButNotReleased = false;
+        }
+
         // Case: Shoot Tongue (only when zoomed)
-        if (cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f)
+        if (!tongueEnd && cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             ShootTongue();
+            fire1PressedButNotReleased = true;
         }
-        // Case: cancel reeling
-        else if (!cameraController.IsZoomed())
+        // Case: cancel reeling (when Tongue is out and Fire1 pressed again)
+        else if (tongueEnd && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             StopReeling();
+            fire1PressedButNotReleased = true;
         }
 
         // Case: Reeling the Frog in
