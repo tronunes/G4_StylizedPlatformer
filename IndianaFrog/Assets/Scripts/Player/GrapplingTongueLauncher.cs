@@ -13,8 +13,10 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot.
     private float shootForce = 35f;
     private float reelingSpeed = 10f;
+    private float tongueRetractSpeed = 100f;
     private float maxTongueLength = 30f;
-    private bool isReeling; // Are we reeling the Frog towards TongueEnd
+    private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
+    private bool isRetractingTongue = false; // Are we retracting the Tongue towards the Frog (but Frog is not reeling in)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
 
     void Start()
@@ -41,31 +43,45 @@ public class GrapplingTongueLauncher : MonoBehaviour
         // Case: cancel reeling (when Tongue is out and Fire1 pressed again)
         else if (tongueEnd && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
-            StopReeling();
+            RetractTongue();
             fire1PressedButNotReleased = true;
         }
 
-        // Case: Reeling the Frog in
-        if (isReeling)
+        // Case: Retracting the Tongue back towards the Frog
+        if (tongueEnd && isRetractingTongue)
         {
-            playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
+            tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.deltaTime;
 
-            // Stop reeling when reaching the end
             if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
             {
-                StopReeling();
+                DestroyTongueEnd();
             }
         }
-        // Case: not reeling
+        // Case: Tongue not being retracted (but might not even exist at all)
         else
         {
-            // ...but tongue has been launched
-            if (tongueEnd)
+            // Case: Reeling the Frog in
+            if (isReelingFrogIn)
             {
-                // Stop reeling when reaching maximum Tongue length
-                if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) >= maxTongueLength)
+                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
+
+                // Stop reeling when reaching the end
+                if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
                 {
-                    StopReeling();
+                    RetractTongue();
+                }
+            }
+            // Case: not reeling
+            else
+            {
+                // ...but tongue has been launched
+                if (tongueEnd)
+                {
+                    // Stop reeling when reaching maximum Tongue length
+                    if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) >= maxTongueLength)
+                    {
+                        RetractTongue();
+                    }
                 }
             }
         }
@@ -79,7 +95,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     void ShootTongue()
     {
         // Destroy previous tongue
-        StopReeling();
+        DestroyTongueEnd();
 
         // Create a new tongue
         tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, tongueStart.rotation);
@@ -124,12 +140,26 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     public void StartReeling()
     {
-        isReeling = true;
+        isReelingFrogIn = true;
     }
 
-    public void StopReeling()
+    public void RetractTongue()
     {
-        isReeling = false;
+        // Retract the tongue quickly in before destroying it
+        if (tongueEnd)
+        {
+            isRetractingTongue = true;
+
+            // Disable collision detection for the retracting Tongue
+            tongueEnd.GetComponent<Rigidbody>().detectCollisions = false;
+            tongueEnd.GetComponent<Collider>().enabled = false;
+        }
+    }
+
+    void DestroyTongueEnd()
+    {
+        isRetractingTongue = false;
+        isReelingFrogIn = false;
         if (tongueEnd) { Destroy(tongueEnd); }
     }
 }
