@@ -18,7 +18,7 @@ public class PlayerCameraController : MonoBehaviour
     private Vector3 zoomedCameraPosition = new Vector3(.6f, .3f, -1.8f);
     private float normalCameraFov = 60f;
     private float zoomedCameraFov = 50f;
-    private float zoomTransitionTime = 0.12f;
+    private float zoomTransitionTime = 0.15f;
     private float currentTransitionTime = 0f;
     private bool isZoomingIn = false;
     private bool isZoomingOut = false;
@@ -44,13 +44,13 @@ public class PlayerCameraController : MonoBehaviour
         }
 
         // Case: Start zooming in
-        if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f)
+        if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f && currentTransitionTime < 0f)
         {
             isZoomingIn = true;
             currentTransitionTime = zoomTransitionTime;
         }
         // Case: Start zooming out
-        else if (isZoomed && !isZoomingOut && Input.GetAxisRaw("Fire2") <= 0f)
+        else if (isZoomed && !isZoomingOut && Input.GetAxisRaw("Fire2") <= 0f && currentTransitionTime < 0f)
         {
             isZoomed = false;
             isZoomingOut = true;
@@ -66,7 +66,7 @@ public class PlayerCameraController : MonoBehaviour
             cameraTransform.localPosition = Vector3.Lerp(
                 normalCameraPosition,
                 zoomedCameraPosition,
-                1f - currentTransitionTime / zoomTransitionTime
+                zoomAnimationCurve.Evaluate(1f - currentTransitionTime / zoomTransitionTime)
             );
 
             // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
@@ -89,7 +89,7 @@ public class PlayerCameraController : MonoBehaviour
             cameraTransform.localPosition = Vector3.Lerp(
                 normalCameraPosition,
                 zoomedCameraPosition,
-                currentTransitionTime / zoomTransitionTime
+                zoomAnimationCurve.Evaluate(currentTransitionTime / zoomTransitionTime)
             );
 
             // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
