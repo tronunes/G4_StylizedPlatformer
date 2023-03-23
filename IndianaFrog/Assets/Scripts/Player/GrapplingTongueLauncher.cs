@@ -17,6 +17,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float maxTongueLength = 30f;
     private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
     private bool isRetractingTongue = false; // Are we retracting the Tongue towards the Frog (but Frog is not reeling in)
+    private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
 
     void Start()
@@ -51,11 +52,18 @@ public class GrapplingTongueLauncher : MonoBehaviour
         if (tongueEnd && isRetractingTongue)
         {
             tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.deltaTime;
+            float currentTongueDistance = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
 
-            if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
+            // Destroy the Tongue when reaching the Frog
+            if (currentTongueDistance < 0.2f || currentTongueDistance > tonguePreviousDistance)
             {
                 DestroyTongueEnd();
             }
+            else
+            {
+                tonguePreviousDistance = currentTongueDistance;
+            }
+
         }
         // Case: Tongue not being retracted (but might not even exist at all)
         else
@@ -149,6 +157,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         if (tongueEnd)
         {
             isRetractingTongue = true;
+            tonguePreviousDistance = Vector3.Distance(tongueEnd.transform.position, tongueStart.position);
 
             // Disable collision detection for the retracting Tongue
             tongueEnd.GetComponent<Rigidbody>().detectCollisions = false;
