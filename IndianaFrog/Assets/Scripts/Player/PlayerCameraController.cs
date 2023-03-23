@@ -9,7 +9,20 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform cameraPivotHorizontal;
     [SerializeField] private Transform cameraPivotVertical;
     [SerializeField] private GameObject crosshair;
+
+
+    [Header("Zooming")]
+    [SerializeField] AnimationCurve zoomAnimationCurve;
     private bool isZoomed = false;
+    private Vector3 normalCameraPosition = new Vector3(0f, 0f, -3f);
+    private Vector3 zoomedCameraPosition = new Vector3(.6f, .3f, -1.8f);
+    private float normalCameraFov = 60f;
+    private float zoomedCameraFov = 50f;
+    private float zoomTransitionTime = 0.12f;
+    private float currentTransitionTime = 0f;
+    private bool isZoomingIn = false;
+    private bool isZoomingOut = false;
+
 
     [Header("Settings")]
     private float horizontalRotateSpeedSetting = 3f;
@@ -20,8 +33,6 @@ public class PlayerCameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
-
-        UnZoom();
     }
 
     void Update()
@@ -32,14 +43,74 @@ public class PlayerCameraController : MonoBehaviour
             return;
         }
 
-        if (Input.GetAxisRaw("Fire2") > 0f)
+        // Case: Start zooming in
+        if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f)
         {
-            Zoom();
+            isZoomingIn = true;
+            currentTransitionTime = zoomTransitionTime;
         }
-        else if (Input.GetAxisRaw("Fire2") <= 0f)
+        // Case: Start zooming out
+        else if (isZoomed && !isZoomingOut && Input.GetAxisRaw("Fire2") <= 0f)
         {
-            UnZoom();
+            isZoomed = false;
+            isZoomingOut = true;
+            currentTransitionTime = zoomTransitionTime;
         }
+
+        // Reduce zoom transition timer
+        currentTransitionTime -= Time.deltaTime;
+
+        // Case: Zooming in
+        if (isZoomingIn)
+        {
+            cameraTransform.localPosition = Vector3.Lerp(
+                normalCameraPosition,
+                zoomedCameraPosition,
+                1f - currentTransitionTime / zoomTransitionTime
+            );
+
+            // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
+            //     normalCameraFov,
+            //     zoomedCameraFov,
+            //     1f - currentTransitionTime / zoomTransitionTime
+            // );
+
+            // Fully zoomed in
+            if (currentTransitionTime <= 0f)
+            {
+                currentTransitionTime = 0f;
+                isZoomingIn = false;
+                isZoomed = true;
+            }
+        }
+        // Case: Zooming out
+        else if (isZoomingOut)
+        {
+            cameraTransform.localPosition = Vector3.Lerp(
+                normalCameraPosition,
+                zoomedCameraPosition,
+                currentTransitionTime / zoomTransitionTime
+            );
+
+            // cameraTransform.GetComponent<Camera>().fieldOfView = Mathf.Lerp(
+            //     normalCameraFov,
+            //     zoomedCameraFov,
+            //     currentTransitionTime / zoomTransitionTime
+            // );
+
+            // Fully zoomed out
+            if (currentTransitionTime <= 0f)
+            {
+                currentTransitionTime = 0f;
+                isZoomingOut = false;
+            }
+        }
+
+        // Toggle crosshair visibility
+        crosshair.SetActive(isZoomed);
+
+        // Let PlayerMovement know if zoomed or not
+        gameObject.GetComponent<PlayerMovement>().ToggleZoom(isZoomed);
 
         // Mouse delta movement
         float pitch = Input.GetAxis("Mouse Y");
@@ -62,26 +133,6 @@ public class PlayerCameraController : MonoBehaviour
             currentEulerAngles.x = 280f;
         }
         cameraPivotVertical.localRotation = Quaternion.Euler(currentEulerAngles);
-    }
-
-    void Zoom()
-    {
-        isZoomed = true;
-        gameObject.GetComponent<PlayerMovement>().ToggleZoom(true);
-        cameraTransform.localPosition = new Vector3(.6f, .3f, -1.8f);
-        cameraTransform.GetComponent<Camera>().fieldOfView = 50f;
-
-        crosshair.SetActive(true);
-    }
-
-    void UnZoom()
-    {
-        isZoomed = false;
-        gameObject.GetComponent<PlayerMovement>().ToggleZoom(false);
-        cameraTransform.localPosition = new Vector3(0f, 0f, -3f);
-        cameraTransform.GetComponent<Camera>().fieldOfView = 60f;
-
-        crosshair.SetActive(false);
     }
 
     public bool IsZoomed()
