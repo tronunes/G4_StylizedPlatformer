@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVectorRight = Vector3.zero;
 
         // Calculate Player's velocity
+        // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
@@ -122,7 +123,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void AddExternalVelocity(Vector3 additionalExternalVelocity)
     {
-        externalVelocity += additionalExternalVelocity;
+        // To make pausing work:
+        // Divide by deltaTime here, and when calling this function multiply the external speed by deltaTime
+        // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
+        externalVelocity += additionalExternalVelocity / Time.deltaTime;
     }
 
     public bool IsGrounded()

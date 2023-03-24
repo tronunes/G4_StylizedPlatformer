@@ -70,7 +70,6 @@ public class GrapplingTongueLauncher : MonoBehaviour
             {
                 tonguePreviousDistance = currentTongueDistance;
             }
-
         }
         // Case: Tongue not being retracted (but might not even exist at all)
         else
@@ -78,7 +77,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
             // Case: Reeling the Frog in
             if (isReelingFrogIn)
             {
-                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
+                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed * Time.deltaTime);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
                 float frogDistanceToTongueEnd = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
