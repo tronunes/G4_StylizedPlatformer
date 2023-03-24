@@ -24,7 +24,7 @@ public class TongueEnd : MonoBehaviour
             gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
             // Latch onto the target
-            transform.SetParent(collision.collider.transform, true);
+            transform.SetParent(collision.collider.transform.parent, true);
 
             // Orient the tongue to face the surface
             transform.LookAt(collision.contacts[0].point - collision.contacts[0].normal);

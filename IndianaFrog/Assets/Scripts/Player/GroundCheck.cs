@@ -18,7 +18,7 @@ public class GroundCheck : MonoBehaviour
         // Parent Character to Platform
         if (collider.gameObject.CompareTag("Platform"))
         {
-            playerMovement.ParentToPlatform(collider.transform);
+            playerMovement.ParentToPlatform(collider.transform.parent);
         }
     }
 
