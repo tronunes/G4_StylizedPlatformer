@@ -124,4 +124,9 @@ public class PlayerMovement : MonoBehaviour
     {
         externalVelocity += additionalExternalVelocity;
     }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
+    }
 }

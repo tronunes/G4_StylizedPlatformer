@@ -19,6 +19,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private bool isRetractingTongue = false; // Are we retracting the Tongue towards the Frog (but Frog is not reeling in)
     private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
+    private bool canShootTongue = true; // Require touching ground before shooting the Tongue again
 
     void Start()
     {
@@ -29,6 +30,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     void Update()
     {
+        // Require touching ground before shooting the Tongue again (while Tongue not out)
+        if (!tongueEnd && playerMovement.IsGrounded())
+        {
+            canShootTongue = true;
+        }
+
         // Check if Fire1 "button" is released
         if (fire1PressedButNotReleased && Input.GetAxis("Fire1") <= 0f)
         {
@@ -36,7 +43,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         }
 
         // Case: Shoot Tongue (only when zoomed)
-        if (!tongueEnd && cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
+        if (canShootTongue && !tongueEnd && cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             ShootTongue();
             fire1PressedButNotReleased = true;
@@ -115,6 +122,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
         tongueRb.AddForce(playerCamera.transform.forward * shootForce, ForceMode.Impulse);
 
         ShowTongue();
+
+        // Prevent shooting the Tongue again before touching ground
+        canShootTongue = false;
     }
 
     void ShowTongue()
