@@ -15,19 +15,28 @@ public class TongueEnd : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Prevent further collisions
-        gameObject.GetComponent<Collider>().enabled = false;
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        // Case: Tongue hit surface onto which it can latch
+        if (collision.collider.gameObject.GetComponent<GrapplingStickySurface>())
+        {
+            // Prevent further collisions
+            gameObject.GetComponent<Collider>().enabled = false;
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        // Latch onto the target
-        transform.SetParent(collision.collider.transform, true);
+            // Latch onto the target
+            transform.SetParent(collision.collider.transform, true);
 
-        // Orient the tongue to face the surface
-        transform.LookAt(collision.contacts[0].point - collision.contacts[0].normal);
+            // Orient the tongue to face the surface
+            transform.LookAt(collision.contacts[0].point - collision.contacts[0].normal);
 
-        // Start reeling the Frog
-        launcher.StartReeling();
+            // Start reeling the Frog
+            launcher.StartReeling();
+        }
+        // Case: Tongue hit surface to which it doesn't stick
+        else
+        {
+            launcher.RetractTongue();
+        }
     }
 
     public void SetLauncher(GrapplingTongueLauncher givenLauncher)
