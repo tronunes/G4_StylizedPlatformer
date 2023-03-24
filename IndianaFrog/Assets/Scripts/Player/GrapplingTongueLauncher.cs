@@ -80,8 +80,11 @@ public class GrapplingTongueLauncher : MonoBehaviour
             {
                 playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed);
 
-                // Stop reeling when reaching the end
-                if (Vector3.Distance(tongueStart.position, tongueEnd.transform.position) < 0.2f)
+                // Stop reeling when reaching the end (i.e. fully reeled in)
+                float frogDistanceToTongueEnd = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
+                if (
+                    frogDistanceToTongueEnd < 0.2f ||
+                    (frogDistanceToTongueEnd < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))
                 {
                     RetractTongue();
                 }

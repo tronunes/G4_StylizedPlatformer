@@ -129,4 +129,9 @@ public class PlayerMovement : MonoBehaviour
     {
         return isGrounded;
     }
+
+    public Vector3 GetPlayerVelocity()
+    {
+        return playerVelocity;
+    }
 }
