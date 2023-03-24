@@ -27,7 +27,7 @@ public class TongueEnd : MonoBehaviour
             transform.SetParent(collision.collider.transform.parent, true);
 
             // Orient the tongue to face the surface
-            transform.LookAt(collision.contacts[0].point - collision.contacts[0].normal);
+            transform.LookAt(transform.position - collision.contacts[0].normal);
 
             // Start reeling the Frog
             launcher.StartReeling();
