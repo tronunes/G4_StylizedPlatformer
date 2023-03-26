@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40fbcf6459698aa4a9d2cc64e7c7a924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 60
+  rotateSpeed: 45
   rotateWaitTime: 2
   beamLength: 8
   isRotating: 1
@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: 808699312868229289, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
@@ -169,7 +169,7 @@ PrefabInstance:
     - target: {fileID: 808699312868229289, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
@@ -346,7 +346,7 @@ PrefabInstance:
     - target: {fileID: 8890578004880497835, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4.77
       objectReference: {fileID: 0}
     - target: {fileID: 8890578004880497835, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
@@ -398,7 +398,7 @@ PrefabInstance:
     - target: {fileID: 808699312868229289, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
