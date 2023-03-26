@@ -15,7 +15,6 @@ public class SpikeTrap : MonoBehaviour
 	
 	private Vector3 spikeStartPosition;
 	private Vector3 spikeEndPosition;
-
 	private Vector3 spikeTargetPosition;
 
 	private bool isActivated = false;	// if player has stepped on trap trigger
@@ -44,7 +43,7 @@ public class SpikeTrap : MonoBehaviour
 			{
 				if(!isTriggered)
 				{
-					print("deploy spikes");
+					//print("deploy spikes");
 					allowActivation = false;
 					isTriggered = true;
 					spike.transform.position = spikeEndPosition;
@@ -68,7 +67,7 @@ public class SpikeTrap : MonoBehaviour
 		{
 			if(!isActivated)
 			{
-				print("stepping on trap");
+				//print("stepping on trap");
 				isActivated = true;
 				trapTimer = trapTriggerTime;				
 			}			
@@ -85,7 +84,7 @@ public class SpikeTrap : MonoBehaviour
 		isActivated = false;
 		isTriggered = false;
 		//spike.transform.position = spikeStartPosition;
-		print("spikes off...");
+		//print("spikes off...");
 	}
 
 

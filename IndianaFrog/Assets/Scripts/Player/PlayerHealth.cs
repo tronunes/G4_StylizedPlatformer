@@ -14,13 +14,14 @@ public class PlayerHealth : MonoBehaviour
 	[Header("UI")]
 	public HealthBar healthbar;
 
-	private float damageTimer = 0f;
+
 	private bool canTakeDamage = true;
 
 
 	private void Start()
 	{
-		damageTimer = invulnerabilityTime;	// might aswell...?
+		StartCoroutine(BecomeInvulnerable());	// We can run the Coroutine when the character spawns
+												// (might need some testing if useful or abusable)
 
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
@@ -28,16 +29,6 @@ public class PlayerHealth : MonoBehaviour
 
 	private void Update()
 	{
-		if(damageTimer > 0f)
-		{
-			canTakeDamage = false;
-			damageTimer -= Time.deltaTime;
-		}
-		else
-		{
-			canTakeDamage = true;
-		}
-
 		if(currentHealth <= 0)
 			KillPlayer();
 	}
@@ -58,14 +49,22 @@ public class PlayerHealth : MonoBehaviour
 			currentHealth -= healthToSubtract;
 			healthbar.SetHealth(currentHealth);
 
-			damageTimer = invulnerabilityTime;
+			StartCoroutine(BecomeInvulnerable());
 			print(healthToSubtract + " damage taken.");
 		}		
 	}
 
+	private IEnumerator BecomeInvulnerable()
+	{
+		canTakeDamage = false;
+		yield return new WaitForSeconds(invulnerabilityTime);
+
+		canTakeDamage = true;
+	}
+
 	private void KillPlayer()
 	{
-		print("game over man, game over!");
+		// Do something here when player dies
 		//Destroy(this.gameObject);
 	}
 }

@@ -81,8 +81,7 @@ public class Enemy : MonoBehaviour
 		else
 		{
 			transform.rotation = Quaternion.RotateTowards(this.transform.rotation, defaultRotation, rotateSpeed * Time.deltaTime);
-		}
-			
+		}			
 	}
 
 	private void OnTriggerEnter(Collider other)

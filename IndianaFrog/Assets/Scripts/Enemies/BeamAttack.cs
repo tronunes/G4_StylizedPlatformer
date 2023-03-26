@@ -27,11 +27,9 @@ public class BeamAttack : MonoBehaviour
 		else
 		{
 			lineRenderer.enabled = false;
-			if(impactEffect.isPlaying)
-				impactEffect.Stop();
+			if(impactEffect.isPlaying)	
+				impactEffect.Stop();	
 		}
-			
-			
 	}
 
 	private void ActivateBeam()
@@ -45,14 +43,14 @@ public class BeamAttack : MonoBehaviour
 			lineRenderer.SetPosition(0, firePoint.position);
 			lineRenderer.SetPosition(1, hit.point);
 
-			// can also implement particle effect instantiate here
+			// have to check the state of particle effect first, if it is already playing
+			// and we are trying to Play() it, script seems to break (same for stopping it)
 			if(!impactEffect.isPlaying)
-				impactEffect.Play();			
+				impactEffect.Play();
+			
 			impactEffect.transform.position = hit.point;
 			impactEffect.transform.rotation = Quaternion.LookRotation(firePoint.position - hit.point);
 
-			// damage the player only once per "interval", otherwise player takes damage
-			// every frame while the beam is passing the player
 			if(hit.transform.CompareTag("Player"))
 					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
 
@@ -61,14 +59,9 @@ public class BeamAttack : MonoBehaviour
 		{
 			lineRenderer.SetPosition(0, firePoint.position);
 			lineRenderer.SetPosition(1, firePoint.position + firePoint.forward * enemyTotem.beamLength);
-			//impactEffect.Stop();
-		}
 
-		if(hit.transform == null)
-		{
 			if(impactEffect.isPlaying)
 				impactEffect.Stop();
-		}
-			
+		}			
 	}
 }
