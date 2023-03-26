@@ -16,11 +16,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
-    [SerializeField] private float jumpForce = 1f;
-    [SerializeField] private float gravityMultiplierPreApex = 2f;
+    [SerializeField] private float maxJumpHeight = 1f;
+    [SerializeField] private float timeToJumpApex = 0.3f;
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float terminalVelocity = -5f; // Has to be a negative value
     private float verticalVelocity;
+    private float jumpVelocity;
+    private float gravity;
 
     // New, add comments later
 
@@ -29,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
+        gravity = -(2 * maxJumpHeight) / (Mathf.Pow(timeToJumpApex, 2));
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
     }
 
     void Update()
@@ -47,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-        // If the player has reached the apex of their jump, add a larger multiplier to the gravity
+        // If the player has reached the apex of their jump, add a multiplier to the gravity
         verticalVelocity = isGrounded ?
             -5f :
-            verticalVelocity + Physics.gravity.y * (playerVelocity.y < 0f ? gravityMultiplierPostApex : gravityMultiplierPreApex) * Time.fixedDeltaTime;
+            verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.fixedDeltaTime;
 
         // Jump
         if (doJump)
@@ -59,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded)
             {
-                verticalVelocity = jumpForce;
+                verticalVelocity = jumpVelocity;
             }
         }
 
