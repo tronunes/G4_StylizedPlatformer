@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,18 +11,28 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
 
     private Vector3 playerPreviousFramePosition;
-    private Vector3 playerVelocity = Vector3.zero;
+    [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
     [SerializeField] private bool isGrounded;
     private bool doJump = false;
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float maxJumpHeight = 1f;
+    [SerializeField] private float timeToJumpApex = 0.3f;
+    [SerializeField] private float gravityMultiplierPostApex = 5f;
+    [SerializeField] private float terminalVelocity = -5f; // Has to be a negative value
+    private float verticalVelocity;
+    private float jumpVelocity;
+    private float gravity;
 
     void Start()
     {
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
+        
+        // Calculate gravity and jump velocity for fixed jump height
+        gravity = -(2 * maxJumpHeight) / (Mathf.Pow(timeToJumpApex, 2));
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
     }
 
     void Update()
@@ -40,9 +51,11 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-        float verticalVelocity = isGrounded ?
-            0f :
-            playerVelocity.y + Globals.GRAVITY * Time.fixedDeltaTime;
+        // If the player has reached the apex of their jump, add a multiplier to the gravity.
+        // Also apply constant force downward when grounded, in case of faulty positive isGrounded
+        verticalVelocity = isGrounded ?
+            -5f :
+            verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.fixedDeltaTime;
 
         // Jump
         if (doJump)
@@ -51,12 +64,18 @@ public class PlayerMovement : MonoBehaviour
 
             if (isGrounded)
             {
-                verticalVelocity = jumpForce;
+                verticalVelocity = jumpVelocity;
             }
         }
 
-        // Add vertical velocity to Player's movement
-        characterController.Move(Vector3.up * verticalVelocity * Time.fixedDeltaTime);
+        // Keep character constrained in terminal velocity
+        if (verticalVelocity < terminalVelocity)
+        {
+            verticalVelocity = terminalVelocity;
+        }
+
+        // Calculate player's vertical movement into a Vector3
+        Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.fixedDeltaTime;
 
         // Forward / backward input
         Vector3 movementVectorForward = Input.GetAxis("Vertical") * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
@@ -66,6 +85,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Move
         Vector3 movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
+
+        // Adjust velocity to slope
+        movementVector = AdjustVelocityToSlope(movementVector);
+
+        // Add Vertical velocity to movementVector
+        movementVector += verticalMovementVector;
+
         characterController.Move(movementVector);
 
         // Rotate the character's mesh towards movement input's direction
@@ -86,5 +112,23 @@ public class PlayerMovement : MonoBehaviour
     public void ClearParent()
     {
         transform.SetParent(null, true);
+    }
+
+    // If the player is going up or down a slope, adjust the horizontal movement to be along the slope's normal
+    private Vector3 AdjustVelocityToSlope(Vector3 velocity)
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 0.2f))
+        {
+            Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
+            Vector3 adjustedVelocity = slopeRotation * velocity;
+
+            if (adjustedVelocity.y < 0 || (isGrounded && adjustedVelocity.y > 0))
+            {
+                return adjustedVelocity;
+            }
+        }
+        return velocity;
     }
 }
