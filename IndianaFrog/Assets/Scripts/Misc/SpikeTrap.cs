@@ -9,16 +9,17 @@ public class SpikeTrap : MonoBehaviour
 	public float trapTriggerTime = 2f;
 	public float spikesDuration = 1f;
 	public float spikesSpeed = 10f;
+	public float spikesRetractSpeed = 0.8f;
 
-	private bool allowMoving = false;
-	private bool allowActivation = false;
+	
 	
 	private Vector3 spikeStartPosition;
 	private Vector3 spikeEndPosition;
-	private Vector3 spikeTargetPosition;
 
-	private bool isActivated = false;	// if player has stepped on trap trigger
-	private bool isTriggered = false;	// if spikes are deployed already
+	private bool allowActivation = true;	// set true when the spikes have retracted to their starting position
+	private bool isActivated = false;		// if player has stepped on trap trigger
+	private bool isTriggered = false;		// if spikes are deployed already
+	
 	private float trapTimer;
 
 
@@ -32,9 +33,11 @@ public class SpikeTrap : MonoBehaviour
 
 	private void Update()
 	{
+		// resets the trap if spikes are moved to starting position
 		if(spike.transform.position == spikeStartPosition)
 			allowActivation = true;
 
+		// if the trap is reset, check if player has triggered it
 		if(allowActivation)
 		{
 			if(isActivated && trapTimer > 0)
@@ -43,22 +46,25 @@ public class SpikeTrap : MonoBehaviour
 			{
 				if(!isTriggered)
 				{
-					//print("deploy spikes");
+					print("deploy spikes");
 					allowActivation = false;
 					isTriggered = true;
-					spike.transform.position = spikeEndPosition;
 					StartCoroutine(DeactivateTrap());
 				}
 			}
 		}		
 
-		if(allowMoving)
-			MoveSpike();
+		// then attempt to move spikes
+		MoveSpikes();
 	}
 
-	private void MoveSpike()
+	private void MoveSpikes()
 	{
-		spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeStartPosition, spikesSpeed * Time.deltaTime);
+		if(isTriggered)
+			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeEndPosition, spikesSpeed * Time.deltaTime);
+		else if(!isTriggered && !allowActivation)
+			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeStartPosition, spikesRetractSpeed * Time.deltaTime);
+			
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -67,7 +73,7 @@ public class SpikeTrap : MonoBehaviour
 		{
 			if(!isActivated)
 			{
-				//print("stepping on trap");
+				print("stepping on trap");
 				isActivated = true;
 				trapTimer = trapTriggerTime;				
 			}			
@@ -77,14 +83,11 @@ public class SpikeTrap : MonoBehaviour
 	private IEnumerator DeactivateTrap()
 	{
 		print("deactivation started");
-		allowMoving = false;
 		yield return new WaitForSeconds(spikesDuration);
-
-		allowMoving = true;
+		
 		isActivated = false;
 		isTriggered = false;
-		//spike.transform.position = spikeStartPosition;
-		//print("spikes off...");
+		print("spikes off...");
 	}
 
 

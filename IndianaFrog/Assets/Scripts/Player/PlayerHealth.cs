@@ -50,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
 			healthbar.SetHealth(currentHealth);
 
 			StartCoroutine(BecomeInvulnerable());
-			print(healthToSubtract + " damage taken.");
+			//print(healthToSubtract + " damage taken.");
 		}		
 	}
 
