@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -24,13 +25,12 @@ public class PlayerMovement : MonoBehaviour
     private float jumpVelocity;
     private float gravity;
 
-    // New, add comments later
-
-
     void Start()
     {
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
+        
+        // Calculate gravity and jump velocity for fixed jump height
         gravity = -(2 * maxJumpHeight) / (Mathf.Pow(timeToJumpApex, 2));
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
     }
@@ -116,12 +116,12 @@ public class PlayerMovement : MonoBehaviour
     // If the player is going up or down a slope, adjust the horizontal movement to be along the slope's normal
     private Vector3 AdjustVelocityToSlope(Vector3 velocity)
     {
-        var ray = new Ray(transform.position, Vector3.down);
+        Ray ray = new Ray(transform.position, Vector3.down);
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 0.2f))
         {
-            var slopeRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
-            var adjustedVelocity = slopeRotation * velocity;
+            Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
+            Vector3 adjustedVelocity = slopeRotation * velocity;
 
             if (adjustedVelocity.y < 0 || (isGrounded && adjustedVelocity.y > 0))
             {
