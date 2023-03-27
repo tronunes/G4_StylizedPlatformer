@@ -124,9 +124,6 @@ public class GrapplingTongueLauncher : MonoBehaviour
         tongueRb.AddForce(playerCamera.transform.forward * shootForce, ForceMode.Impulse);
 
         ShowTongue();
-
-        // Prevent shooting the Tongue again before touching ground
-        canShootTongue = false;
     }
 
     void ShowTongue()
@@ -161,6 +158,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
     public void StartReeling()
     {
         isReelingFrogIn = true;
+
+        // Prevent shooting the Tongue again before touching ground
+        canShootTongue = false;
     }
 
     public void RetractTongue()
