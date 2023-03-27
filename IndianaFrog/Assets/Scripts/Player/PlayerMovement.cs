@@ -51,7 +51,8 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-        // If the player has reached the apex of their jump, add a multiplier to the gravity
+        // If the player has reached the apex of their jump, add a multiplier to the gravity.
+        // Also apply constant force downward when grounded, in case of faulty positive isGrounded
         verticalVelocity = isGrounded ?
             -5f :
             verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.fixedDeltaTime;
