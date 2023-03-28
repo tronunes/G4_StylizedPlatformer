@@ -48,7 +48,7 @@ public class TongueEnd : MonoBehaviour
     {
         // Prevent the Tongue from going through surfaces when velocity is very high and surface very thin
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude))
+        if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude * Time.fixedDeltaTime))
         {
             tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.fixedDeltaTime);
         }
