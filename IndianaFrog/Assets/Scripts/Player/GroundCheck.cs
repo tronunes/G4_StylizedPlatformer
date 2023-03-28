@@ -23,6 +23,8 @@ public class GroundCheck : MonoBehaviour
         // Parent Character to Platform
         if (collider.gameObject.CompareTag("Platform"))
         {
+            // Use the parent of the collider as the parent, so that the collider mesh can be scaled however we want.
+            // The parent's scale needs to be (1,1,1) in order not to skew the Frog
             playerMovement.ParentToPlatform(collider.transform.parent);
         }
     }

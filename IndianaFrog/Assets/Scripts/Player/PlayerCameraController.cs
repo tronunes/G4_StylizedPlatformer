@@ -10,7 +10,6 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform cameraPivotVertical;
     [SerializeField] private GameObject crosshair;
 
-
     [Header("Zooming")]
     [SerializeField] AnimationCurve zoomAnimationCurve;
     private bool isZoomed = false;
@@ -44,14 +43,14 @@ public class PlayerCameraController : MonoBehaviour
         }
 
         // Case: Start zooming in
-        if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f && currentTransitionTime < 0f)
+        if (!isZoomed && !isZoomingIn && Input.GetAxisRaw("Fire2") > 0f && currentTransitionTime <= 0f)
         {
             isZoomed = true;
             isZoomingIn = true;
             currentTransitionTime = zoomTransitionTime;
         }
         // Case: Start zooming out
-        else if (isZoomed && !isZoomingOut && Input.GetAxisRaw("Fire2") <= 0f && currentTransitionTime < 0f)
+        else if (isZoomed && !isZoomingOut && Input.GetAxisRaw("Fire2") <= 0f && currentTransitionTime <= 0f)
         {
             isZoomed = false;
             isZoomingOut = true;
@@ -110,7 +109,7 @@ public class PlayerCameraController : MonoBehaviour
         crosshair.SetActive(isZoomed);
 
         // Let PlayerMovement know if zoomed or not
-        gameObject.GetComponent<PlayerMovement>().ToggleZoom(isZoomed);
+        gameObject.GetComponent<PlayerMovement>().SetIsZoomed(isZoomed);
 
         // Mouse delta movement
         float pitch = Input.GetAxis("Mouse Y");

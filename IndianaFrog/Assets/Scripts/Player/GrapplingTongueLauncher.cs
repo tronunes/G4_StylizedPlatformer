@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class GrapplingTongueLauncher : MonoBehaviour
 {
+    // Technical
     private PlayerMovement playerMovement;
     private PlayerCameraController cameraController;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
     [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
     [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
-    private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot.
+    private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot, destroyed when reeled back in.
+
+    // Stats
     private float shootForce = 35f;
-    private float reelingSpeed = 10f;
-    private float tongueRetractSpeed = 100f;
+    private float frogReelingSpeed = 10f; // Reeling = Frog moves towards the tongue end (which is attached to a wall)
+    private float tongueRetractSpeed = 100f; // Rectracting = the tongue moves towards the Frog without moving the Frog
     private float maxTongueLength = 30f;
+
+    // Helpers
     private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
     private bool isRetractingTongue = false; // Are we retracting the Tongue towards the Frog (but Frog is not reeling in)
     private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
@@ -36,19 +41,19 @@ public class GrapplingTongueLauncher : MonoBehaviour
             canShootTongue = true;
         }
 
-        // Check if Fire1 "button" is released
+        // Check if Fire1 "button" is released, i.e. ButtonUp-event (but for axis instead of button)
         if (fire1PressedButNotReleased && Input.GetAxis("Fire1") <= 0f)
         {
             fire1PressedButNotReleased = false;
         }
 
-        // Case: Shoot Tongue (only when zoomed)
+        // Case: Shoot Tongue (only when zoomed) when Fire1 pressed
         if (canShootTongue && !tongueEnd && cameraController.IsZoomed() && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             ShootTongue();
             fire1PressedButNotReleased = true;
         }
-        // Case: cancel reeling (when Tongue is out and Fire1 pressed again)
+        // Case: Retract tongue when Fire1 pressed again
         else if (tongueEnd && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             RetractTongue();
@@ -77,13 +82,13 @@ public class GrapplingTongueLauncher : MonoBehaviour
             // Case: Reeling the Frog in
             if (isReelingFrogIn)
             {
-                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * reelingSpeed * Time.deltaTime);
+                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * frogReelingSpeed * Time.deltaTime);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
                 float frogDistanceToTongueEnd = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
                 if (
-                    frogDistanceToTongueEnd < 0.2f ||
-                    (frogDistanceToTongueEnd < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))
+                    frogDistanceToTongueEnd < 0.2f ||                                                           // "Frog is close enough"
+                    (frogDistanceToTongueEnd < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
                 {
                     RetractTongue();
                 }
@@ -163,9 +168,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
         canShootTongue = false;
     }
 
+    // This is "Start retracting", so only call when retracting starts, not every frame.
     public void RetractTongue()
     {
-        // Retract the tongue quickly in before destroying it
         if (tongueEnd)
         {
             isRetractingTongue = true;

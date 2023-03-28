@@ -142,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         transform.SetParent(null, true);
     }
 
-    public void ToggleZoom(bool newZoomedState)
+    public void SetIsZoomed(bool newZoomedState)
     {
         isZoomed = newZoomedState;
     }
