@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform cameraLookTransform;
     private CharacterController characterController;
     private bool isZoomed = false;
+    [SerializeField] private Animator animator;
 
     private Vector3 playerPreviousFramePosition;
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
-        
+
         // Calculate gravity and jump velocity for fixed jump height
         gravity = -(2 * maxJumpHeight) / (Mathf.Pow(timeToJumpApex, 2));
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -83,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     verticalVelocity = jumpVelocity;
+                    animator.SetTrigger("Jump");
                 }
             }
 
@@ -113,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Move
         characterController.Move(movementVector);
+
+        animator.SetBool("Running", movementVector.magnitude > 0f);
 
         // Case: zoomed -> use camera's rotation for the character's mesh
         if (isZoomed)
