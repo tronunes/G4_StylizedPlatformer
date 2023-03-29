@@ -84,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
                 if (isGrounded)
                 {
                     verticalVelocity = jumpVelocity;
+
+                    // Animate Jump
                     animator.SetTrigger("Jump");
                 }
             }
@@ -116,7 +118,8 @@ public class PlayerMovement : MonoBehaviour
         // Move
         characterController.Move(movementVector);
 
-        animator.SetBool("Running", movementVector.magnitude > 0f);
+        // Animate running
+        animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
 
         // Case: zoomed -> use camera's rotation for the character's mesh
         if (isZoomed)
