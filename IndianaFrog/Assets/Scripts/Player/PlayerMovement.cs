@@ -15,27 +15,30 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 playerPreviousFramePosition;
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
     [SerializeField] private bool isGrounded;
-    private bool doJump = false;
+    private bool chargingJump = false;
     private Vector3 externalVelocity = Vector3.zero;
+    [SerializeField] private float gravity = -10f;
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float maxJumpHeight = 1f;
-    [SerializeField] private float timeToJumpApex = 0.3f;
+    [SerializeField] private float maxChargeJumpHeight = 1f;
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float terminalVelocity = -5f; // Has to be a negative value
+    [SerializeField] private float chargeJumpTimer = 0f;
+    private float jumpInputDecayTimer = 0f;
     private float verticalVelocity;
     private float jumpVelocity;
-    private float gravity;
+    private float chargeJumpVelocity;
 
     void Start()
     {
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
 
-        // Calculate gravity and jump velocity for fixed jump height
-        gravity = -(2 * maxJumpHeight) / (Mathf.Pow(timeToJumpApex, 2));
-        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        // Calculate jump velocity for fixed jump height, first for charged jump, then uncharged
+        chargeJumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxChargeJumpHeight);
+        jumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxJumpHeight);
     }
 
     void Update()
@@ -44,12 +47,34 @@ public class PlayerMovement : MonoBehaviour
         // The input needs to be caught outside of FixedUpdate
         if (Input.GetButtonDown("Jump"))
         {
-            doJump = true;
+            chargingJump = true;
+        } else if (Input.GetButtonUp("Jump"))
+        {
+            chargingJump = false;
         }
     }
 
     void FixedUpdate()
     {
+        // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
+        if(jumpInputDecayTimer >= 0.2f)
+        {
+            chargeJumpTimer = 0f;
+            jumpInputDecayTimer = 0f;
+        }
+
+        // Progress jumpInputDecayTimer
+        if (!chargingJump && chargeJumpTimer > 0f)
+        {
+            jumpInputDecayTimer += Time.fixedDeltaTime;
+        }
+
+        // Add to chargeJumpTimer if the jump button is held down
+        if (chargingJump && chargeJumpTimer <= 0.5f)
+        {
+            chargeJumpTimer += Time.fixedDeltaTime;
+        }
+
         Vector3 movementVector = Vector3.zero;
         Vector3 movementVectorForward = Vector3.zero;
         Vector3 movementVectorRight = Vector3.zero;
@@ -76,18 +101,24 @@ public class PlayerMovement : MonoBehaviour
                 -5f :
                 verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.fixedDeltaTime;
 
-            // Jump
-            if (doJump)
+            // Jump if the jump button is let go of and there is any amount of charge
+            if (!chargingJump && chargeJumpTimer > 0 && isGrounded)
             {
-                doJump = false;
+                // Depending on charge amount, decide which jump to do
+                if (chargeJumpTimer >= 0.5f)
+                {
+                    verticalVelocity = chargeJumpVelocity;
 
-                if (isGrounded)
+                    // Animate Jump
+                    animator.SetTrigger("Jump");
+                } else
                 {
                     verticalVelocity = jumpVelocity;
 
                     // Animate Jump
                     animator.SetTrigger("Jump");
                 }
+                chargeJumpTimer = 0f;
             }
 
             // Keep character constrained in terminal velocity

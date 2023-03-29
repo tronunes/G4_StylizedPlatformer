@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class Globals
 {
-    public static float GRAVITY = -9.81f;
+    
 }
