@@ -6,6 +6,7 @@ public class BeamAttack : MonoBehaviour
 {
 	public Transform firePoint;
 	public LineRenderer lineRenderer;
+	public ParticleSystem glowEffect;
 	public ParticleSystem impactEffect;
 
 	public LayerMask hitLayer;
@@ -23,12 +24,23 @@ public class BeamAttack : MonoBehaviour
 	{
 		// if the parent is rotating, only then fire the beam
 		if(enemyTotem.isRotating)
+		{
 			ActivateBeam();
+			if(!glowEffect.isPlaying)
+				glowEffect.Play();
+		}			
 		else
 		{
 			lineRenderer.enabled = false;
 			if(impactEffect.isPlaying)	
-				impactEffect.Stop();	
+				impactEffect.Stop();
+
+			if(glowEffect.isPlaying)
+			{
+				glowEffect.Stop();
+				glowEffect.Clear();	// have to clear existing particles alse or they linger for their lifetime-duration
+			}
+				
 		}
 	}
 
