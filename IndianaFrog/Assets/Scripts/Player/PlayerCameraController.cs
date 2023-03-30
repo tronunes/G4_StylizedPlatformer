@@ -138,4 +138,18 @@ public class PlayerCameraController : MonoBehaviour
     {
         return isZoomed;
     }
+
+    public void ResetPlayerCamera()
+    {
+        cameraTransform.localPosition = normalCameraPosition;
+        cameraPivotHorizontal.localRotation = Quaternion.identity;
+        cameraPivotVertical.localRotation = Quaternion.Euler(25f, 0f, 0f);
+
+        crosshair.SetActive(false);
+        isZoomed = false;
+        cameraTransform.GetComponent<Camera>().fieldOfView = normalCameraFov;
+        currentTransitionTime = 0f;
+        isZoomingIn = false;
+        isZoomingOut = false;
+    }
 }

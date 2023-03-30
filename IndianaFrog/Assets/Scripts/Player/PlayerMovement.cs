@@ -189,4 +189,16 @@ public class PlayerMovement : MonoBehaviour
         }
         return velocity;
     }
+
+    public void ResetPlayerMovement()
+    {
+        ClearParent();
+        playerPreviousFramePosition = transform.position;
+        playerVelocity = Vector3.zero;
+        externalVelocity = Vector3.zero;
+        doJump = false;
+        isGrounded = false;
+
+        frogMesh.localRotation = Quaternion.identity;
+    }
 }

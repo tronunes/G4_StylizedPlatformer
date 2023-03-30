@@ -55,6 +55,7 @@ public class Frog : MonoBehaviour
         // Respawn
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
+        ResetPlayer();
     }
 
     public void SetNewCheckpoint(Checkpoint newCheckpoint)
@@ -97,5 +98,16 @@ public class Frog : MonoBehaviour
         {
             return startRotation;
         }
+    }
+
+    void ResetPlayer()
+    {
+        // This component
+        currentHP = maxHP;
+
+        // Other components
+        gameObject.GetComponent<PlayerMovement>().ResetPlayerMovement();
+        gameObject.GetComponent<PlayerCameraController>().ResetPlayerCamera();
+        gameObject.GetComponent<GrapplingTongueLauncher>().ResetTongueLauncher();
     }
 }

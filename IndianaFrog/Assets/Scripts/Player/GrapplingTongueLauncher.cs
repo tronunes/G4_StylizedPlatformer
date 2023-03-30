@@ -188,4 +188,10 @@ public class GrapplingTongueLauncher : MonoBehaviour
         isReelingFrogIn = false;
         if (tongueEnd) { Destroy(tongueEnd); }
     }
+
+    public void ResetTongueLauncher()
+    {
+        DestroyTongueEnd();
+        HideTongue();
+    }
 }
