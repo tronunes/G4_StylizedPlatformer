@@ -19,6 +19,15 @@ public class Frog : MonoBehaviour
         currentHP = maxHP;
     }
 
+    void Update()
+    {
+        // Die when fell out of the map
+        if (transform.position.y < -10f)
+        {
+            Die();
+        }
+    }
+
     void RecoverHP()
     {
         currentHP++;
