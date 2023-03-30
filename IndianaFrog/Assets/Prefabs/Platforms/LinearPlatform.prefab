@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a89a2d49825a9b4ea840f3d7f6fbaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platform: {fileID: 8392258540385995480}
+  platform: {fileID: 6947617156163694573}
   waypoints:
   - {fileID: 2491846491866132884}
   - {fileID: 8125852454401736906}
@@ -216,9 +216,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &8392258540385995480 stripped
+--- !u!4 &6947617156163694573 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 6679984290593448369, guid: e1d237de8cabec346b416fa46f91fa86,
+  m_CorrespondingSourceObject: {fileID: 5235922758646023300, guid: e1d237de8cabec346b416fa46f91fa86,
     type: 3}
   m_PrefabInstance: {fileID: 2937289222688680809}
   m_PrefabAsset: {fileID: 0}
