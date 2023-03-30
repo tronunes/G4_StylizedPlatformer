@@ -5,6 +5,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private Transform respawnTransform;
+    public int checkpointIndex; // Indicates how far in the level the checkpoint is. A higher index checkpoint overrides a lower index.
 
     void OnDrawGizmos()
     {
@@ -18,5 +19,24 @@ public class Checkpoint : MonoBehaviour
             transform.position + boxCollider.center,
             boxCollider.size
         );
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            Frog frog = collider.gameObject.GetComponent<Frog>();
+            frog.SetNewCheckpoint(this);
+        }
+    }
+
+    public Vector3 GetRespawnPosition()
+    {
+        return respawnTransform.position;
+    }
+
+    public Quaternion GetRespawnRotation()
+    {
+        return respawnTransform.rotation;
     }
 }
