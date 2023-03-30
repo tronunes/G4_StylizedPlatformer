@@ -97,7 +97,7 @@ public class LinearPlatform : MonoBehaviour
             {
                 Gizmos.DrawSphere(
                     waypoint.position,
-                    meshCollider.bounds.size.y
+                    1f
                 );
             }
             index++;

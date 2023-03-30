@@ -17,7 +17,7 @@ public class Checkpoint : MonoBehaviour
         Gizmos.color = new Color(1f, 0.92f, 0.016f, 1f); // Yellow
         Gizmos.DrawWireCube(
             transform.position + boxCollider.center,
-            boxCollider.size
+            boxCollider.size * transform.localScale.x
         );
     }
 
