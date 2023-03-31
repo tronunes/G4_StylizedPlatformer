@@ -6,6 +6,13 @@ public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private Transform respawnTransform;
     public int checkpointIndex; // Indicates how far in the level the checkpoint is. A higher index checkpoint overrides a lower index.
+    [SerializeField] private GameObject fireEffect;
+
+
+    void Awake()
+    {
+        fireEffect.SetActive(false);
+    }
 
     void OnDrawGizmos()
     {
@@ -27,6 +34,9 @@ public class Checkpoint : MonoBehaviour
         {
             Frog frog = collider.gameObject.GetComponent<Frog>();
             frog.SetNewCheckpoint(this);
+
+            // Activate the fire
+            fireEffect.SetActive(true);
         }
     }
 
