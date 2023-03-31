@@ -11,7 +11,7 @@ public class GroundCheck : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         // Grounded
-        if (!collider.gameObject.CompareTag("Player") && !collider.gameObject.CompareTag("Respawn"))
+        if (!collider.gameObject.CompareTag("Player") && !collider.isTrigger)
         {
             overlaps++;
             if (overlaps > 0)
@@ -32,7 +32,7 @@ public class GroundCheck : MonoBehaviour
     void OnTriggerExit(Collider collider)
     {
         // Ungrounded (i.e. not touching ground)
-        if (!collider.gameObject.CompareTag("Player") && !collider.gameObject.CompareTag("Respawn"))
+        if (!collider.gameObject.CompareTag("Player") && !collider.isTrigger)
         {
             overlaps--;
             if (overlaps == 0)
