@@ -148,7 +148,7 @@ RectTransform:
   m_GameObject: {fileID: 5803530630455857784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5803530629961985011}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 5803530630551069560}
   - component: {fileID: 5803530630551069561}
   m_Layer: 5
-  m_Name: TMPButton_Exit
+  m_Name: TMPButton_Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 5803530631387385572}
   - component: {fileID: 5803530631387385573}
   m_Layer: 5
-  m_Name: TMP_Exit
+  m_Name: TMP_Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Quit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
