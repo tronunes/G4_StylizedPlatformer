@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
         if (!chargingJump && chargeJumpTimer > 0f)
         {
             jumpInputDecayTimer += Time.fixedDeltaTime;
+        } else if (chargingJump)
+        {
+            // Reset jumpInputDecayTimer if player presses down jump button again
+            jumpInputDecayTimer = 0f;
         }
 
         // Add to chargeJumpTimer if the jump button is held down
