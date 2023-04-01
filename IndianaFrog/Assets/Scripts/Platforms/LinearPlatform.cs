@@ -79,7 +79,7 @@ public class LinearPlatform : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = new Color(0f, 0f, 1, 0.6f); // Transparent blue
+        Gizmos.color = new Color(0f, 0f, 1f, 0.6f); // Transparent blue
         int index = 0;
 
         // Draw all the waypoints
