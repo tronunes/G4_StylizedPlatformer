@@ -228,11 +228,15 @@ public class PlayerMovement : MonoBehaviour
     public void ResetPlayerMovement()
     {
         ClearParent();
+
         playerPreviousFramePosition = transform.position;
         playerVelocity = Vector3.zero;
         externalVelocity = Vector3.zero;
-        doJump = false;
         isGrounded = false;
+
+        chargingJump = false;
+        chargeJumpTimer = 0f;
+        jumpInputDecayTimer = 0f;
 
         frogMesh.localRotation = Quaternion.identity;
     }

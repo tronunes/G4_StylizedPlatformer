@@ -171,11 +171,13 @@ MonoBehaviour:
   animator: {fileID: 2131154259457372300}
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
+  gravity: -10
   movementSpeed: 6
   maxJumpHeight: 1.5
-  timeToJumpApex: 0.3
+  maxChargeJumpHeight: 5
   gravityMultiplierPostApex: 1
   terminalVelocity: -12
+  chargeJumpTimer: 0
 --- !u!114 &2070319886851112046
 MonoBehaviour:
   m_ObjectHideFlags: 0
