@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6213828657611608462}
   - component: {fileID: 6213828657611608463}
   - component: {fileID: 6213828657611608460}
-  - component: {fileID: 6213828657611608461}
   m_Layer: 0
   m_Name: WaterPool
   m_TagString: Untagged
@@ -99,18 +98,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6213828657611608461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6213828657611608450}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc7f50cdf59dd994bb4c5d45e3b7c008, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amplitude: 0.05
-  length: 0.8
-  speed: 1

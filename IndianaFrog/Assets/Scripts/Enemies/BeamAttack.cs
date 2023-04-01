@@ -48,7 +48,6 @@ public class BeamAttack : MonoBehaviour
 	{
 		lineRenderer.enabled = true;
 
-		//Debug.DrawRay(firePoint.position, firePoint.forward * enemyTotem.beamLength, Color.red);
 		// if the Raycast hits something, set the end of beam to that point so it will be blocked by obstacles
 		if(Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, enemyTotem.beamLength, hitLayer))
 		{

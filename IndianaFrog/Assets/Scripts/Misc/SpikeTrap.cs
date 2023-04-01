@@ -9,9 +9,7 @@ public class SpikeTrap : MonoBehaviour
 	public float trapTriggerTime = 2f;
 	public float spikesDuration = 1f;
 	public float spikesSpeed = 10f;
-	public float spikesRetractSpeed = 0.8f;
-
-	
+	public float spikesRetractSpeed = 0.8f;	
 	
 	private Vector3 spikeStartPosition;
 	private Vector3 spikeEndPosition;
@@ -46,7 +44,7 @@ public class SpikeTrap : MonoBehaviour
 			{
 				if(!isTriggered)
 				{
-					print("deploy spikes");
+					//print("deploy spikes");
 					allowActivation = false;
 					isTriggered = true;
 					StartCoroutine(DeactivateTrap());
@@ -73,7 +71,7 @@ public class SpikeTrap : MonoBehaviour
 		{
 			if(!isActivated)
 			{
-				print("stepping on trap");
+				//print("stepping on trap");
 				isActivated = true;
 				trapTimer = trapTriggerTime;				
 			}			
@@ -82,12 +80,12 @@ public class SpikeTrap : MonoBehaviour
 
 	private IEnumerator DeactivateTrap()
 	{
-		print("deactivation started");
+		//print("deactivation started");
 		yield return new WaitForSeconds(spikesDuration);
 		
 		isActivated = false;
 		isTriggered = false;
-		print("spikes off...");
+		//print("spikes off...");
 	}
 
 
