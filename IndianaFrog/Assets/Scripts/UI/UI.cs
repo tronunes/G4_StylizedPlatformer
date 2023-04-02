@@ -94,9 +94,9 @@ public class UI : MonoBehaviour
         buttonCloseApp = GameObject.Find("Canvas/Menu_Main/TMPButton_Exit").GetComponent<Button>();
         
         //Buttons PauseMenu
-        buttonContinue = GameObject.Find("Canvas/Menu_Pause/PauseButtonsLayout/TMPButton_Continue").GetComponent<Button>();
-        buttonPSettings = GameObject.Find("Canvas/Menu_Pause/PauseButtonsLayout/TMPButton_Settings").GetComponent<Button>();
-        buttonReturnMain = GameObject.Find("Canvas/Menu_Pause/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
+        buttonContinue = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Continue").GetComponent<Button>();
+        buttonPSettings = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Settings").GetComponent<Button>();
+        buttonReturnMain = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
 
         //Buttons SettingsMenu
         buttonClose = GameObject.Find("Canvas/Menu_Settings/TMPButton_Close").GetComponent<Button>();
