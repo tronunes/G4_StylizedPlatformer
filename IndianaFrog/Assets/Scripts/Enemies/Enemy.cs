@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
 	[Header("MASK TYPE")]
 	public bool isStaticEnemy;
+	public bool useOffsetInterval;
 
 	[Header("ENEMY STATS")]
 	public float fireInterval = 3f;
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
 	public float rotateSpeed = 10;
 
 	private float fireDelayTimer;
+	private bool allowFiring = false;	// used for timing offset
 	private Transform target;
 	private SphereCollider sc;
 	private Vector3 targetDirection;
@@ -31,8 +33,15 @@ public class Enemy : MonoBehaviour
 		sc = GetComponent<SphereCollider>();
 		sc.radius = detectionRange;
 
-		fireDelayTimer = fireInterval;
+		// if timer is set equal to fireInterval at start, must take that into consideration in the Hold-coroutine
+		fireDelayTimer = 0f;
 		defaultRotation = transform.rotation;
+
+		// if mask is set to use offsetInterval yield for a short time, otherwise mask can start firing normally
+		if(useOffsetInterval)
+			StartCoroutine(Hold());
+		else
+			allowFiring = true;
 	}
 
 	private void Update()
@@ -41,7 +50,7 @@ public class Enemy : MonoBehaviour
 			Rotate();
 
 		fireDelayTimer -= Time.deltaTime;
-		if(fireDelayTimer <= 0)
+		if(fireDelayTimer <= 0 && allowFiring)
 			Fire();
 	}
 
@@ -81,8 +90,14 @@ public class Enemy : MonoBehaviour
 		else
 		{
 			transform.rotation = Quaternion.RotateTowards(this.transform.rotation, defaultRotation, rotateSpeed * Time.deltaTime);
-		}
-			
+		}			
+	}
+
+	private IEnumerator Hold()
+	{
+		//yield return new WaitForSeconds(fireInterval);	// if the fire-timer is set to fireInterval time at start wait for that to run zero
+		yield return new WaitForSeconds(fireInterval / 2f);	// wait for half the duration of the interval so we can offset the mask timings
+		allowFiring = true;
 	}
 
 	private void OnTriggerEnter(Collider other)

@@ -17,4 +17,10 @@ public class KillProjectile : MonoBehaviour
 		yield return new WaitForSeconds(projectileLifeTime);
 		Destroy(this.gameObject);
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if(other.CompareTag("Player"))
+			Destroy(this.gameObject);
+	}
 }
