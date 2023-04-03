@@ -20,7 +20,8 @@ public class KillProjectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Player"))
-			Destroy(this.gameObject);
+		// needs a small delay after contact to blend in better with explosion vfx
+		Destroy(this.gameObject, 0.1f);
 	}
+
 }
