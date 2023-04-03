@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Frog : MonoBehaviour
+public class PlayerCheckpointHandler : MonoBehaviour
 {
     // Checkpoints and respawning
     private Checkpoint latestCheckpoint;

@@ -63,8 +63,8 @@ public class PlayerHealth : MonoBehaviour
 	{
 		isCurrentlyDead = true;
 
-		//Reset the player to the most recent checkpoint
-		gameObject.GetComponent<Frog>().Die();
+		// Reset the player to the most recent checkpoint
+		gameObject.GetComponent<PlayerCheckpointHandler>().Die();
 	}
 
 	public void ResetHealth()

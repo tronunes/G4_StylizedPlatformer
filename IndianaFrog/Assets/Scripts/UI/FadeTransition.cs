@@ -20,9 +20,9 @@ public class FadeTransition : MonoBehaviour
         UnFade();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // DEBUG: remove these when not needed anymore for debugging
         if (Input.GetKeyDown(KeyCode.F))
         {
             Fade();

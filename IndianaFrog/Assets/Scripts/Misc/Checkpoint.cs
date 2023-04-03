@@ -32,8 +32,8 @@ public class Checkpoint : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            Frog frog = collider.gameObject.GetComponent<Frog>();
-            frog.SetNewCheckpoint(this);
+            PlayerCheckpointHandler checkpointHandler = collider.gameObject.GetComponent<PlayerCheckpointHandler>();
+            checkpointHandler.SetNewCheckpoint(this);
 
             // Activate the fire
             fireEffect.SetActive(true);
