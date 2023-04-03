@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2161.1572, g: 2265.2793, b: 3288.4844, a: 1}
+  m_IndirectSpecularColor: {r: 2159.663, g: 2263.3574, b: 3285.2656, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2197,13 +2197,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
+      propertyPath: gravity
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
       propertyPath: jumpForce
       value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: maxJumpHeight
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2218,7 +2223,12 @@ PrefabInstance:
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: terminalVelocity
-      value: -25
+      value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: maxChargeJumpHeight
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2228,7 +2238,7 @@ PrefabInstance:
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: gravityMultiplierPostApex
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8461015670506846816, guid: 765147221b9d5804399e885852232e94,
         type: 3}

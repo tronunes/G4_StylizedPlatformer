@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         // DEBUG: this is only for testing the pausing feature.
         // Eventually this might need to be moved somewhere else
-        if (Input.GetKeyDown(KeyCode.Pause) || Input.GetKeyDown(KeyCode.P))
+        if (Input.GetButtonDown("Pause"))
         {
             // Toggle pause
             if (IsPaused()) { UnPause(); }
