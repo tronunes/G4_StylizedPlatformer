@@ -16,20 +16,17 @@ public class PlayerHealth : MonoBehaviour
 
 
 	private bool canTakeDamage = true;
+	private bool isCurrentlyDead = false;
 
 
 	private void Start()
 	{
-		StartCoroutine(BecomeInvulnerable());	// We can run the Coroutine when the character spawns
-												// (might need some testing if useful or abusable)
-
-		currentHealth = maxHealth;
-		healthbar.SetMaxHealth(maxHealth);
+		ResetHealth();
 	}
 
 	private void Update()
 	{
-		if(currentHealth <= 0)
+		if(!isCurrentlyDead && currentHealth <= 0)
 			KillPlayer();
 	}
 
@@ -64,7 +61,19 @@ public class PlayerHealth : MonoBehaviour
 
 	private void KillPlayer()
 	{
-		// Do something here when player dies
-		//Destroy(this.gameObject);
+		isCurrentlyDead = true;
+
+		//Reset the player to the most recent checkpoint
+		gameObject.GetComponent<Frog>().Die();
+	}
+
+	public void ResetHealth()
+	{
+		isCurrentlyDead = false;
+		StartCoroutine(BecomeInvulnerable());	// We can run the Coroutine when the character spawns
+												// (might need some testing if useful or abusable)
+
+		currentHealth = maxHealth;
+		healthbar.SetMaxHealth(maxHealth);
 	}
 }

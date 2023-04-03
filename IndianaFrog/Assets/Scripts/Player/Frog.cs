@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Frog : MonoBehaviour
 {
-    private int maxHP = 3;
-    private int currentHP;
-
     // Checkpoints and respawning
     private Checkpoint latestCheckpoint;
     private Vector3 startPosition;
@@ -16,41 +13,9 @@ public class Frog : MonoBehaviour
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
-        currentHP = maxHP;
     }
 
-    void Update()
-    {
-        // Die when fell out of the map
-        if (transform.position.y < -10f)
-        {
-            Die();
-        }
-    }
-
-    void RecoverHP()
-    {
-        currentHP++;
-
-        // Clamp HP to max
-        if (currentHP > maxHP)
-        {
-            currentHP = maxHP;
-        }
-    }
-
-    void TakeDamage()
-    {
-        currentHP--;
-
-        // Die when HP reaches zero
-        if (currentHP == 0)
-        {
-            Die();
-        }
-    }
-
-    void Die()
+    public void Die()
     {
         // Respawn
         transform.position = GetRespawnPosition();
@@ -102,12 +67,10 @@ public class Frog : MonoBehaviour
 
     void ResetPlayer()
     {
-        // This component
-        currentHP = maxHP;
-
         // Other components
         gameObject.GetComponent<PlayerMovement>().ResetPlayerMovement();
         gameObject.GetComponent<PlayerCameraController>().ResetPlayerCamera();
         gameObject.GetComponent<GrapplingTongueLauncher>().ResetTongueLauncher();
+        gameObject.GetComponent<PlayerHealth>().ResetHealth();
     }
 }
