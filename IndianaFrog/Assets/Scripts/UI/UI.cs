@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
+    [SerializeField]
+    private GameManager gameManager;
+
     //Menu Toggles
     bool cmenuMain = false;
     bool cmenuPause = false;
@@ -144,6 +147,7 @@ public class UI : MonoBehaviour
         if (menuPause.activeSelf)
         {
             menuPause.SetActive(false);
+            gameManager.UnPause();
             if (currentScene == "Lv0_MainMenu")
             {
                 menuMain.SetActive(true);
@@ -167,6 +171,7 @@ public class UI : MonoBehaviour
         Debug.Log("Exit or Quit Clicked");
         if (menuPause.activeSelf)
         {
+            gameManager.UnPause();
             SceneManager.LoadScene("Lv0_MainMenu");
         } else
         {
