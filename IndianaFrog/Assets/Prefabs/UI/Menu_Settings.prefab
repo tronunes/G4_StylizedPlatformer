@@ -1416,6 +1416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5031132679712042668}
   - component: {fileID: 5031132679712042667}
+  - component: {fileID: 5702817014729436185}
   m_Layer: 5
   m_Name: TMPSlider_Master
   m_TagString: Untagged
@@ -1494,10 +1495,34 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5702817014729436185}
+        m_TargetAssemblyTypeName: UISliderFuncs, Assembly-CSharp
+        m_MethodName: SetMasterVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5702817014729436185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031132679712042669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60425a4e23d6b4e45aec83e0bda1ea92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5031132679712586844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,7 +1919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5031132679954650830
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1913,9 +1938,9 @@ RectTransform:
   m_Father: {fileID: 5031132680627463222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -45}
   m_SizeDelta: {x: 290, y: 90}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5031132679954650827
@@ -2936,6 +2961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5031132680310841598}
   - component: {fileID: 5031132680310841597}
+  - component: {fileID: 3048365788538753256}
   m_Layer: 5
   m_Name: TMPSlider_Effects
   m_TagString: Untagged
@@ -3017,7 +3043,31 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3048365788538753256}
+        m_TargetAssemblyTypeName: UISliderFuncs, Assembly-CSharp
+        m_MethodName: SetFXVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3048365788538753256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031132680310841599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60425a4e23d6b4e45aec83e0bda1ea92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5031132680320307797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3035,7 +3085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5031132680320307796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3595,6 +3645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5031132680549297356}
   - component: {fileID: 5031132680549297355}
+  - component: {fileID: 5712877443917150864}
   m_Layer: 5
   m_Name: TMPSlider_Music
   m_TagString: Untagged
@@ -3676,7 +3727,31 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5712877443917150864}
+        m_TargetAssemblyTypeName: UISliderFuncs, Assembly-CSharp
+        m_MethodName: SetMusicVol
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5712877443917150864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5031132680549297357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60425a4e23d6b4e45aec83e0bda1ea92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5031132680594436118
 GameObject:
   m_ObjectHideFlags: 0

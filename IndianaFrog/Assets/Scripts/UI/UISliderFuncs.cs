@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GCQualitySlider : MonoBehaviour
+public class UISliderFuncs : MonoBehaviour
 {
     public void SetQuality(System.Single qualityIndex)
     {
@@ -21,6 +21,24 @@ public class GCQualitySlider : MonoBehaviour
                 Debug.Log("Quality set to: " + QualitySettings.names[2]);
                 break;
         }
+    }
+
+    public void SetMasterVol(System.Single value)
+    {
+        AudioListener.volume = value;
+        Debug.Log("Master Volume set to: " + value);
+    }
+
+    public void SetFXVol(System.Single value)
+    {
+        //needs to change some global multiplier
+        
+    }
+
+    public void SetMusicVol(System.Single value)
+    {
+        //needs to change some global multiplier 
+        
     }
 
 }
