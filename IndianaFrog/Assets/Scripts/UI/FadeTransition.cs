@@ -70,15 +70,23 @@ public class FadeTransition : MonoBehaviour
     // Transition from black to transparent
     public void UnFade()
     {
-        transitionTimer = transitionDuration;
-        doUnFade = true;
+        // Unfade only if currently fully faded
+        if (fadeImage.color.a == 1f)
+        {
+            transitionTimer = transitionDuration;
+            doUnFade = true;
+        }
     }
 
     // Transition from tranparent to black
     public void Fade()
     {
-        doFade = true;
-        transitionTimer = transitionDuration;
+        // Fade only if currently fully unfaded
+        if (fadeImage.color.a == 0f)
+        {
+            doFade = true;
+            transitionTimer = transitionDuration;
+        }
     }
 
     public void FadeAndUnFade()
