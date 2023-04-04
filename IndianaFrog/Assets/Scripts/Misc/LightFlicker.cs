@@ -6,13 +6,13 @@ using UnityEngine.Rendering.HighDefinition;
 public class LightFlicker : MonoBehaviour
 {
     private float originalLightIntensity;
-    [Range(0f, 1f)] public float dimmingPercentage;
-    public float flickerFrequency = 1;
+    [Tooltip("How much the light dims when flickering")] [Range(0f, 1f)] public float dimmingPercentage;
+    [Tooltip("How frequently the light flickers")] public float flickerFrequency = 1;
     private HDAdditionalLightData lightData;
     private Vector3 lightOriginalPosition;
-    public bool oscillateLightPosition = false; // Moves the lightsource transform position with Perlin noise
-    [Range(0f, 0.2f)] public float lightMovementRadius = 0.05f;
-    public bool useRandomOffset = true;
+    [Tooltip("Should the position of the lightsource also oscillate randomly")] public bool oscillateLightPosition = false;
+    [Tooltip("Lightsource position movement radius")] [Range(0f, 0.2f)] public float lightMovementRadius = 0.05f;
+    [Tooltip("I.e. randomize flickering start position")] public bool useRandomOffset = true;
     private float randomOffset;
 
 
