@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PlayerCheckpointHandler : MonoBehaviour
 {
@@ -32,10 +33,11 @@ public class PlayerCheckpointHandler : MonoBehaviour
         EnableOrDisablePlayerInput(false);
 
         // Create a callback to fade end event
-        fadeTransitionHandler.event_FadeFinished.AddListener(() => {
+        UnityAction callback = () => {
             fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
             SceneManager.LoadScene(levelName);
-        });
+        };
+        fadeTransitionHandler.event_FadeFinished.AddListener(() => callback.Invoke());
 
         // Start fading
         fadeTransitionHandler.Fade();
@@ -101,11 +103,12 @@ public class PlayerCheckpointHandler : MonoBehaviour
         ResetPlayer();
 
         // Create a callback to unfade end event
-        fadeTransitionHandler.event_UnfadeFinished.AddListener(() => 
+        UnityAction callback = () => 
         {
             EnableOrDisablePlayerInput(true);
             fadeTransitionHandler.event_UnfadeFinished.RemoveAllListeners();
-        });
+        };
+        fadeTransitionHandler.event_UnfadeFinished.AddListener(() => callback.Invoke());
 
         // Start unfading
         fadeTransitionHandler.UnFade();
