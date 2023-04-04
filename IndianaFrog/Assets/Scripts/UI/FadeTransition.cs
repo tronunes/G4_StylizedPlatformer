@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class FadeTransition : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class FadeTransition : MonoBehaviour
     public AnimationCurve transitionCurve;
     private bool doFade = false;
     private bool doUnFade = false;
+
+    [Header("Events")]
+    public UnityEvent event_FadeFinished = new UnityEvent();
+    public UnityEvent event_UnfadeFinished = new UnityEvent();
+
 
     void Start()
     {
@@ -52,19 +58,30 @@ public class FadeTransition : MonoBehaviour
             // Make sure image alpha is either 1 or 0 when timer has run out
             if (doFade)
             {
+                transitionTimer = 0f;
+                doUnFade = false;
+                doFade = false;
+
                 imageAlpha = 1f;
+                SetImageAlpha(imageAlpha);
+                event_FadeFinished.Invoke();
             }
             else if (doUnFade)
             {
-                imageAlpha = 0f;
-            }
+                transitionTimer = 0f;
+                doUnFade = false;
+                doFade = false;
 
-            transitionTimer = 0f;
-            doUnFade = false;
-            doFade = false;
+                imageAlpha = 0f;
+                SetImageAlpha(imageAlpha);
+                event_UnfadeFinished.Invoke();
+            }
         }
 
-        SetImageAlpha(imageAlpha);
+        if (doFade || doUnFade)
+        {
+            SetImageAlpha(imageAlpha);
+        }
     }
 
     // Transition from black to transparent

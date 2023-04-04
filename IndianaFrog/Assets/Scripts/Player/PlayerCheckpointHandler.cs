@@ -9,18 +9,20 @@ public class PlayerCheckpointHandler : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
 
+    [SerializeField] private FadeTransition fadeTransitionHandler;
+
     void Start()
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        fadeTransitionHandler.event_FadeFinished.AddListener(Respawn);
     }
 
     public void Die()
     {
         // Respawn
-        transform.position = GetRespawnPosition();
-        transform.rotation = GetRespawnRotation();
-        ResetPlayer();
+        fadeTransitionHandler.Fade();
     }
 
     public void SetNewCheckpoint(Checkpoint newCheckpoint)
@@ -72,5 +74,13 @@ public class PlayerCheckpointHandler : MonoBehaviour
         gameObject.GetComponent<PlayerCameraController>().ResetPlayerCamera();
         gameObject.GetComponent<GrapplingTongueLauncher>().ResetTongueLauncher();
         gameObject.GetComponent<PlayerHealth>().ResetHealth();
+    }
+
+    void Respawn()
+    {
+        transform.position = GetRespawnPosition();
+        transform.rotation = GetRespawnRotation();
+        ResetPlayer();
+        fadeTransitionHandler.UnFade();
     }
 }
