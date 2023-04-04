@@ -52,7 +52,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_ShadowVariant: 0
   m_ShadowPrecision: 0
   useOldInspector: 0
-  useVolumetric: 1
+  useVolumetric: 0
   featuresFoldout: 1
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
@@ -232,6 +232,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flickerPercentage: 0.7
   flickerFrequency: 3
+  moveLightSource: 1
+  lightMovementRadius: 0.05
 --- !u!1 &5048799252468099025
 GameObject:
   m_ObjectHideFlags: 0
