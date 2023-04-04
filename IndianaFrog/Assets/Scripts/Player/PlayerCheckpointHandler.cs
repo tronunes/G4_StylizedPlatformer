@@ -9,40 +9,33 @@ public class PlayerCheckpointHandler : MonoBehaviour
     private Checkpoint latestCheckpoint;
     private Vector3 startPosition;
     private Quaternion startRotation;
-
     [SerializeField] private FadeTransition fadeTransitionHandler;
-    private bool doRespawn = false;
-    private bool doLoadNextLevel = false;
     private string nextLevelName;
 
     void Start()
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
-
-        // Add a callback for fade finished event
-        fadeTransitionHandler.event_FadeFinished.AddListener(FadeCallback);
-        fadeTransitionHandler.event_UnfadeFinished.AddListener(UnFadeCallback);
     }
 
     public void Die()
     {
-        doRespawn = true;
-
         EnableOrDisablePlayerInput(false);
 
         // Start fading
+        fadeTransitionHandler.event_FadeFinished.AddListener(Respawn);
         fadeTransitionHandler.Fade();
     }
 
     public void FinishLevel(string levelName)
     {
-        doLoadNextLevel = true;
-        nextLevelName = levelName;
-
         EnableOrDisablePlayerInput(false);
 
         // Start fading
+        fadeTransitionHandler.event_FadeFinished.AddListener(() => {
+            fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
+            SceneManager.LoadScene(levelName);
+        });
         fadeTransitionHandler.Fade();
     }
 
@@ -98,32 +91,20 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
     void Respawn()
     {
+        // Remove the listener
+        fadeTransitionHandler.event_FadeFinished.RemoveListener(Respawn);
+
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
         ResetPlayer();
 
         // Start unfading
+        fadeTransitionHandler.event_UnfadeFinished.AddListener(() => 
+        {
+            EnableOrDisablePlayerInput(true);
+            fadeTransitionHandler.event_UnfadeFinished.RemoveAllListeners();
+        });
         fadeTransitionHandler.UnFade();
-    }
-
-    void FadeCallback()
-    {
-        if (doRespawn)
-        {
-            doRespawn = false;
-            Respawn();
-        }
-
-        if (doLoadNextLevel)
-        {
-            doLoadNextLevel = false;
-            SceneManager.LoadScene(nextLevelName);
-        }
-    }
-
-    void UnFadeCallback()
-    {
-        EnableOrDisablePlayerInput(true);
     }
 
     void EnableOrDisablePlayerInput(bool newEnabledState)
