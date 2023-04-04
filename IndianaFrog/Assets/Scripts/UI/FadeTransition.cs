@@ -32,35 +32,38 @@ public class FadeTransition : MonoBehaviour
             UnFade();
         }
 
+        float imageAlpha = fadeImage.color.a;
         if (doFade)
         {
-            // Lerp between fully black and fully transparent by the transitionTimer
-            fadeImage.color = new Color(
-                originalColor.r,
-                originalColor.g,
-                originalColor.b,
-                Mathf.Lerp(0f, 1f, transitionTimer / transitionDuration)
-            );
+            // Lerp to fully black
+            imageAlpha = Mathf.Lerp(0f, 1f, 1f - transitionTimer / transitionDuration);
         }
         else if (doUnFade)
         {
-            // Lerp between fully black and fully transparent by the transitionTimer
-            fadeImage.color = new Color(
-                originalColor.r,
-                originalColor.g,
-                originalColor.b,
-                Mathf.Lerp(0f, 1f, 1f - transitionTimer / transitionDuration)
-            );
+            // Lerp to fully transparent
+            imageAlpha = Mathf.Lerp(0f, 1f, transitionTimer / transitionDuration);
         }
 
         // Reduce transition timer
         transitionTimer -= Time.deltaTime;
         if (transitionTimer < 0f)
         {
+            // Make sure image alpha is either 1 or 0 when timer has run out
+            if (doFade)
+            {
+                imageAlpha = 1f;
+            }
+            else if (doUnFade)
+            {
+                imageAlpha = 0f;
+            }
+
             transitionTimer = 0f;
             doUnFade = false;
             doFade = false;
         }
+
+        SetImageAlpha(imageAlpha);
     }
 
     // Transition from black to transparent
@@ -80,5 +83,15 @@ public class FadeTransition : MonoBehaviour
     public void FadeAndUnFade()
     {
 
+    }
+
+    private void SetImageAlpha(float alpha)
+    {
+        fadeImage.color = new Color(
+            originalColor.r,
+            originalColor.g,
+            originalColor.b,
+            alpha
+        );
     }
 }
