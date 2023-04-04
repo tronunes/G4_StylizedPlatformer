@@ -22,11 +22,14 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
         // Add a callback for fade finished event
         fadeTransitionHandler.event_FadeFinished.AddListener(FadeCallback);
+        fadeTransitionHandler.event_UnfadeFinished.AddListener(UnFadeCallback);
     }
 
     public void Die()
     {
         doRespawn = true;
+
+        EnableOrDisablePlayerInput(false);
 
         // Start fading
         fadeTransitionHandler.Fade();
@@ -36,6 +39,8 @@ public class PlayerCheckpointHandler : MonoBehaviour
     {
         doLoadNextLevel = true;
         nextLevelName = levelName;
+
+        EnableOrDisablePlayerInput(false);
 
         // Start fading
         fadeTransitionHandler.Fade();
@@ -85,7 +90,6 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
     void ResetPlayer()
     {
-        // Other components
         gameObject.GetComponent<PlayerMovement>().ResetPlayerMovement();
         gameObject.GetComponent<PlayerCameraController>().ResetPlayerCamera();
         gameObject.GetComponent<GrapplingTongueLauncher>().ResetTongueLauncher();
@@ -115,5 +119,17 @@ public class PlayerCheckpointHandler : MonoBehaviour
             doLoadNextLevel = false;
             SceneManager.LoadScene(nextLevelName);
         }
+    }
+
+    void UnFadeCallback()
+    {
+        EnableOrDisablePlayerInput(true);
+    }
+
+    void EnableOrDisablePlayerInput(bool newEnabledState)
+    {
+        gameObject.GetComponent<PlayerMovement>().inputLocked = !newEnabledState;
+        gameObject.GetComponent<PlayerCameraController>().inputLocked = !newEnabledState;
+        gameObject.GetComponent<GrapplingTongueLauncher>().inputLocked = !newEnabledState;
     }
 }

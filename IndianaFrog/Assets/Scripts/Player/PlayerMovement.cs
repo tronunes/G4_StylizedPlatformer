@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private bool isZoomed = false;
     [SerializeField] private Animator animator;
+    public bool inputLocked = false;
 
     private Vector3 playerPreviousFramePosition;
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
@@ -43,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (inputLocked)
+        {
+            return;
+        }
+
         // Jump
         // The input needs to be caught outside of FixedUpdate
         if (Input.GetButtonDown("Jump"))
@@ -56,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (inputLocked)
+        {
+            return;
+        }
+
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
         if(jumpInputDecayTimer >= 0.2f)
         {

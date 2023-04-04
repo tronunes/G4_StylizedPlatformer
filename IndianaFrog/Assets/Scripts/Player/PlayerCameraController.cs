@@ -9,6 +9,7 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform cameraPivotHorizontal;
     [SerializeField] private Transform cameraPivotVertical;
     [SerializeField] private GameObject crosshair;
+    public bool inputLocked = false;
 
     [Header("Zooming")]
     [SerializeField] AnimationCurve zoomAnimationCurve;
@@ -37,7 +38,7 @@ public class PlayerCameraController : MonoBehaviour
     void Update()
     {
         // Don't control the Camera while paused
-        if (GameManager.instance.IsPaused())
+        if (GameManager.instance.IsPaused() || inputLocked)
         {
             return;
         }
