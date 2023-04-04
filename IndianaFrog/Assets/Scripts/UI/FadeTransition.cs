@@ -9,6 +9,7 @@ public class FadeTransition : MonoBehaviour
     private Color originalColor;
     private float transitionTimer = 0f; // The current position in the transition
     public float transitionDuration = 1.5f; // The total duration of the transition
+    public AnimationCurve transitionCurve;
     private bool doFade = false;
     private bool doUnFade = false;
 
@@ -36,12 +37,12 @@ public class FadeTransition : MonoBehaviour
         if (doFade)
         {
             // Lerp to fully black
-            imageAlpha = Mathf.Lerp(0f, 1f, 1f - transitionTimer / transitionDuration);
+            imageAlpha = transitionCurve.Evaluate(Mathf.Lerp(0f, 1f, 1f - transitionTimer / transitionDuration));
         }
         else if (doUnFade)
         {
             // Lerp to fully transparent
-            imageAlpha = Mathf.Lerp(0f, 1f, transitionTimer / transitionDuration);
+            imageAlpha = transitionCurve.Evaluate(Mathf.Lerp(0f, 1f, transitionTimer / transitionDuration));
         }
 
         // Reduce transition timer
