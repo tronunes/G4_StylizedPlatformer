@@ -230,10 +230,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66853b529587c454c9d61fb2db732d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flickerPercentage: 0.7
+  dimmingPercentage: 0.8
   flickerFrequency: 3
-  moveLightSource: 1
+  oscillateLightPosition: 1
   lightMovementRadius: 0.05
+  useRandomOffset: 1
 --- !u!1 &5048799252468099025
 GameObject:
   m_ObjectHideFlags: 0

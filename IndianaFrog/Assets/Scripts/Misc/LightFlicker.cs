@@ -6,12 +6,14 @@ using UnityEngine.Rendering.HighDefinition;
 public class LightFlicker : MonoBehaviour
 {
     private float originalLightIntensity;
-    [Range(0f, 1f)] public float flickerPercentage;
+    [Range(0f, 1f)] public float dimmingPercentage;
     public float flickerFrequency = 1;
     private HDAdditionalLightData lightData;
     private Vector3 lightOriginalPosition;
-    public bool moveLightSource = false; // Moves the lightsource transform position with Perlin noise
+    public bool oscillateLightPosition = false; // Moves the lightsource transform position with Perlin noise
     [Range(0f, 0.2f)] public float lightMovementRadius = 0.05f;
+    public bool useRandomOffset = true;
+    private float randomOffset;
 
 
     void Start()
@@ -20,25 +22,29 @@ public class LightFlicker : MonoBehaviour
         originalLightIntensity = lightData.intensity;
 
         lightOriginalPosition = transform.position;
+
+        // Create a random offset for the Perlin value
+        // to prevent multiple lights having the same pattern
+        randomOffset = useRandomOffset ? Random.Range(0f, 100f) : 0f;
     }
 
     void Update()
     {
         // Change the light intensity over time with Perlin noise
-        if (flickerPercentage > 0)
+        if (dimmingPercentage > 0)
         {
-            float dimmingValue = flickerPercentage * Mathf.PerlinNoise(Time.time * flickerFrequency, 0.0f);
+            float dimmingValue = dimmingPercentage * Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 0.0f + randomOffset);
             lightData.intensity = originalLightIntensity - originalLightIntensity * dimmingValue;
 
             // Change the lightsource position over time with Perlin noise
-            if (moveLightSource)
+            if (oscillateLightPosition)
             {
                 transform.position =
                     lightOriginalPosition +
                         (-Vector3.one + 2f * new Vector3(
-                            Mathf.PerlinNoise(Time.time * flickerFrequency, 10f),
-                            Mathf.PerlinNoise(Time.time * flickerFrequency, 20f),
-                            Mathf.PerlinNoise(Time.time * flickerFrequency, 30f))
+                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 10f + randomOffset),
+                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 20f + randomOffset),
+                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 30f + randomOffset))
                         ) * lightMovementRadius;
             }
         }
