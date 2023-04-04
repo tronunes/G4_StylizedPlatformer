@@ -31,11 +31,13 @@ public class PlayerCheckpointHandler : MonoBehaviour
     {
         EnableOrDisablePlayerInput(false);
 
-        // Start fading
+        // Create a callback to fade end event
         fadeTransitionHandler.event_FadeFinished.AddListener(() => {
             fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
             SceneManager.LoadScene(levelName);
         });
+
+        // Start fading
         fadeTransitionHandler.Fade();
     }
 
@@ -98,12 +100,14 @@ public class PlayerCheckpointHandler : MonoBehaviour
         transform.rotation = GetRespawnRotation();
         ResetPlayer();
 
-        // Start unfading
+        // Create a callback to unfade end event
         fadeTransitionHandler.event_UnfadeFinished.AddListener(() => 
         {
             EnableOrDisablePlayerInput(true);
             fadeTransitionHandler.event_UnfadeFinished.RemoveAllListeners();
         });
+
+        // Start unfading
         fadeTransitionHandler.UnFade();
     }
 
