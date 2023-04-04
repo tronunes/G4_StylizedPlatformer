@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCheckpointHandler : MonoBehaviour
 {
@@ -10,18 +11,32 @@ public class PlayerCheckpointHandler : MonoBehaviour
     private Quaternion startRotation;
 
     [SerializeField] private FadeTransition fadeTransitionHandler;
+    private bool doRespawn = false;
+    private bool doLoadNextLevel = false;
+    private string nextLevelName;
 
     void Start()
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
 
-        // Add a respawn callback for fade finished event
-        fadeTransitionHandler.event_FadeFinished.AddListener(Respawn);
+        // Add a callback for fade finished event
+        fadeTransitionHandler.event_FadeFinished.AddListener(FadeCallback);
     }
 
     public void Die()
     {
+        doRespawn = true;
+
+        // Start fading
+        fadeTransitionHandler.Fade();
+    }
+
+    public void FinishLevel(string levelName)
+    {
+        doLoadNextLevel = true;
+        nextLevelName = levelName;
+
         // Start fading
         fadeTransitionHandler.Fade();
     }
@@ -85,5 +100,20 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
         // Start unfading
         fadeTransitionHandler.UnFade();
+    }
+
+    void FadeCallback()
+    {
+        if (doRespawn)
+        {
+            doRespawn = false;
+            Respawn();
+        }
+
+        if (doLoadNextLevel)
+        {
+            doLoadNextLevel = false;
+            SceneManager.LoadScene(nextLevelName);
+        }
     }
 }

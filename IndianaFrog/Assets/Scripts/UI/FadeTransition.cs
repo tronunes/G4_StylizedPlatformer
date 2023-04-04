@@ -24,6 +24,9 @@ public class FadeTransition : MonoBehaviour
         fadeImage = gameObject.GetComponent<Image>();
         originalColor = fadeImage.color;
         transitionTimer = 0f;
+
+        // Start faded and immediately unfade
+        SetImageAlpha(1f);
         UnFade();
     }
 
