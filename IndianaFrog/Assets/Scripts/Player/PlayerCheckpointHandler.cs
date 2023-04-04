@@ -102,13 +102,8 @@ public class PlayerCheckpointHandler : MonoBehaviour
         transform.rotation = GetRespawnRotation();
         ResetPlayer();
 
-        // Create a callback to unfade end event
-        UnityAction callback = () => 
-        {
-            EnableOrDisablePlayerInput(true);
-            fadeTransitionHandler.event_UnfadeFinished.RemoveAllListeners();
-        };
-        fadeTransitionHandler.event_UnfadeFinished.AddListener(() => callback.Invoke());
+        // Enable input
+        EnableOrDisablePlayerInput(true);
 
         // Start unfading
         fadeTransitionHandler.UnFade();
