@@ -29,16 +29,6 @@ public class FadeTransition : MonoBehaviour
 
     void Update()
     {
-        // DEBUG: remove these when not needed anymore for debugging
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Fade();
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            UnFade();
-        }
-
         float imageAlpha = fadeImage.color.a;
         if (doFade)
         {
@@ -53,31 +43,38 @@ public class FadeTransition : MonoBehaviour
 
         // Reduce transition timer
         transitionTimer -= Time.deltaTime;
+
+        // Case: fade / unfade complete
         if (transitionTimer < 0f)
         {
             // Make sure image alpha is either 1 or 0 when timer has run out
             if (doFade)
             {
-                transitionTimer = 0f;
-                doUnFade = false;
-                doFade = false;
+                // Reset fading values before invoking the event
+                ResetFadingValues();
 
+                // Update the fading image transparency
                 imageAlpha = 1f;
                 SetImageAlpha(imageAlpha);
+
+                // Invoke event
                 event_FadeFinished.Invoke();
             }
             else if (doUnFade)
             {
-                transitionTimer = 0f;
-                doUnFade = false;
-                doFade = false;
+                // Reset fading values before invoking the event
+                ResetFadingValues();
 
+                // Update the fading image transparency
                 imageAlpha = 0f;
                 SetImageAlpha(imageAlpha);
+
+                // Invoke event
                 event_UnfadeFinished.Invoke();
             }
         }
 
+        // Update the fading image transparency when either fading or unfading
         if (doFade || doUnFade)
         {
             SetImageAlpha(imageAlpha);
@@ -106,9 +103,11 @@ public class FadeTransition : MonoBehaviour
         }
     }
 
-    public void FadeAndUnFade()
+    void ResetFadingValues()
     {
-
+        transitionTimer = 0f;
+        doUnFade = false;
+        doFade = false;
     }
 
     private void SetImageAlpha(float alpha)

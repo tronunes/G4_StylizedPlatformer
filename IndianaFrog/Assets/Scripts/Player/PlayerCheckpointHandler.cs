@@ -16,12 +16,13 @@ public class PlayerCheckpointHandler : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
 
+        // Add a respawn callback for fade finished event
         fadeTransitionHandler.event_FadeFinished.AddListener(Respawn);
     }
 
     public void Die()
     {
-        // Respawn
+        // Start fading
         fadeTransitionHandler.Fade();
     }
 
@@ -81,6 +82,8 @@ public class PlayerCheckpointHandler : MonoBehaviour
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
         ResetPlayer();
+
+        // Start unfading
         fadeTransitionHandler.UnFade();
     }
 }
