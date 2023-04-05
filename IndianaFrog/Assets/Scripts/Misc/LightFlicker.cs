@@ -14,12 +14,16 @@ public class LightFlicker : MonoBehaviour
     [Tooltip("Lightsource position movement radius")] [Range(0f, 0.2f)] public float lightMovementRadius = 0.05f;
     [Tooltip("I.e. randomize flickering start position")] public bool useRandomOffset = true;
     private float randomOffset;
+    [Tooltip("How long it takes the light to \"warm up\"")] public float buildUpTime = 1f;
+    private float buildUpTimeLeft;
 
 
     void Start()
     {
         lightData = gameObject.GetComponent<HDAdditionalLightData>();;
         originalLightIntensity = lightData.intensity;
+        lightData.intensity = 0f;
+        buildUpTimeLeft = buildUpTime;
 
         lightOriginalPosition = transform.position;
 
@@ -30,24 +34,31 @@ public class LightFlicker : MonoBehaviour
 
     void Update()
     {
-        // Change the light intensity over time with Perlin noise
-        if (dimmingPercentage > 0)
+        // Case: Build-up
+        if (buildUpTimeLeft > 0f)
         {
+            lightData.intensity = originalLightIntensity * (1f - buildUpTimeLeft / buildUpTime);
+            buildUpTimeLeft -= Time.deltaTime;
+        }
+        // Case: normal light flickering
+        else
+        {
+            // Change the light intensity over time with Perlin noise
             float dimmingValue = dimmingPercentage * Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 0.0f + randomOffset);
             lightData.intensity = originalLightIntensity - originalLightIntensity * dimmingValue;
+        }
 
-            // Change the lightsource position over time with Perlin noise
-            if (oscillateLightPosition)
-            {
-                // The "10f", "20f" and "30f" are arbitrary. They are supposed to be different to produce different Perlin values.
-                transform.position =
-                    lightOriginalPosition +
-                        (-Vector3.one + 2f * new Vector3(
-                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 10f + randomOffset),
-                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 20f + randomOffset),
-                            Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 30f + randomOffset))
-                        ) * lightMovementRadius;
-            }
+        // Change the lightsource position over time with Perlin noise
+        if (oscillateLightPosition)
+        {
+            // The "10f", "20f" and "30f" are arbitrary. They are supposed to be different to produce different Perlin values.
+            transform.position =
+                lightOriginalPosition +
+                    (-Vector3.one + 2f * new Vector3(
+                        Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 10f + randomOffset),
+                        Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 20f + randomOffset),
+                        Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 30f + randomOffset))
+                    ) * lightMovementRadius;
         }
     }
 }

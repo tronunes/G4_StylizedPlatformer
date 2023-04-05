@@ -195,6 +195,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelFinish
       objectReference: {fileID: 0}
+    - target: {fileID: 7214748571386150299, guid: d6620c9c092e010438310d35a2a88e06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6620c9c092e010438310d35a2a88e06, type: 3}
 --- !u!1001 &95218030
@@ -708,6 +713,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Checkpoint (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026671138214972413, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2600002006472404812, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}
@@ -1775,6 +1785,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2026671138214972413, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2600002006472404812, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}
       propertyPath: checkpointIndex
@@ -2209,6 +2224,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 2026671138214972413, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600002006472404812, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: checkpointIndex
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a27283d6f307e1b43843b32a3a943a3e, type: 3}
 --- !u!1001 &1797762564
@@ -2433,6 +2458,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Checkpoint (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026671138214972413, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2600002006472404812, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}

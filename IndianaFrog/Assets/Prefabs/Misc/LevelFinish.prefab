@@ -661,14 +661,14 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 23873.24
-  m_Range: 10
+  m_Color: {r: 1, g: 0, b: 0.90043736, a: 1}
+  m_Intensity: 795774.7
+  m_Range: 30
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 300000
+  m_Intensity: 10000000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_ShadowVariant: 0
   m_ShadowPrecision: 0
   useOldInspector: 0
-  useVolumetric: 1
+  useVolumetric: 0
   featuresFoldout: 1
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
@@ -846,8 +846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66853b529587c454c9d61fb2db732d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flickerPercentage: 0.938
+  dimmingPercentage: 0.5
   flickerFrequency: 0.5
+  oscillateLightPosition: 0
+  lightMovementRadius: 0.05
+  useRandomOffset: 1
+  buildUpTime: 0
 --- !u!1 &5388781643616683492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5901,6 +5905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797361bf5bda7bb4991aaaeae2747b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScene: 
 --- !u!65 &4268721254726934064
 BoxCollider:
   m_ObjectHideFlags: 0
