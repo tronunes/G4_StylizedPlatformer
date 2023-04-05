@@ -36,6 +36,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     void Update()
     {
+        // Prevent the Frog receiving input from the Player
         if (inputLocked)
         {
             return;

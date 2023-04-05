@@ -37,7 +37,7 @@ public class PlayerCameraController : MonoBehaviour
 
     void Update()
     {
-        // Don't control the Camera while paused
+        // Don't control the Camera while paused or input locked
         if (GameManager.instance.IsPaused() || inputLocked)
         {
             return;
