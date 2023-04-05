@@ -5,6 +5,7 @@ using UnityEngine;
 public class KillProjectile : MonoBehaviour
 {
 	public float projectileLifeTime = 2f;
+	public float projectileDestroyDelayTime = 0.1f;
 
 
 	private void Start()
@@ -20,7 +21,8 @@ public class KillProjectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Player"))
-			Destroy(this.gameObject);
+		// needs a small delay after contact to blend in better with explosion vfx
+		Destroy(this.gameObject, projectileDestroyDelayTime);
 	}
+
 }
