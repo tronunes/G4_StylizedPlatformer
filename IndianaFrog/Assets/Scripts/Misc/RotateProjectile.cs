@@ -12,6 +12,7 @@ public class RotateProjectile : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody>();
 	}
+
 	private void Update()
 	{
 		// simply align the projectile's rotation with trajectory
