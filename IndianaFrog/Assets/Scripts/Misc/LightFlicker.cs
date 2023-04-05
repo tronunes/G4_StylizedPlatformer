@@ -12,7 +12,7 @@ public class LightFlicker : MonoBehaviour
     private Vector3 lightOriginalPosition;
     [Tooltip("Should the position of the lightsource also oscillate randomly")] public bool oscillateLightPosition = false;
     [Tooltip("Lightsource position movement radius")] [Range(0f, 0.2f)] public float lightMovementRadius = 0.05f;
-    [Tooltip("I.e. randomize flickering start position")] public bool useRandomOffset = true;
+    [Tooltip("Prevents multiple lights to flicker in sync")] public bool useRandomOffset = true;
     private float randomOffset;
     [Tooltip("How long it takes the light to \"warm up\"")] public float buildUpTime = 1f;
     private float buildUpTimeLeft;
@@ -44,7 +44,7 @@ public class LightFlicker : MonoBehaviour
         else
         {
             // Change the light intensity over time with Perlin noise
-            float dimmingValue = dimmingPercentage * Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, 0.0f + randomOffset);
+            float dimmingValue = dimmingPercentage * Mathf.PerlinNoise(Time.time * flickerFrequency + randomOffset, randomOffset);
             lightData.intensity = originalLightIntensity - originalLightIntensity * dimmingValue;
         }
 

@@ -10,13 +10,13 @@ public class FadeTransition : MonoBehaviour
     private Color originalColor;
     private float transitionTimer = 0f; // The current position in the transition
     public float transitionDuration = 1.5f; // The total duration of the transition
-    public AnimationCurve transitionCurve;
-    private bool doFade = false;
-    private bool doUnFade = false;
+    public AnimationCurve transitionCurve; // A curve to make fading/unfading visually better and smoother
+    private bool doFade = false; // When true, fading to black
+    private bool doUnFade = false; // When true, unfading to transparent
 
     [Header("Events")]
-    public UnityEvent event_FadeFinished = new UnityEvent();
-    public UnityEvent event_UnfadeFinished = new UnityEvent();
+    public UnityEvent event_FadeFinished = new UnityEvent(); // Triggers when fully faded
+    public UnityEvent event_UnfadeFinished = new UnityEvent(); // Triggers when fully unfaded
 
 
     void Start()
@@ -90,8 +90,8 @@ public class FadeTransition : MonoBehaviour
         // Unfade only if currently fully faded
         if (fadeImage.color.a == 1f)
         {
-            transitionTimer = transitionDuration;
             doUnFade = true;
+            transitionTimer = transitionDuration;
         }
     }
 

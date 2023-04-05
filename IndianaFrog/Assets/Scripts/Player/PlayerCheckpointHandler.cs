@@ -11,7 +11,6 @@ public class PlayerCheckpointHandler : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
     [SerializeField] private FadeTransition fadeTransitionHandler;
-    private string nextLevelName;
 
     void Start()
     {
@@ -21,20 +20,24 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
     public void Die()
     {
+        // Disable input
         EnableOrDisablePlayerInput(false);
 
-        // Start fading
+        // Start fading (and call Respawn when fully faded)
         fadeTransitionHandler.event_FadeFinished.AddListener(Respawn);
         fadeTransitionHandler.Fade();
     }
 
     public void FinishLevel(string levelName)
     {
+        // Disable input
         EnableOrDisablePlayerInput(false);
 
-        // Create a callback to fade end event
+        // Create a callback to the "fade finished" event
         UnityAction callback = () => {
             fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
+
+            // Load a new level when fully faded
             SceneManager.LoadScene(levelName);
         };
         fadeTransitionHandler.event_FadeFinished.AddListener(() => callback.Invoke());
@@ -98,6 +101,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
         // Remove the listener
         fadeTransitionHandler.event_FadeFinished.RemoveListener(Respawn);
 
+        // Respawn the Player
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
         ResetPlayer();
