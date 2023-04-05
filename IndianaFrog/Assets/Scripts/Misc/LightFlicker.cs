@@ -39,6 +39,7 @@ public class LightFlicker : MonoBehaviour
             // Change the lightsource position over time with Perlin noise
             if (oscillateLightPosition)
             {
+                // The "10f", "20f" and "30f" are arbitrary. They are supposed to be different to produce different Perlin values.
                 transform.position =
                     lightOriginalPosition +
                         (-Vector3.one + 2f * new Vector3(
