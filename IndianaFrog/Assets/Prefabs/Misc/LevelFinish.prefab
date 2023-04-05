@@ -846,8 +846,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66853b529587c454c9d61fb2db732d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dimmingPercentage: 0.5
-  flickerFrequency: 0.5
+  dimmingPercentage: 0.8
+  flickerFrequency: 1
   oscillateLightPosition: 0
   lightMovementRadius: 0.05
   useRandomOffset: 1

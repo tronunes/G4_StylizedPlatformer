@@ -71,6 +71,10 @@ public class PlayerMovement : MonoBehaviour
         {
             inputVerticalAxisValue = 0f;
             inputHorizontalAxisValue = 0f;
+
+            // Cancel jumping
+            chargeJumpTimer = 0f;
+            jumpInputDecayTimer = 0f;
         }
 
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
