@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LinearPlatform : MonoBehaviour
 {
-    [SerializeField] private Transform platform; // The actual moving mesh
+    [SerializeField] private Transform platform; // The moving part
+    [SerializeField] private Collider meshCollider; // The platform's collider
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
     [SerializeField] private float travelTime = 3f; // Between two waypoints
@@ -74,5 +75,32 @@ public class LinearPlatform : MonoBehaviour
         }
 
         return previousIndex;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0f, 0f, 1f, 0.6f); // Transparent blue
+        int index = 0;
+
+        // Draw all the waypoints
+        // The first one has a different draw shape to avoid z-fighting
+        foreach(Transform waypoint in waypoints)
+        {
+            if (index != 0)
+            {
+                Gizmos.DrawCube(
+                    waypoint.position,
+                    meshCollider.bounds.size
+                );
+            }
+            else
+            {
+                Gizmos.DrawSphere(
+                    waypoint.position,
+                    1f
+                );
+            }
+            index++;
+        }
     }
 }

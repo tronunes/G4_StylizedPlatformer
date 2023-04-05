@@ -20,17 +20,7 @@ public class PlayerHealth : MonoBehaviour
 
 	private void Start()
 	{
-		StartCoroutine(BecomeInvulnerable());	// We can run the Coroutine when the character spawns
-												// (might need some testing if useful or abusable)
-
-		currentHealth = maxHealth;
-		healthbar.SetMaxHealth(maxHealth);
-	}
-
-	private void Update()
-	{
-		if(currentHealth <= 0)
-			KillPlayer();
+		ResetHealth();
 	}
 
 	public void AddHealth(int healthToAdd)
@@ -49,9 +39,16 @@ public class PlayerHealth : MonoBehaviour
 			currentHealth -= healthToSubtract;
 			healthbar.SetHealth(currentHealth);
 
-			StartCoroutine(BecomeInvulnerable());
-			//print(healthToSubtract + " damage taken.");
-		}		
+			if (currentHealth <= 0)
+			{
+				KillPlayer();
+			}
+			else
+			{
+				StartCoroutine(BecomeInvulnerable());
+				//print(healthToSubtract + " damage taken.");
+			}
+		}
 	}
 
 	private IEnumerator BecomeInvulnerable()
@@ -64,7 +61,19 @@ public class PlayerHealth : MonoBehaviour
 
 	private void KillPlayer()
 	{
-		// Do something here when player dies
-		//Destroy(this.gameObject);
+		// Prevent spamming death
+		canTakeDamage = false;
+
+		// Reset the player to the most recent checkpoint
+		gameObject.GetComponent<PlayerCheckpointHandler>().Die();
+	}
+
+	public void ResetHealth()
+	{
+		StartCoroutine(BecomeInvulnerable());	// We can run the Coroutine when the character spawns
+												// (might need some testing if useful or abusable)
+
+		currentHealth = maxHealth;
+		healthbar.SetMaxHealth(maxHealth);
 	}
 }

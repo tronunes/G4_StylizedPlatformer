@@ -5,18 +5,18 @@ using UnityEngine;
 public class RotateProjectile : MonoBehaviour
 {
 	private Quaternion r;
-	private Rigidbody rigidbody;
+	private Rigidbody projectileRigidbody;
 
 
 	private void Start()
 	{
-		rigidbody = GetComponent<Rigidbody>();
+		projectileRigidbody = GetComponent<Rigidbody>();
 	}
 
 	private void Update()
 	{
 		// simply align the projectile's rotation with trajectory
-		r = Quaternion.LookRotation(rigidbody.velocity);
+		r = Quaternion.LookRotation(projectileRigidbody.velocity);
 		transform.rotation = r;
 	}
 }
