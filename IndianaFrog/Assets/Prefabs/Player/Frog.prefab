@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 5575981486277436156}
   - component: {fileID: 1799006752889930577}
   - component: {fileID: 5769859545461286336}
+  - component: {fileID: 4379615891639382290}
   m_Layer: 6
   m_Name: Frog
   m_TagString: Player
@@ -171,6 +172,7 @@ MonoBehaviour:
   frogMesh: {fileID: 1880772900031758979}
   cameraLookTransform: {fileID: 6262107846742018078}
   animator: {fileID: 2131154259457372300}
+  inputLocked: 0
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
   gravity: -10
@@ -196,6 +198,7 @@ MonoBehaviour:
   cameraPivotHorizontal: {fileID: 6262107846742018078}
   cameraPivotVertical: {fileID: 6500143702850215494}
   crosshair: {fileID: 6724434250387547677}
+  inputLocked: 0
   zoomAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -253,6 +256,7 @@ MonoBehaviour:
   tongueMid: {fileID: 7928620274742984346}
   tongueEndPrefab: {fileID: 5486396794392725225, guid: d0ce5d24e73560a409bf3b91c2eaa800,
     type: 3}
+  inputLocked: 0
 --- !u!114 &5769859545461286336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +273,18 @@ MonoBehaviour:
   currentHealth: 0
   invulnerabilityTime: 1
   healthbar: {fileID: 9058371691549743346}
+--- !u!114 &4379615891639382290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723754090840151393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee11abc5266dfc468cefeb828594ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1698277716000211498
 GameObject:
   m_ObjectHideFlags: 0
