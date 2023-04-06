@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // SlidingFriction multiplied by ten to keep the friction number small (just looks nicer)
+        slidingFriction *= 10;
+
         characterController = gameObject.GetComponent<CharacterController>();
         playerPreviousFramePosition = transform.position;
 
@@ -50,8 +53,8 @@ public class PlayerMovement : MonoBehaviour
         chargeJumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxChargeJumpHeight);
         jumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxJumpHeight);
 
-        // Calculate slide start velocity, slidingFriction multiplied by ten to keep the friction number small (just looks nicer)
-        slideStartVelocity = Mathf.Sqrt(-2.0f * (-slidingFriction * 10) * slidingLength);
+        // Calculate slide start velocity
+        slideStartVelocity = Mathf.Sqrt(-2.0f * -slidingFriction * slidingLength);
         slidingCooldown = 1f;
     }
 
@@ -111,15 +114,13 @@ public class PlayerMovement : MonoBehaviour
         {
             slidingState = true;
             slidingVelocity = slideStartVelocity;
-            characterController.height = 0.7f;
-            characterController.center = Vector3.up * (characterController.height / 2f);
+            changeCharacterHeight(0.7f);
         }
         else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
             slidingState = false;
             slidingCooldown = 0.1f;
-            characterController.height = 1.5f;
-            characterController.center = Vector3.up * (characterController.height / 2f);
+            changeCharacterHeight(1.5f);
         }
 
         // Progress cooldown if grounded
@@ -133,25 +134,26 @@ public class PlayerMovement : MonoBehaviour
         {
             AddExternalVelocity(frogMesh.forward * slidingVelocity * Time.fixedDeltaTime);
             
-            slidingVelocity -= (slidingFriction * 10) * Time.fixedDeltaTime;
+            slidingVelocity -= slidingFriction * Time.fixedDeltaTime;
         }
-        else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f) // Handle sliding in the air
+        // Handle sliding in the air, end slide at velocity 5 instead of 0, in order to stop an abrupt pause in the air after a slide reaches its end
+        else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f) 
         {
             verticalVelocity = verticalVelocity > 0f ? 0f : verticalVelocity + gravity * Time.fixedDeltaTime;
 
             AddExternalVelocity((frogMesh.forward * slidingVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
 
-            slidingVelocity -= (slidingFriction * 10) * Time.fixedDeltaTime;
+            slidingVelocity -= slidingFriction * Time.fixedDeltaTime;
         }
-        else // When not sliding / After a slide is done
+        // When not sliding / After a slide is done
+        else
         {
             slidingVelocity = 0f;
             slidingState = false;
             slidingInput = false;
             if (characterController.height == 0.7f) // Make sure that the character's height is right when not sliding
             {
-                characterController.height = 1.5f;
-                characterController.center = Vector3.up * (characterController.height / 2f);
+                changeCharacterHeight(1.5f);
             }
             
         }
@@ -188,15 +190,14 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-
+        // If the player has pressed down and released the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
         if (!chargingJump && chargeJumpTimer > 0 && isGrounded && slidingState)
         {
             externalVelocity = Vector3.zero;
             slidingVelocity = 0f;
             slidingState = false;
             slidingInput = false;
-            characterController.height = 1.5f;
-            characterController.center = Vector3.up * (characterController.height / 2f);
+            changeCharacterHeight(1.5f);
         }
 
             // Case: external velocity given -> don't calculate velocity from movement or gravity
@@ -350,5 +351,11 @@ public class PlayerMovement : MonoBehaviour
         jumpInputDecayTimer = 0f;
 
         frogMesh.localRotation = Quaternion.identity;
+    }
+
+    private void changeCharacterHeight(float newHeight)
+    {
+        characterController.height = newHeight;
+        characterController.center = Vector3.up * (characterController.height / 2f);
     }
 }
