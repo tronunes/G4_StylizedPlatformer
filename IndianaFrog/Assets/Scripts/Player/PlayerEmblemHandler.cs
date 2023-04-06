@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmblemHandler : MonoBehaviour
+public class PlayerEmblemHandler : MonoBehaviour
 {
     private int emblemsCollected = 0;
     public int requiredEmblemCount = 0;
