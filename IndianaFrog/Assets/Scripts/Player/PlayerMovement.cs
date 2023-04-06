@@ -8,23 +8,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Technical")]
     [SerializeField] private Transform frogMesh;
     [SerializeField] private Transform cameraLookTransform;
-    private CharacterController characterController;
-    private bool isZoomed = false;
     [SerializeField] private Animator animator;
-    public bool inputLocked = false;
-
-    private Vector3 playerPreviousFramePosition;
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
     [SerializeField] private bool isGrounded;
-    private bool chargingJump = false;
-
-    private bool slidingInput;
-    private bool slidingState;
-    private float slidingVelocity;
-    private float slidingCooldown;
-
-    private Vector3 externalVelocity = Vector3.zero;
+    public bool inputLocked = false;
     [SerializeField] private float gravity = -10f;
+
+    private CharacterController characterController;
+    private bool isZoomed = false;
+    private Vector3 playerPreviousFramePosition;
+    private bool chargingJump = false;
+    private Vector3 externalVelocity = Vector3.zero;
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
@@ -32,11 +26,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxChargeJumpHeight = 1f;
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float terminalVelocity = -5f; // Has to be a negative value
-    [SerializeField] private float chargeJumpTimer = 0f;
+    [SerializeField] private float slidingFriction; // Higher number means the slide is faster
+    [SerializeField] private float slidingLength; // How many units the slide moves the character forward
+
+    private float chargeJumpTimer = 0f;
     private float jumpInputDecayTimer = 0f;
     private float verticalVelocity;
     private float jumpVelocity;
     private float chargeJumpVelocity;
+
+    private bool slidingInput;
+    private bool slidingState;
+    private float slideStartVelocity;
+    private float slidingVelocity;
+    private float slidingCooldown;
 
     void Start()
     {
@@ -46,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
         // Calculate jump velocity for fixed jump height, first for charged jump, then uncharged
         chargeJumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxChargeJumpHeight);
         jumpVelocity = Mathf.Sqrt(-2.0f * gravity * maxJumpHeight);
+
+        // Calculate slide start velocity, slidingFriction multiplied by ten to keep the friction number small (just looks nicer)
+        slideStartVelocity = Mathf.Sqrt(-2.0f * (-slidingFriction * 10) * slidingLength);
+        slidingCooldown = 1f;
     }
 
     void Update()
@@ -67,11 +74,12 @@ public class PlayerMovement : MonoBehaviour
             chargingJump = false;
         }
 
-        if (Input.GetButtonDown("Fire3"))
+        // Slide
+        if (Input.GetButtonDown("Slide"))
         {
             slidingInput = true;
         }
-        else if (Input.GetButtonUp("Fire3"))
+        else if (Input.GetButtonUp("Slide"))
         {
             slidingInput = false;
         }
@@ -98,15 +106,15 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
-        // TODO sliding
-        if (slidingInput && !slidingState)
+        // Set the character's slidingState to true, and set its height and velocity
+        if (slidingInput && !slidingState && externalVelocity == Vector3.zero)
         {
             slidingState = true;
-            slidingVelocity = 20f;
+            slidingVelocity = slideStartVelocity;
             characterController.center = Vector3.down * -0.35f;
             characterController.height = 0.7f;
         }
-        else if (!slidingInput && slidingState)
+        else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
             slidingState = false;
             slidingCooldown = 0.1f;
@@ -114,31 +122,33 @@ public class PlayerMovement : MonoBehaviour
             characterController.height = 1.5f;
         }
 
+        // Progress cooldown if grounded
         if (!slidingState && slidingCooldown > 0f && isGrounded)
         {
             slidingCooldown -= Time.fixedDeltaTime;
         }
 
+        // Handle sliding on the ground
         if (isGrounded && slidingState && slidingVelocity >= 0f && slidingCooldown <= 0f)
         {
             AddExternalVelocity(frogMesh.forward * slidingVelocity * Time.fixedDeltaTime);
             
-            slidingVelocity -= 0.8f;
+            slidingVelocity -= (slidingFriction * 10) * Time.fixedDeltaTime;
         }
-        else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f)
+        else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f) // Handle sliding in the air
         {
             verticalVelocity = verticalVelocity > 0f ? 0f : verticalVelocity + gravity * Time.fixedDeltaTime;
 
             AddExternalVelocity((frogMesh.forward * slidingVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
 
-            slidingVelocity -= 0.8f;
+            slidingVelocity -= (slidingFriction * 10) * Time.fixedDeltaTime;
         }
-        else
+        else // When not sliding / After a slide is done
         {
             slidingVelocity = 0f;
             slidingState = false;
             slidingInput = false;
-            if (characterController.height == 0.7f)
+            if (characterController.height == 0.7f) // Make sure that the character's height is right when not sliding
             {
                 characterController.center = Vector3.down * -0.75f;
                 characterController.height = 1.5f;
