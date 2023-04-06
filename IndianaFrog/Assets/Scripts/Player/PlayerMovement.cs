@@ -17,6 +17,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
     [SerializeField] private bool isGrounded;
     private bool chargingJump = false;
+
+    private bool slidingInput;
+    private bool slidingState;
+    private float slidingVelocity;
+    private float slidingCooldown;
+
     private Vector3 externalVelocity = Vector3.zero;
     [SerializeField] private float gravity = -10f;
 
@@ -47,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (inputLocked)
         {
             chargingJump = false;
+            slidingInput = false;
             return;
         }
 
@@ -58,6 +65,15 @@ public class PlayerMovement : MonoBehaviour
         } else if (Input.GetButtonUp("Jump"))
         {
             chargingJump = false;
+        }
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            slidingInput = true;
+        }
+        else if (Input.GetButtonUp("Fire3"))
+        {
+            slidingInput = false;
         }
     }
 
@@ -75,10 +91,63 @@ public class PlayerMovement : MonoBehaviour
             // Cancel jumping
             chargeJumpTimer = 0f;
             jumpInputDecayTimer = 0f;
+
+            // Cancel sliding
+            slidingVelocity = 0f;
+            slidingState = false;
+            slidingInput = false;
+        }
+
+        // TODO sliding
+        if (slidingInput && !slidingState)
+        {
+            slidingState = true;
+            slidingVelocity = 20f;
+            characterController.center = Vector3.down * -0.35f;
+            characterController.height = 0.7f;
+        }
+        else if (!slidingInput && slidingState)
+        {
+            slidingState = false;
+            slidingCooldown = 0.1f;
+            characterController.center = Vector3.down * -0.75f;
+            characterController.height = 1.5f;
+        }
+
+        if (!slidingState && slidingCooldown > 0f && isGrounded)
+        {
+            slidingCooldown -= Time.fixedDeltaTime;
+        }
+
+        if (isGrounded && slidingState && slidingVelocity >= 0f && slidingCooldown <= 0f)
+        {
+            AddExternalVelocity(frogMesh.forward * slidingVelocity * Time.fixedDeltaTime);
+            
+            slidingVelocity -= 0.8f;
+        }
+        else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f)
+        {
+            verticalVelocity = verticalVelocity > 0f ? 0f : verticalVelocity + gravity * Time.fixedDeltaTime;
+
+            AddExternalVelocity((frogMesh.forward * slidingVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
+
+            slidingVelocity -= 0.8f;
+        }
+        else
+        {
+            slidingVelocity = 0f;
+            slidingState = false;
+            slidingInput = false;
+            if (characterController.height == 0.7f)
+            {
+                characterController.center = Vector3.down * -0.75f;
+                characterController.height = 1.5f;
+            }
+            
         }
 
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
-        if(jumpInputDecayTimer >= 0.2f)
+        if (jumpInputDecayTimer >= 0.2f)
         {
             chargeJumpTimer = 0f;
             jumpInputDecayTimer = 0f;
@@ -109,8 +178,19 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
 
-        // Case: external velocity given -> don't calculate velocity from movement or gravity
-        if (externalVelocity != Vector3.zero)
+
+        if (!chargingJump && chargeJumpTimer > 0 && isGrounded && slidingState)
+        {
+            externalVelocity = Vector3.zero;
+            slidingVelocity = 0f;
+            slidingState = false;
+            slidingInput = false;
+            characterController.center = Vector3.down * -0.75f;
+            characterController.height = 1.5f;
+        }
+
+            // Case: external velocity given -> don't calculate velocity from movement or gravity
+            if (externalVelocity != Vector3.zero)
         {
             movementVector = externalVelocity * Time.fixedDeltaTime;
 
