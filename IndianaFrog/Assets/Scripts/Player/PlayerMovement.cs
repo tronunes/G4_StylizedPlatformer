@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController characterController;
     private bool isZoomed = false;
     [SerializeField] private Animator animator;
+    public bool inputLocked = false;
 
     private Vector3 playerPreviousFramePosition;
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
@@ -43,6 +44,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (inputLocked)
+        {
+            chargingJump = false;
+            return;
+        }
+
         // Jump
         // The input needs to be caught outside of FixedUpdate
         if (Input.GetButtonDown("Jump"))
@@ -56,6 +63,20 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        float inputVerticalAxisValue = Input.GetAxis("Vertical");
+        float inputHorizontalAxisValue = Input.GetAxis("Horizontal");
+
+        // Prevent the Frog receiving input from the Player
+        if (inputLocked)
+        {
+            inputVerticalAxisValue = 0f;
+            inputHorizontalAxisValue = 0f;
+
+            // Cancel jumping
+            chargeJumpTimer = 0f;
+            jumpInputDecayTimer = 0f;
+        }
+
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
         if(jumpInputDecayTimer >= 0.2f)
         {
@@ -135,10 +156,10 @@ public class PlayerMovement : MonoBehaviour
             Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.fixedDeltaTime;
 
             // Forward / backward input
-            movementVectorForward = Input.GetAxis("Vertical") * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
+            movementVectorForward = inputVerticalAxisValue * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
 
             // Right / left input
-            movementVectorRight = Input.GetAxis("Horizontal") * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
+            movementVectorRight = inputHorizontalAxisValue * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
 
             // Construct the movementVector from inputs
             movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
@@ -223,5 +244,21 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         return velocity;
+    }
+
+    public void ResetPlayerMovement()
+    {
+        ClearParent();
+
+        playerPreviousFramePosition = transform.position;
+        playerVelocity = Vector3.zero;
+        externalVelocity = Vector3.zero;
+        isGrounded = false;
+
+        chargingJump = false;
+        chargeJumpTimer = 0f;
+        jumpInputDecayTimer = 0f;
+
+        frogMesh.localRotation = Quaternion.identity;
     }
 }

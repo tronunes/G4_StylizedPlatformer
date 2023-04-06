@@ -53,4 +53,15 @@ public class RotatingPlatform : MonoBehaviour
         // In case player is parented to the platform -> update its position as well
         Physics.SyncTransforms();
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0f, 1f, 1f, 0.6f); // Transparent teal
+
+        // Draw a sphere at the rotating pivot point
+        Gizmos.DrawSphere(
+            rotationPivot.position,
+            1f
+        );
+    }
 }

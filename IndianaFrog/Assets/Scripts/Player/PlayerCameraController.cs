@@ -9,6 +9,7 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private Transform cameraPivotHorizontal;
     [SerializeField] private Transform cameraPivotVertical;
     [SerializeField] private GameObject crosshair;
+    public bool inputLocked = false;
 
     [Header("Zooming")]
     [SerializeField] AnimationCurve zoomAnimationCurve;
@@ -30,14 +31,14 @@ public class PlayerCameraController : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        // Don't control the Camera while paused
-        if (GameManager.instance.IsPaused())
+        // Don't control the Camera while paused or input locked
+        if (GameManager.instance.IsPaused() || inputLocked)
         {
             return;
         }
@@ -137,5 +138,19 @@ public class PlayerCameraController : MonoBehaviour
     public bool IsZoomed()
     {
         return isZoomed;
+    }
+
+    public void ResetPlayerCamera()
+    {
+        cameraTransform.localPosition = normalCameraPosition;
+        cameraPivotHorizontal.localRotation = Quaternion.identity;
+        cameraPivotVertical.localRotation = Quaternion.Euler(25f, 0f, 0f);
+
+        crosshair.SetActive(false);
+        isZoomed = false;
+        cameraTransform.GetComponent<Camera>().fieldOfView = normalCameraFov;
+        currentTransitionTime = 0f;
+        isZoomingIn = false;
+        isZoomingOut = false;
     }
 }
