@@ -111,15 +111,15 @@ public class PlayerMovement : MonoBehaviour
         {
             slidingState = true;
             slidingVelocity = slideStartVelocity;
-            characterController.center = Vector3.down * -0.35f;
             characterController.height = 0.7f;
+            characterController.center = Vector3.up * (characterController.height / 2f);
         }
         else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
             slidingState = false;
             slidingCooldown = 0.1f;
-            characterController.center = Vector3.down * -0.75f;
             characterController.height = 1.5f;
+            characterController.center = Vector3.up * (characterController.height / 2f);
         }
 
         // Progress cooldown if grounded
@@ -150,8 +150,8 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
             if (characterController.height == 0.7f) // Make sure that the character's height is right when not sliding
             {
-                characterController.center = Vector3.down * -0.75f;
                 characterController.height = 1.5f;
+                characterController.center = Vector3.up * (characterController.height / 2f);
             }
             
         }
@@ -195,8 +195,8 @@ public class PlayerMovement : MonoBehaviour
             slidingVelocity = 0f;
             slidingState = false;
             slidingInput = false;
-            characterController.center = Vector3.down * -0.75f;
             characterController.height = 1.5f;
+            characterController.center = Vector3.up * (characterController.height / 2f);
         }
 
             // Case: external velocity given -> don't calculate velocity from movement or gravity
