@@ -50,7 +50,10 @@ public class TongueEnd : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude * Time.fixedDeltaTime))
         {
-            tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.fixedDeltaTime);
+            if (!hit.collider.isTrigger)
+            {
+                tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.fixedDeltaTime);
+            }
         }
     }
 }
