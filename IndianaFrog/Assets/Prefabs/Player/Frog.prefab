@@ -171,6 +171,7 @@ MonoBehaviour:
   frogMesh: {fileID: 1880772900031758979}
   cameraLookTransform: {fileID: 6262107846742018078}
   animator: {fileID: 2131154259457372300}
+  inputLocked: 0
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
   gravity: -10
@@ -196,6 +197,7 @@ MonoBehaviour:
   cameraPivotHorizontal: {fileID: 6262107846742018078}
   cameraPivotVertical: {fileID: 6500143702850215494}
   crosshair: {fileID: 6724434250387547677}
+  inputLocked: 0
   zoomAnimationCurve:
     serializedVersion: 2
     m_Curve:
@@ -253,6 +255,7 @@ MonoBehaviour:
   tongueMid: {fileID: 7928620274742984346}
   tongueEndPrefab: {fileID: 5486396794392725225, guid: d0ce5d24e73560a409bf3b91c2eaa800,
     type: 3}
+  inputLocked: 0
 --- !u!114 &5769859545461286336
 MonoBehaviour:
   m_ObjectHideFlags: 0
