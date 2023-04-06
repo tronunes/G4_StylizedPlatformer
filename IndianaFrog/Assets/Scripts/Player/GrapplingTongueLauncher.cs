@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GrapplingTongueLauncher : MonoBehaviour
 {
-    // Technical
+    [Header("Technical")]
     private PlayerMovement playerMovement;
     private PlayerCameraController cameraController;
     [SerializeField] private Camera playerCamera;
@@ -12,6 +12,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
     [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
     private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot, destroyed when reeled back in.
+    public bool inputLocked = false;
 
     // Stats
     private float shootForce = 35f;
@@ -35,6 +36,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     void Update()
     {
+        // Prevent the Frog receiving input from the Player
+        if (inputLocked)
+        {
+            return;
+        }
+
         // Require touching ground before shooting the Tongue again (while Tongue not out)
         if (!tongueEnd && playerMovement.IsGrounded())
         {
@@ -187,5 +194,11 @@ public class GrapplingTongueLauncher : MonoBehaviour
         isRetractingTongue = false;
         isReelingFrogIn = false;
         if (tongueEnd) { Destroy(tongueEnd); }
+    }
+
+    public void ResetTongueLauncher()
+    {
+        DestroyTongueEnd();
+        HideTongue();
     }
 }

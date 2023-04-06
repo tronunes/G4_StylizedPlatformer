@@ -38,7 +38,7 @@ public class BeamAttack : MonoBehaviour
 			if(glowEffect.isPlaying)
 			{
 				glowEffect.Stop();
-				glowEffect.Clear();	// have to clear existing particles alse or they linger for their lifetime-duration
+				glowEffect.Clear();	// have to clear particles also after stopping, or they linger for their lifetime-duration
 			}
 				
 		}
