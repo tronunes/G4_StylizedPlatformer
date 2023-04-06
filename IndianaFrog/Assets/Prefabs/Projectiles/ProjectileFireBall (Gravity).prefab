@@ -10,9 +10,14 @@ PrefabInstance:
     - target: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_Name
-      value: ProjectileFireBall Variant
+      value: ProjectileFireBall (Gravity)
       objectReference: {fileID: 0}
     - target: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364038343988430056, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -85,6 +90,21 @@ PrefabInstance:
     - target: {fileID: 8790083762035177759, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115566758542990871, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115566758542990871, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115566758542990872, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
