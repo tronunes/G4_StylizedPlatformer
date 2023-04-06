@@ -21,14 +21,5 @@ public class PlayerEmblemHandler : MonoBehaviour
     public void CollectEmblem()
     {
         emblemsCollected++;
-        Debug.Log("Emblem collected");
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("Emblem"))
-        {
-            CollectEmblem();
-        }
     }
 }
