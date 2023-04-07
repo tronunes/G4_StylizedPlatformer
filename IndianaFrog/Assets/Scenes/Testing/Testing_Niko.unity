@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809929626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.18, y: 1.156, z: -3.2}
+  m_LocalPosition: {x: -6.34, y: 1.156, z: -10.73}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -605,6 +605,7 @@ MonoBehaviour:
   currentHealth: 0
   invulnerabilityTime: 2
   healthbar: {fileID: 1014856502}
+  canTakeDamage: 1
 --- !u!54 &809929632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -616,10 +617,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &1014856502 stripped
 MonoBehaviour:
@@ -1228,6 +1229,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProjectileFireBall
       objectReference: {fileID: 0}
+    - target: {fileID: 7998603054644830872, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: projectileLifeTime
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998603054644830872, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: projectileDestroyDelayTime
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8790083762035177759, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1241,7 +1252,7 @@ PrefabInstance:
     - target: {fileID: 8790083762035177759, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.27
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: 8790083762035177759, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
@@ -1282,6 +1293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115566758542990869, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c581307650883c14b86fe546a8bbb40e, type: 3}
@@ -2116,6 +2132,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: QuadSpinningTotem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7193484461954458780, guid: f570344dd4131f442ba11c4b8fe747fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f570344dd4131f442ba11c4b8fe747fc, type: 3}

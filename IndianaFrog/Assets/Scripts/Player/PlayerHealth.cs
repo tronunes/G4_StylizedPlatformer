@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 	public HealthBar healthbar;
 
 
-	private bool canTakeDamage = true;
+	[HideInInspector] public bool canTakeDamage = true;
 
 
 	private void Start()

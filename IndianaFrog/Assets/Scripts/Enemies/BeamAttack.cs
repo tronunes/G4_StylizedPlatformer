@@ -63,8 +63,21 @@ public class BeamAttack : MonoBehaviour
 			impactEffect.transform.rotation = Quaternion.LookRotation(firePoint.position - hit.point);
 
 			if(hit.transform.CompareTag("Player"))
-					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
+			{
+				if(hit.transform.GetComponent<PlayerHealth>().canTakeDamage)
+				{
+					// cache the wanted direction in a variable
+					Vector3 knockbackDirection = hit.transform.position - hit.point;
 
+					// set the upwards direction manually
+					knockbackDirection.y = 1.0f;
+					hit.transform.GetComponent<Rigidbody>().AddForce(knockbackDirection * 4f, ForceMode.Impulse);
+					print("pushing: " + knockbackDirection);
+
+					// this sets the boolean so call after checking for knockback
+					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
+				}				
+			}
 		}
 		else
 		{
