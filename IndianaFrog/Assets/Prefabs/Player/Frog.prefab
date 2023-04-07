@@ -172,16 +172,17 @@ MonoBehaviour:
   frogMesh: {fileID: 1880772900031758979}
   cameraLookTransform: {fileID: 6262107846742018078}
   animator: {fileID: 2131154259457372300}
-  inputLocked: 0
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
+  inputLocked: 0
   gravity: -10
   movementSpeed: 6
   maxJumpHeight: 1.2
   maxChargeJumpHeight: 5
   gravityMultiplierPostApex: 1
   terminalVelocity: -12
-  chargeJumpTimer: 0
+  slidingFriction: 1
+  slidingLength: 8
 --- !u!114 &2070319886851112046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee11abc5266dfc468cefeb828594ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredEmblemCount: 0
 --- !u!1 &1698277716000211498
 GameObject:
   m_ObjectHideFlags: 0
