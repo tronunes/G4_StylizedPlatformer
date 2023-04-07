@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809929626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.34, y: 1.156, z: -10.73}
+  m_LocalPosition: {x: -9.31, y: 1.78, z: -3.15}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49993214468cfc4e88d0fc4706e070e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 4
+  maxHealth: 400
   currentHealth: 0
   invulnerabilityTime: 2
   healthbar: {fileID: 1014856502}
@@ -1229,6 +1229,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProjectileFireBall
       objectReference: {fileID: 0}
+    - target: {fileID: 5573206352511081149, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7998603054644830872, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: projectileLifeTime
@@ -1728,6 +1733,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyMaskTracking
       objectReference: {fileID: 0}
+    - target: {fileID: 749095189279391121, guid: c2cf10fc59ec1394b8de7706123b3bc4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 749095189279391125, guid: c2cf10fc59ec1394b8de7706123b3bc4,
         type: 3}
       propertyPath: m_RootOrder
@@ -2224,12 +2234,12 @@ PrefabInstance:
     - target: {fileID: 8505028987084016206, guid: 9267120a5f256804da2478eb58c0fb87,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.9445
+      value: -15.14
       objectReference: {fileID: 0}
     - target: {fileID: 8505028987084016206, guid: 9267120a5f256804da2478eb58c0fb87,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 8505028987084016206, guid: 9267120a5f256804da2478eb58c0fb87,
         type: 3}

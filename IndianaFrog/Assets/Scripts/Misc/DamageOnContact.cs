@@ -16,17 +16,16 @@ public class DamageOnContact : MonoBehaviour
 			if(other.GetComponent<PlayerHealth>().canTakeDamage)
 			{
 				// cache the wanted direction in a variable
-				Vector3 knockbackDirection = other.transform.position - this.transform.position;
+				//Vector3 knockbackDirection = other.transform.position - this.transform.position;
+				Vector3 knockbackDirection = other.transform.position - this.gameObject.GetComponent<Collider>().ClosestPoint(other.transform.position);
 
 				// set the upwards direction manually
-				knockbackDirection.y = 1.0f;
-				other.GetComponent<Rigidbody>().AddForce(knockbackDirection * 4f, ForceMode.Impulse);
+				knockbackDirection.y = 0.5f;
+				other.GetComponent<Rigidbody>().AddForce(knockbackDirection * 8.0f, ForceMode.Impulse);
 			}
-
-			// this sets the boolean so call after checking for knockback
+			// this sets the boolean so call AFTER checking for knockback
 			other.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
 			
-		}
-			
+		}			
 	}
 }

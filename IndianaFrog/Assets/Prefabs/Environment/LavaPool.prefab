@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8505028987084016205}
   - component: {fileID: 8505028987084016204}
   - component: {fileID: 8505028987084016211}
+  - component: {fileID: 3997046510742305084}
   - component: {fileID: 8505028987084016207}
   m_Layer: 9
   m_Name: LavaPool
@@ -29,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 8505028987084016209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.444499, y: -0.0135, z: -20.9925}
-  m_LocalScale: {x: 0.8, y: 1.6, z: 0.8}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.8, y: 1, z: 0.8}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,11 +95,24 @@ MeshCollider:
   m_GameObject: {fileID: 8505028987084016209}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &3997046510742305084
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8505028987084016209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 0.5, z: 10}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!114 &8505028987084016207
 MonoBehaviour:
   m_ObjectHideFlags: 0
