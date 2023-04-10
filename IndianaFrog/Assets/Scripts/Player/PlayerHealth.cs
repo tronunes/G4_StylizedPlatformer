@@ -14,12 +14,26 @@ public class PlayerHealth : MonoBehaviour
 	[Header("UI")]
 	public HealthBar healthbar;
 
+	//Feathers that represent hitpoints
+	private GameObject hpFeather0;
+	private GameObject hpFeather1;
+	private GameObject hpFeather2;
+
+	[Header("FEATHER DAMAGE")]
+	public int blinksFeather = 3;
+	public float blinkSpeed = 0.1f;
+
 
 	private bool canTakeDamage = true;
 
 
 	private void Start()
 	{
+		//Find the Feathers from headfeather prefab, scene should only have one
+		hpFeather0 = GameObject.Find("HeadFeathersHP/hp0");
+		hpFeather1 = GameObject.Find("HeadFeathersHP/hp1");
+		hpFeather2 = GameObject.Find("HeadFeathersHP/hp2");
+
 		ResetHealth();
 	}
 
@@ -47,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
 			{
 				StartCoroutine(BecomeInvulnerable());
 				//print(healthToSubtract + " damage taken.");
+				StartCoroutine(FeatherDamage());
 			}
 		}
 	}
@@ -57,6 +72,40 @@ public class PlayerHealth : MonoBehaviour
 		yield return new WaitForSeconds(invulnerabilityTime);
 
 		canTakeDamage = true;
+	}
+
+	private IEnumerator FeatherDamage()
+	{
+		GameObject currentFeather;
+		switch (currentHealth)
+		{
+			case 3:
+				currentFeather = hpFeather2;
+				break;
+			case 2:
+				currentFeather = hpFeather1;
+				break;
+			case 1:
+				currentFeather = hpFeather0;
+				break;
+			default:
+				Debug.Log("Something went wrong with getting current health");
+				currentFeather = null;
+				break;
+		}
+		for (int i = 0; i < blinksFeather; i++)
+        {
+            // Hide the object
+            currentFeather.SetActive(false);
+            yield return new WaitForSeconds(blinkSpeed);
+
+            // Show the object
+            currentFeather.SetActive(true);
+            yield return new WaitForSeconds(blinkSpeed);
+        }
+
+        // Hide the object for good
+        currentFeather.SetActive(false);
 	}
 
 	private void KillPlayer()
@@ -75,5 +124,10 @@ public class PlayerHealth : MonoBehaviour
 
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
+
+		// Show all feathers
+		hpFeather0.SetActive(true);
+		hpFeather1.SetActive(true);
+		hpFeather2.SetActive(true);
 	}
 }
