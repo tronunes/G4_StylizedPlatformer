@@ -8,6 +8,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerCameraController cameraController;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private Transform frogMesh;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
     [SerializeField] private Transform tongueMid; // The middle, stretchy part of the tongue
     [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
@@ -127,7 +128,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         DestroyTongueEnd();
 
         // Create a new tongue
-        tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, tongueStart.rotation);
+        tongueEnd = Instantiate(tongueEndPrefab, tongueStart.position + tongueStart.forward * 0.5f, frogMesh.rotation);
         tongueEnd.GetComponent<TongueEnd>().SetLauncher(this);
         Rigidbody tongueRb = tongueEnd.GetComponent<Rigidbody>();
         tongueRb.velocity = Vector3.zero;
