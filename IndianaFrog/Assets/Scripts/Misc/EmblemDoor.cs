@@ -5,6 +5,12 @@ using UnityEngine;
 public class EmblemDoor : MonoBehaviour
 {
     private bool isOpen = false;
+    [SerializeField] Animator animator;
+
+    void Start()
+    {
+
+    }
 
 
     void OnTriggerEnter(Collider collider)
@@ -23,7 +29,7 @@ public class EmblemDoor : MonoBehaviour
         if (!isOpen)
         {
             isOpen = true;
-            Debug.Log("Open door");
+            animator.SetTrigger("OpenDoor");
         }
     }
 }
