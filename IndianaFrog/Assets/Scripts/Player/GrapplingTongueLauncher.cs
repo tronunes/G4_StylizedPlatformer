@@ -163,6 +163,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         }
         else
         {
+            tongueStart.localRotation = Quaternion.identity;
             HideTongue();
         }
     }
