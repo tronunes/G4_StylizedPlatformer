@@ -38,4 +38,9 @@ public class PlayerEmblemHandler : MonoBehaviour
             emblemIcon.Find("Inactive").gameObject.SetActive(false);
         }
     }
+
+    public bool CanDoorBeOpened()
+    {
+        return emblemsCollected >= requiredEmblemCount;
+    }
 }
