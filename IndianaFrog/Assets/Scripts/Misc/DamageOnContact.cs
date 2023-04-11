@@ -30,9 +30,9 @@ public class DamageOnContact : MonoBehaviour
 				knockbackDirection = Vector3.Normalize(knockbackDirection);
 
 				// set the upwards direction manually
-				knockbackDirection.y = 0.8f;	// 4.0
-				print(knockbackDirection);
-				//other.GetComponent<Rigidbody>().AddForce(knockbackDirection * 1.0f, ForceMode.Impulse);
+				knockbackDirection.y = 0.8f;	// 4f
+
+				//other.GetComponent<Rigidbody>().AddForce(knockbackDirection * 1f, ForceMode.Impulse);
 				other.GetComponent<PlayerMovement>().AddExternalVelocity(knockbackDirection * 1.5f);
 			}
 			// this sets the boolean so call AFTER checking for knockback

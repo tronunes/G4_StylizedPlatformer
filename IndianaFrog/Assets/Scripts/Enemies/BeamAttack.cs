@@ -74,9 +74,10 @@ public class BeamAttack : MonoBehaviour
 					knockbackDirection = Vector3.Normalize(knockbackDirection);
 
 					// set the upwards direction manually
-					knockbackDirection.y = 4f;
-					print(knockbackDirection);
-					hit.transform.GetComponent<Rigidbody>().AddForce(knockbackDirection * 1f, ForceMode.Impulse);					
+					knockbackDirection.y = 0.8f;	// 4f
+
+					//hit.transform.GetComponent<Rigidbody>().AddForce(knockbackDirection * 1f, ForceMode.Impulse);
+					hit.transform.GetComponent<PlayerMovement>().AddExternalVelocity(knockbackDirection * 1.5f);
 				}
 				// this sets the boolean so call AFTER checking for knockback
 				hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
