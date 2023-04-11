@@ -15,24 +15,25 @@ public class PlayerHealth : MonoBehaviour
 	public HealthBar healthbar;
 
 	//Feathers that represent hitpoints
-	private GameObject hpFeather0;
-	private GameObject hpFeather1;
-	private GameObject hpFeather2;
-
 	[Header("FEATHER DAMAGE")]
 	public int blinksFeather = 3;
 	public float blinkSpeed = 0.1f;
 
-
+	private GameObject currentFeather;
+	private GameObject hpFeather0;
+	private GameObject hpFeather1;
+	private GameObject hpFeather2;
+	
 	private bool canTakeDamage = true;
 
 
 	private void Start()
 	{
 		//Find the Feathers from headfeather prefab, scene should only have one
-		hpFeather0 = GameObject.Find("HeadFeathersHP/hp0");
-		hpFeather1 = GameObject.Find("HeadFeathersHP/hp1");
-		hpFeather2 = GameObject.Find("HeadFeathersHP/hp2");
+		hpFeather0 = GameObject.Find("hpFeather/hp0");
+		hpFeather1 = GameObject.Find("hpFeather/hp1");
+		hpFeather2 = GameObject.Find("hpFeather/hp2");
+		currentFeather = hpFeather2;
 
 		ResetHealth();
 	}
@@ -43,6 +44,8 @@ public class PlayerHealth : MonoBehaviour
 		healthToAdd = Mathf.Min(healthToAdd, maxHealth - currentHealth);
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
+
+		StartCoroutine(FeatherChange("AddHealth"));
 	}
 
 	public void SubtractHealth(int healthToSubtract)
@@ -61,7 +64,7 @@ public class PlayerHealth : MonoBehaviour
 			{
 				StartCoroutine(BecomeInvulnerable());
 				//print(healthToSubtract + " damage taken.");
-				StartCoroutine(FeatherDamage());
+				StartCoroutine(FeatherChange("SubtractHealth"));
 			}
 		}
 	}
@@ -74,9 +77,8 @@ public class PlayerHealth : MonoBehaviour
 		canTakeDamage = true;
 	}
 
-	private IEnumerator FeatherDamage()
+	private IEnumerator FeatherChange(string eventName)
 	{
-		GameObject currentFeather;
 		switch (currentHealth)
 		{
 			case 3:
@@ -93,19 +95,40 @@ public class PlayerHealth : MonoBehaviour
 				currentFeather = null;
 				break;
 		}
-		for (int i = 0; i < blinksFeather; i++)
-        {
-            // Hide the object
+		
+		if ( eventName.Equals("SubtractHealth") ) 
+		{
+            for (int i = 0; i < blinksFeather; i++)
+            {
+                // Hide the object
+                currentFeather.SetActive(false);
+                yield return new WaitForSeconds(blinkSpeed);
+
+                // Show the object
+                currentFeather.SetActive(true);
+                yield return new WaitForSeconds(blinkSpeed);
+            }
+
+            // Hide the object for good
             currentFeather.SetActive(false);
-            yield return new WaitForSeconds(blinkSpeed);
+		} else if (eventName.Equals("AddHealth"))
+        {
+			//handle blinking in feather
+			 for (int i = 0; i < blinksFeather; i++)
+            {
+                // Hide the object
+                currentFeather.SetActive(true);
+                yield return new WaitForSeconds(blinkSpeed);
 
-            // Show the object
+                // Show the object
+                currentFeather.SetActive(false);
+                yield return new WaitForSeconds(blinkSpeed);
+            }
+
+            // Hide the object for good
             currentFeather.SetActive(true);
-            yield return new WaitForSeconds(blinkSpeed);
         }
-
-        // Hide the object for good
-        currentFeather.SetActive(false);
+		
 	}
 
 	private void KillPlayer()
@@ -125,9 +148,10 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
 
-		// Show all feathers
+		// Reset Feathers
 		hpFeather0.SetActive(true);
 		hpFeather1.SetActive(true);
 		hpFeather2.SetActive(true);
+		currentFeather = hpFeather2;
 	}
 }
