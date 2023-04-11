@@ -7,11 +7,6 @@ public class EmblemDoor : MonoBehaviour
     private bool isOpen = false;
     [SerializeField] Animator animator;
 
-    void Start()
-    {
-
-    }
-
 
     void OnTriggerEnter(Collider collider)
     {
