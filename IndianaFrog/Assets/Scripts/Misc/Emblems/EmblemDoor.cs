@@ -46,10 +46,7 @@ public class EmblemDoor : MonoBehaviour
             emblemParts.gameObject.SetActive(true);
 
             // Insert each emblem to the door via an animation
-            foreach(Transform emblemPart in emblemParts)
-            {
-                emblemPart.GetComponent<Animator>().SetTrigger("Move");
-            }
+            emblemParts.GetComponent<Animator>().SetTrigger("Move");
         }
     }
 }
