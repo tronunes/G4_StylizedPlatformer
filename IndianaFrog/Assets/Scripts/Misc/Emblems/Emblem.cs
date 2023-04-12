@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 
 public enum EmblemPartChoices // Choices for the visible part model
@@ -10,13 +11,43 @@ public enum EmblemPartChoices // Choices for the visible part model
     BOTTOM
 }
 
+[ExecuteInEditMode]
 public class Emblem : MonoBehaviour
 {
     public EmblemPartChoices visiblePartModel;
     private Transform emblemPartsWrapper;
 
+    private void OnEnable()
+    {
+        EditorApplication.update += OnEditorUpdate;
+    }
+
+    private void OnDisable()
+    {
+        EditorApplication.update -= OnEditorUpdate;
+    }
+
+    void OnEditorUpdate()
+    {
+        // Show the correct part model when the visiblePartModel value is changed in editor
+        ShowCorrectPartModel();
+    }
 
     void Start()
+    {
+        ShowCorrectPartModel();
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem();
+            Destroy(gameObject);
+        }
+    }
+
+    void ShowCorrectPartModel()
     {
         emblemPartsWrapper = transform.Find("Animator").Find("EmblemParts");
 
@@ -38,15 +69,6 @@ public class Emblem : MonoBehaviour
             case EmblemPartChoices.BOTTOM:
                 emblemPartsWrapper.Find("EmblemPart_Bottom").gameObject.SetActive(true);
                 break;
-        }
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem();
-            Destroy(gameObject);
         }
     }
 }
