@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
 	public float blinkSpeed = 0.1f;
 
 	private GameObject currentFeather;
+	private SkinnedMeshRenderer currentFeatherRenderer;
 	private GameObject hpFeather0;
 	private GameObject hpFeather1;
 	private GameObject hpFeather2;
@@ -29,7 +30,7 @@ public class PlayerHealth : MonoBehaviour
 
 	private void Start()
 	{
-		//Find the Feathers from headfeather prefab, scene should only have one
+		//Find the Feathers from headFeather prefab, scene should only have one
 		hpFeather0 = GameObject.Find("hpFeather/hp0");
 		hpFeather1 = GameObject.Find("hpFeather/hp1");
 		hpFeather2 = GameObject.Find("hpFeather/hp2");
@@ -95,38 +96,38 @@ public class PlayerHealth : MonoBehaviour
 				currentFeather = null;
 				break;
 		}
+
+		currentFeatherRenderer = currentFeather.GetComponentInChildren<SkinnedMeshRenderer>();
 		
 		if ( eventName.Equals("SubtractHealth") ) 
 		{
-            for (int i = 0; i < blinksFeather; i++)
+            //handle blinking in feather
+			for (int i = 0; i < blinksFeather; i++)
             {
-                // Hide the object
-                currentFeather.SetActive(false);
+				
+                currentFeatherRenderer.enabled = (false);
                 yield return new WaitForSeconds(blinkSpeed);
 
-                // Show the object
-                currentFeather.SetActive(true);
+                currentFeatherRenderer.enabled = (true);
                 yield return new WaitForSeconds(blinkSpeed);
             }
+            // Hide the object until reset
+            currentFeatherRenderer.enabled = (false);
 
-            // Hide the object for good
-            currentFeather.SetActive(false);
 		} else if (eventName.Equals("AddHealth"))
         {
-			//handle blinking in feather
+			//handle blinking
 			 for (int i = 0; i < blinksFeather; i++)
             {
                 // Hide the object
-                currentFeather.SetActive(true);
+                currentFeatherRenderer.enabled = (true);
                 yield return new WaitForSeconds(blinkSpeed);
 
-                // Show the object
-                currentFeather.SetActive(false);
+                currentFeatherRenderer.enabled = (false);
                 yield return new WaitForSeconds(blinkSpeed);
             }
-
-            // Hide the object for good
-            currentFeather.SetActive(true);
+            // Hide the object until reset
+            currentFeatherRenderer.enabled = (true);
         }
 		
 	}
@@ -149,9 +150,9 @@ public class PlayerHealth : MonoBehaviour
 		healthbar.SetMaxHealth(maxHealth);
 
 		// Reset Feathers
-		hpFeather0.SetActive(true);
-		hpFeather1.SetActive(true);
-		hpFeather2.SetActive(true);
+		hpFeather0.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+		hpFeather1.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+		hpFeather2.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
 		currentFeather = hpFeather2;
 	}
 }
