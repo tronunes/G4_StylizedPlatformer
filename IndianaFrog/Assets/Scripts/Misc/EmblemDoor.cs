@@ -5,6 +5,7 @@ using UnityEngine;
 public class EmblemDoor : MonoBehaviour
 {
     private bool isOpen = false;
+    private bool emblemsInserted = false;
     [SerializeField] Animator doorAnimator;
     [SerializeField] Transform emblemParts;
 
@@ -26,7 +27,7 @@ public class EmblemDoor : MonoBehaviour
         }
     }
 
-    void OpenDoor()
+    public void OpenDoor()
     {
         if (!isOpen)
         {
@@ -37,13 +38,18 @@ public class EmblemDoor : MonoBehaviour
 
     void InsertEmblems()
     {
-        // Show emblems
-        emblemParts.gameObject.SetActive(true);
-
-        // Insert each emblem to the door via an animation
-        foreach(Transform emblemPart in emblemParts)
+        if (!emblemsInserted)
         {
-            emblemPart.GetComponent<Animator>().SetTrigger("Move");
+            emblemsInserted = true;
+
+            // Show emblems
+            emblemParts.gameObject.SetActive(true);
+
+            // Insert each emblem to the door via an animation
+            foreach(Transform emblemPart in emblemParts)
+            {
+                emblemPart.GetComponent<Animator>().SetTrigger("Move");
+            }
         }
     }
 }

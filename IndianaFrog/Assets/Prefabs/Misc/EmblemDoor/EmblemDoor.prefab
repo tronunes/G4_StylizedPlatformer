@@ -113,6 +113,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 354591435055742811}
+  - {fileID: 2072738523164366735}
   m_Father: {fileID: 1007211869539637976}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -248,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 19967710656896181}
   - component: {fileID: 2798978294145624180}
+  - component: {fileID: 6928714028424746030}
   m_Layer: 0
   m_Name: Bottom
   m_TagString: Untagged
@@ -292,6 +294,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6928714028424746030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777424065600222457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945632bfa3048524695c9ba99c679794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emblemDoor: {fileID: 5888278490830237833}
 --- !u!1 &3510783601906511413
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5604695441559051602}
   - component: {fileID: 165529745120944077}
+  - component: {fileID: 4412107201607698072}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -429,6 +445,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4412107201607698072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5257573209482601976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945632bfa3048524695c9ba99c679794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emblemDoor: {fileID: 5888278490830237833}
 --- !u!1 &5356854879357684021
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4313430599245181818}
   - component: {fileID: 1650289998294782067}
+  - component: {fileID: 4011452131153885681}
   m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
@@ -566,6 +596,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4011452131153885681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822930799903958352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945632bfa3048524695c9ba99c679794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emblemDoor: {fileID: 5888278490830237833}
 --- !u!1 &5974662628239823469
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +723,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 729514632809273641}
-  - {fileID: 2072738523164366735}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -742,7 +784,7 @@ Transform:
   - {fileID: 4313430599245181818}
   - {fileID: 5604695441559051602}
   - {fileID: 19967710656896181}
-  m_Father: {fileID: 1007211869539637976}
+  m_Father: {fileID: 729514632809273641}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!1001 &919765475304513419
