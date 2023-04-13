@@ -15,6 +15,7 @@ public class Emblem : MonoBehaviour
 {
     public EmblemPartChoices visiblePartModel;
     private Transform emblemPartsWrapper;
+    public GameObject collectParticlesPrefab; // Prefab of the particle effect which is spawned when the Emblem is collected
 
     void Start()
     {
@@ -26,6 +27,10 @@ public class Emblem : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem(visiblePartModel);
+
+            // Activate particles
+            Instantiate(collectParticlesPrefab, transform.position + Vector3.up, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }
