@@ -19875,7 +19875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorAnimator: {fileID: 1473645930773869439}
-  emblemParts: {fileID: 2072738523164366735}
+  animatedEmblemParts: {fileID: 2072738523164366735}
   dustParticles: {fileID: 1779150739408125542}
 --- !u!65 &3368745017064463208
 BoxCollider:

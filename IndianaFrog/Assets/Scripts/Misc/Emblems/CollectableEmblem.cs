@@ -19,8 +19,10 @@ public class CollectableEmblem : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
+        // Case: Player collides with the Emblem
         if (collider.gameObject.CompareTag("Player"))
         {
+            // Collect the Emblem
             collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem(visiblePartModel);
 
             // Activate particles

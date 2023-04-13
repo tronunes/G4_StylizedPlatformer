@@ -11,20 +11,20 @@ public class PlayerEmblemHandler : MonoBehaviour
     [SerializeField] private Transform emblemsUIWrapper;
 
 
-    public void CollectEmblem(EmblemPartChoices model)
+    public void CollectEmblem(EmblemPartChoices partType)
     {
         emblemsCollected++;
 
-        UpdateEmblemsUI(model);
+        UpdateEmblemsUI(partType);
     }
 
-    void UpdateEmblemsUI(EmblemPartChoices model)
+    void UpdateEmblemsUI(EmblemPartChoices partType)
     {
         // Get the correct object name, for example "Emblem_Top"
         string nameSuffix = "";
-        if (model == EmblemPartChoices.TOP) { nameSuffix = "Top"; }
-        else if (model == EmblemPartChoices.RIGHT) { nameSuffix = "Right"; }
-        else if (model == EmblemPartChoices.BOTTOM) { nameSuffix = "Bottom"; }
+        if (partType == EmblemPartChoices.TOP) { nameSuffix = "Top"; }
+        else if (partType == EmblemPartChoices.RIGHT) { nameSuffix = "Right"; }
+        else if (partType == EmblemPartChoices.BOTTOM) { nameSuffix = "Bottom"; }
 
         // Enable the "active" icon and disable the "inactive" icon for the Emblem
         Transform emblemIcon = emblemsUIWrapper.Find("Emblem_" + nameSuffix);
