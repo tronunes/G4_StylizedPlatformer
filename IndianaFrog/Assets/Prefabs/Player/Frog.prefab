@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 5575981486277436156}
   - component: {fileID: 1799006752889930577}
   - component: {fileID: 5769859545461286336}
-  - component: {fileID: 4379615891639382290}
+  - component: {fileID: 1740473608759932506}
   m_Layer: 6
   m_Name: Frog
   m_TagString: Player
@@ -275,7 +275,8 @@ MonoBehaviour:
   currentHealth: 0
   invulnerabilityTime: 1
   healthbar: {fileID: 9058371691549743346}
---- !u!114 &4379615891639382290
+  featherManager: {fileID: 1740473608759932506}
+--- !u!114 &1740473608759932506
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,11 +285,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 723754090840151393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ee11abc5266dfc468cefeb828594ff9, type: 3}
+  m_Script: {fileID: 11500000, guid: 96db9af07275bda4f9dbc14022ad641c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredEmblemCount: 3
-  emblemsUIWrapper: {fileID: 6874512991749869521}
+  blinksFeather: 3
+  blinkSpeed: 0.1
 --- !u!1 &1698277716000211498
 GameObject:
   m_ObjectHideFlags: 0

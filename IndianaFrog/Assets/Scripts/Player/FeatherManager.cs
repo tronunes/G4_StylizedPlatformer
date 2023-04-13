@@ -13,6 +13,7 @@ public class FeatherManager : MonoBehaviour
     private SkinnedMeshRenderer currentFeatherRenderer;
 
     [Header("FEATHER DAMAGE")]
+    [Tooltip("How many times feather blinks")]
     public int blinksFeather = 3; //how many times feather blinks
     public float blinkSpeed = 0.1f;
 
