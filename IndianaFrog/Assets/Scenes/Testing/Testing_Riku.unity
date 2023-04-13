@@ -961,6 +961,11 @@ PrefabInstance:
       propertyPath: blinkSpeed
       value: 0.28
       objectReference: {fileID: 0}
+    - target: {fileID: 5769859545461286336, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: featherManager
+      value: 
+      objectReference: {fileID: 1916267804}
     - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2749,6 +2754,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1749884355}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1916267803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 723754090840151393, guid: 765147221b9d5804399e885852232e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 780665818}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1916267804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916267803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96db9af07275bda4f9dbc14022ad641c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinksFeather: 3
+  blinkSpeed: 0.25
 --- !u!1 &2080688063
 GameObject:
   m_ObjectHideFlags: 0
