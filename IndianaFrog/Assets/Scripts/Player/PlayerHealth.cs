@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
 	[Header("UI")]
 	public HealthBar healthbar;
-
+	public FeatherManager featherManager;
 
 	private bool canTakeDamage = true;
 
@@ -29,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
 		healthToAdd = Mathf.Min(healthToAdd, maxHealth - currentHealth);
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
+		featherManager.AddFeather(currentHealth, "AddHealth");
 	}
 
 	public void SubtractHealth(int healthToSubtract)
@@ -38,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
 			healthToSubtract = Mathf.Min(healthToSubtract, currentHealth);
 			currentHealth -= healthToSubtract;
 			healthbar.SetHealth(currentHealth);
+			featherManager.RemoveFeather(currentHealth, "SubtractHealth");
 
 			if (currentHealth <= 0)
 			{
@@ -46,7 +48,6 @@ public class PlayerHealth : MonoBehaviour
 			else
 			{
 				StartCoroutine(BecomeInvulnerable());
-				//print(healthToSubtract + " damage taken.");
 			}
 		}
 	}
@@ -75,5 +76,6 @@ public class PlayerHealth : MonoBehaviour
 
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
+		featherManager.FeatherReset();
 	}
 }
