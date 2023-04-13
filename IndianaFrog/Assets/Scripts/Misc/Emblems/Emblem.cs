@@ -25,7 +25,7 @@ public class Emblem : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem();
+            collider.gameObject.GetComponent<PlayerEmblemHandler>().CollectEmblem(visiblePartModel);
             Destroy(gameObject);
         }
     }

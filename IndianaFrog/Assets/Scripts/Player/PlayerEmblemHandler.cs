@@ -11,22 +11,25 @@ public class PlayerEmblemHandler : MonoBehaviour
     [SerializeField] private Transform emblemsUIWrapper;
 
 
-    public void CollectEmblem()
+    public void CollectEmblem(EmblemPartChoices model)
     {
         emblemsCollected++;
 
-        UpdateEmblemsUI();
+        UpdateEmblemsUI(model);
     }
 
-    void UpdateEmblemsUI()
+    void UpdateEmblemsUI(EmblemPartChoices model)
     {
-        // Activate the "Active" icons and disable "Inactive" icons for all collected emblems
-        for (int i = 0; i < emblemsCollected; i++)
-        {
-            Transform emblemIcon = emblemsUIWrapper.Find("Emblem" + (i + 1).ToString());
-            emblemIcon.Find("Active").gameObject.SetActive(true);
-            emblemIcon.Find("Inactive").gameObject.SetActive(false);
-        }
+        // Get the correct object name, for example "Emblem_Top"
+        string nameSuffix = "";
+        if (model == EmblemPartChoices.TOP) { nameSuffix = "Top"; }
+        else if (model == EmblemPartChoices.RIGHT) { nameSuffix = "Right"; }
+        else if (model == EmblemPartChoices.BOTTOM) { nameSuffix = "Bottom"; }
+
+        // Enable the "active" icon and disable the "inactive" icon for the Emblem
+        Transform emblemIcon = emblemsUIWrapper.Find("Emblem_" + nameSuffix);
+        emblemIcon.Find("Active").gameObject.SetActive(true);
+        emblemIcon.Find("Inactive").gameObject.SetActive(false);
     }
 
     public bool CanDoorBeOpened()
