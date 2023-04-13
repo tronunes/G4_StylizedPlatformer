@@ -12,7 +12,7 @@ public enum EmblemPartChoices
     BOTTOM
 }
 
-public class Emblem : MonoBehaviour
+public class CollectableEmblem : MonoBehaviour
 {
     public EmblemPartChoices visiblePartModel;
     public GameObject collectParticlesPrefab; // Prefab of the particle effect which is spawned when the Emblem is collected
