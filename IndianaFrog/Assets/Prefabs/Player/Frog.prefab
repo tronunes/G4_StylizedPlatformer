@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 1799006752889930577}
   - component: {fileID: 5769859545461286336}
   - component: {fileID: 1740473608759932506}
+  - component: {fileID: 4692655347576647185}
   m_Layer: 6
   m_Name: Frog
   m_TagString: Player
@@ -290,6 +291,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinksFeather: 3
   blinkSpeed: 0.1
+--- !u!114 &4692655347576647185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723754090840151393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee11abc5266dfc468cefeb828594ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emblemsUIWrapper: {fileID: 6874512991749869521}
 --- !u!1 &1698277716000211498
 GameObject:
   m_ObjectHideFlags: 0
