@@ -80,8 +80,8 @@ public class FeatherManager : MonoBehaviour
                 // Hide feather until gained hp or reset
                 currentFeatherRenderer.enabled = (false);
 
-            }
-            else if (eventName.Equals("AddHealth")) //Player gained hp
+            } //Player gained hp
+            else if (eventName.Equals("AddHealth"))
             {
                 //handle blinking current feather
                 for (int i = 0; i < blinksFeather; i++)
