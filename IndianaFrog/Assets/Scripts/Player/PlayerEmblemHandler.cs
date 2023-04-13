@@ -5,21 +5,11 @@ using UnityEngine;
 public class PlayerEmblemHandler : MonoBehaviour
 {
     private int emblemsCollected = 0;
-    public int requiredEmblemCount = 3;
+    private int requiredEmblemCount = 3;
 
     [Header("Technical")]
     [SerializeField] private Transform emblemsUIWrapper;
 
-
-    void Start()
-    {
-        // If required emblem count is not defined in the inspector
-        // -> count the number of emblems in the scene and require collecting them all
-        if (requiredEmblemCount == -1)
-        {
-            requiredEmblemCount = GameObject.FindGameObjectsWithTag("Emblem").Length;
-        }
-    }
 
     public void CollectEmblem()
     {
