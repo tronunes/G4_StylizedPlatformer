@@ -13,7 +13,7 @@ public class FeatherManager : MonoBehaviour
 	private GameObject hpFeather0;
 	private GameObject hpFeather1;
 	private GameObject hpFeather2;
-    // Start is called before the first frame update
+    
     void Awake() 
     {
         hpFeather0 = GameObject.Find("hpFeather/hp0");
@@ -22,6 +22,16 @@ public class FeatherManager : MonoBehaviour
 		currentFeather = hpFeather2;
     }
 
+	public void FeatherPlus(int currentHealth, string eventName)
+	{
+		StartCoroutine(FeatherChange(currentHealth, eventName));
+	}
+
+	public void FeatherMinus(int currentHealth, string eventName)
+	{
+		StartCoroutine(FeatherChange(currentHealth, eventName));
+	}
+	
     public void FeatherReset()
     {
 		hpFeather0.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
@@ -49,38 +59,42 @@ public class FeatherManager : MonoBehaviour
 				break;
 		}
 
-		currentFeatherRenderer = currentFeather.GetComponentInChildren<SkinnedMeshRenderer>();
-		
-		if ( eventName.Equals("SubtractHealth") ) 
+		if (currentFeather != null)
 		{
-            //handle blinking in feather
-			for (int i = 0; i < blinksFeather; i++)
+            currentFeatherRenderer = currentFeather.GetComponentInChildren<SkinnedMeshRenderer>();
+
+            if (eventName.Equals("SubtractHealth"))
             {
-				
+                //handle blinking in feather
+                for (int i = 0; i < blinksFeather; i++)
+                {
+
+                    currentFeatherRenderer.enabled = (false);
+                    yield return new WaitForSeconds(blinkSpeed);
+
+                    currentFeatherRenderer.enabled = (true);
+                    yield return new WaitForSeconds(blinkSpeed);
+                }
+                // Hide the object until reset
                 currentFeatherRenderer.enabled = (false);
-                yield return new WaitForSeconds(blinkSpeed);
 
-                currentFeatherRenderer.enabled = (true);
-                yield return new WaitForSeconds(blinkSpeed);
             }
-            // Hide the object until reset
-            currentFeatherRenderer.enabled = (false);
-
-		} else if (eventName.Equals("AddHealth"))
-        {
-			//handle blinking
-			 for (int i = 0; i < blinksFeather; i++)
+            else if (eventName.Equals("AddHealth"))
             {
-                // Hide the object
-                currentFeatherRenderer.enabled = (true);
-                yield return new WaitForSeconds(blinkSpeed);
+                //handle blinking
+                for (int i = 0; i < blinksFeather; i++)
+                {
+                    // Hide the object
+                    currentFeatherRenderer.enabled = (true);
+                    yield return new WaitForSeconds(blinkSpeed);
 
-                currentFeatherRenderer.enabled = (false);
-                yield return new WaitForSeconds(blinkSpeed);
+                    currentFeatherRenderer.enabled = (false);
+                    yield return new WaitForSeconds(blinkSpeed);
+                }
+                // Hide the object until reset
+                currentFeatherRenderer.enabled = (true);
             }
-            // Hide the object until reset
-            currentFeatherRenderer.enabled = (true);
-        }
+		}
 		
 	}
 }
