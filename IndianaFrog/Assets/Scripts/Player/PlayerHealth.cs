@@ -13,9 +13,10 @@ public class PlayerHealth : MonoBehaviour
 
 	[Header("UI")]
 	public HealthBar healthbar;
+	public FeatherManager featherManager;
 
 	//Feathers that represent hitpoints
-	[Header("FEATHER DAMAGE")]
+	/*[Header("FEATHER DAMAGE")]
 	public int blinksFeather = 3;
 	public float blinkSpeed = 0.1f;
 
@@ -23,19 +24,18 @@ public class PlayerHealth : MonoBehaviour
 	private SkinnedMeshRenderer currentFeatherRenderer;
 	private GameObject hpFeather0;
 	private GameObject hpFeather1;
-	private GameObject hpFeather2;
+	private GameObject hpFeather2; */
 	
 	private bool canTakeDamage = true;
 
 
 	private void Start()
 	{
-		//Find the Feathers from headFeather prefab, scene should only have one
+		/*//Find the Feathers from headFeather prefab, scene should only have one
 		hpFeather0 = GameObject.Find("hpFeather/hp0");
 		hpFeather1 = GameObject.Find("hpFeather/hp1");
 		hpFeather2 = GameObject.Find("hpFeather/hp2");
-		currentFeather = hpFeather2;
-
+		currentFeather = hpFeather2;*/
 		ResetHealth();
 	}
 
@@ -46,7 +46,8 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
 
-		StartCoroutine(FeatherChange("AddHealth"));
+		//StartCoroutine(FeatherChange("AddHealth"));
+		StartCoroutine(featherManager.FeatherChange(currentHealth, "AddHealth"));
 	}
 
 	public void SubtractHealth(int healthToSubtract)
@@ -65,7 +66,8 @@ public class PlayerHealth : MonoBehaviour
 			{
 				StartCoroutine(BecomeInvulnerable());
 				//print(healthToSubtract + " damage taken.");
-				StartCoroutine(FeatherChange("SubtractHealth"));
+				//StartCoroutine(FeatherChange("SubtractHealth"));
+				StartCoroutine(featherManager.FeatherChange(currentHealth, "SubtractHealth"));
 			}
 		}
 	}
@@ -78,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
 		canTakeDamage = true;
 	}
 
-	private IEnumerator FeatherChange(string eventName)
+	/*private IEnumerator FeatherChange(string eventName)
 	{
 		switch (currentHealth)
 		{
@@ -130,7 +132,7 @@ public class PlayerHealth : MonoBehaviour
             currentFeatherRenderer.enabled = (true);
         }
 		
-	}
+	}*/
 
 	private void KillPlayer()
 	{
@@ -148,11 +150,12 @@ public class PlayerHealth : MonoBehaviour
 
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
+		featherManager.FeatherReset();
 
 		// Reset Feathers
-		hpFeather0.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+		/*hpFeather0.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
 		hpFeather1.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
 		hpFeather2.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-		currentFeather = hpFeather2;
+		currentFeather = hpFeather2;*/
 	}
 }
