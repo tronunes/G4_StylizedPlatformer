@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
 		healthToAdd = Mathf.Min(healthToAdd, maxHealth - currentHealth);
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
-		featherManager.FeatherPlus(currentHealth, "AddHealth");
+		featherManager.AddFeather(currentHealth, "AddHealth");
 	}
 
 	public void SubtractHealth(int healthToSubtract)
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
 			healthToSubtract = Mathf.Min(healthToSubtract, currentHealth);
 			currentHealth -= healthToSubtract;
 			healthbar.SetHealth(currentHealth);
-			featherManager.FeatherMinus(currentHealth, "SubtractHealth");
+			featherManager.RemoveFeather(currentHealth, "SubtractHealth");
 
 			if (currentHealth <= 0)
 			{

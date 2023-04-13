@@ -5,9 +5,10 @@ using UnityEngine;
 public class FeatherManager : MonoBehaviour
 {
     [Header("FEATHER DAMAGE")]
-    public int blinksFeather = 3;
+    public int blinksFeather = 3; //how many times feather blinks
     public float blinkSpeed = 0.1f;
 
+    //Selected feather based on hp that script will act on
     private GameObject currentFeather;
     private SkinnedMeshRenderer currentFeatherRenderer;
     private GameObject hpFeather0;
@@ -22,12 +23,12 @@ public class FeatherManager : MonoBehaviour
         currentFeather = hpFeather2;
     }
 
-    public void FeatherPlus(int currentHealth, string eventName)
+    public void AddFeather(int currentHealth, string eventName)
     {
         StartCoroutine(FeatherChange(currentHealth, eventName));
     }
 
-    public void FeatherMinus(int currentHealth, string eventName)
+    public void RemoveFeather(int currentHealth, string eventName)
     {
         StartCoroutine(FeatherChange(currentHealth, eventName));
     }
