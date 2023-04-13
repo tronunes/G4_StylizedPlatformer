@@ -6,8 +6,9 @@ public class EmblemDoor : MonoBehaviour
 {
     private bool isOpen = false;
     private bool emblemsInserted = false;
-    [SerializeField] Animator doorAnimator;
-    [SerializeField] Transform emblemParts;
+    [SerializeField] private Animator doorAnimator;
+    [SerializeField] private Transform emblemParts;
+    [SerializeField] private GameObject dustParticles;
 
 
     void Start()
@@ -33,6 +34,9 @@ public class EmblemDoor : MonoBehaviour
         {
             isOpen = true;
             doorAnimator.SetTrigger("OpenDoor");
+
+            // Play dust particles
+            dustParticles.SetActive(true);
         }
     }
 
