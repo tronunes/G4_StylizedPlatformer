@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class FeatherManager : MonoBehaviour
 {
-    [Header("FEATHER DAMAGE")]
-    public int blinksFeather = 3; //how many times feather blinks
-    public float blinkSpeed = 0.1f;
+    private GameObject hpFeather0;
+    private GameObject hpFeather1;
+    private GameObject hpFeather2;
 
     //Selected feather based on hp that script will act on
     private GameObject currentFeather;
     private SkinnedMeshRenderer currentFeatherRenderer;
-    private GameObject hpFeather0;
-    private GameObject hpFeather1;
-    private GameObject hpFeather2;
+
+    [Header("FEATHER DAMAGE")]
+    public int blinksFeather = 3; //how many times feather blinks
+    public float blinkSpeed = 0.1f;
 
     void Awake()
     {
@@ -55,7 +56,7 @@ public class FeatherManager : MonoBehaviour
                 currentFeather = hpFeather0;
                 break;
             default:
-                Debug.Log("Something went wrong with getting current health");
+                //player took last hit with no feathers
                 currentFeather = null;
                 break;
         }
@@ -64,35 +65,34 @@ public class FeatherManager : MonoBehaviour
         {
             currentFeatherRenderer = currentFeather.GetComponentInChildren<SkinnedMeshRenderer>();
 
+            //Player lost hp
             if (eventName.Equals("SubtractHealth"))
             {
-                //handle blinking in feather
+                //handle blinking current feather
                 for (int i = 0; i < blinksFeather; i++)
                 {
-
                     currentFeatherRenderer.enabled = (false);
                     yield return new WaitForSeconds(blinkSpeed);
 
                     currentFeatherRenderer.enabled = (true);
                     yield return new WaitForSeconds(blinkSpeed);
                 }
-                // Hide the object until reset
+                // Hide feather until gained hp or reset
                 currentFeatherRenderer.enabled = (false);
 
             }
-            else if (eventName.Equals("AddHealth"))
+            else if (eventName.Equals("AddHealth")) //Player gained hp
             {
-                //handle blinking
+                //handle blinking current feather
                 for (int i = 0; i < blinksFeather; i++)
                 {
-                    // Hide the object
                     currentFeatherRenderer.enabled = (true);
                     yield return new WaitForSeconds(blinkSpeed);
 
                     currentFeatherRenderer.enabled = (false);
                     yield return new WaitForSeconds(blinkSpeed);
                 }
-                // Hide the object until reset
+                // Reveal feather until next damage
                 currentFeatherRenderer.enabled = (true);
             }
         }
