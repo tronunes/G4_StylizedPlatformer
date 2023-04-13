@@ -11,27 +11,10 @@ public enum EmblemPartChoices // Choices for the visible part model
     BOTTOM
 }
 
-[ExecuteInEditMode]
 public class Emblem : MonoBehaviour
 {
     public EmblemPartChoices visiblePartModel;
     private Transform emblemPartsWrapper;
-
-    private void OnEnable()
-    {
-        EditorApplication.update += OnEditorUpdate;
-    }
-
-    private void OnDisable()
-    {
-        EditorApplication.update -= OnEditorUpdate;
-    }
-
-    void OnEditorUpdate()
-    {
-        // Show the correct part model when the visiblePartModel value is changed in editor
-        ShowCorrectPartModel();
-    }
 
     void Start()
     {
