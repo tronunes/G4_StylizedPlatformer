@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2159.245, g: 2262.9941, b: 3284.7812, a: 1}
+  m_IndirectSpecularColor: {r: 2156.5684, g: 2260.543, b: 3282.918, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1294,7 +1294,7 @@ GameObject:
   - component: {fileID: 539816075}
   m_Layer: 0
   m_Name: Cube (12)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1728,7 +1728,7 @@ GameObject:
   - component: {fileID: 736819392}
   m_Layer: 0
   m_Name: Cube (9)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2228,8 +2228,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
+      propertyPath: maxAngle
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
       propertyPath: jumpForce
       value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallJumpDrag
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2244,7 +2254,7 @@ PrefabInstance:
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: slidingLength
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2253,8 +2263,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
+      propertyPath: wallJumpLength
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
       propertyPath: slidingFriction
-      value: 4
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallJumpGravity
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2263,8 +2288,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
+      propertyPath: maxWallJumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallDetectionLegth
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
       propertyPath: maxChargeJumpHeight
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallClingSlideSpeed
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallChargeJumpLength
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: grapplingTongueLauncher
+      value: 
+      objectReference: {fileID: 1767356896}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: maxWallChargeJumpHeight
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2275,6 +2330,11 @@ PrefabInstance:
         type: 3}
       propertyPath: gravityMultiplierPostApex
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7490675023737064836, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
+      propertyPath: wallJumpHorizontalStartVelocity
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
         type: 3}
@@ -2308,7 +2368,7 @@ GameObject:
   - component: {fileID: 865422473}
   m_Layer: 0
   m_Name: Cube (10)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2589,7 +2649,7 @@ GameObject:
   - component: {fileID: 979198834}
   m_Layer: 0
   m_Name: Cube (11)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4474,6 +4534,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9b271746952bd248afc04ffb5f7912e, type: 3}
+--- !u!114 &1767356896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1799006752889930577, guid: 765147221b9d5804399e885852232e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 852452144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1c1306549612242b1ba442db916e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1978514952
 GameObject:
   m_ObjectHideFlags: 0
