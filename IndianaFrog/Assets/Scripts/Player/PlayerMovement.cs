@@ -297,7 +297,8 @@ public class PlayerMovement : MonoBehaviour
                     wallJumpHorizontalVelocity = wallJumpHorizontalStartVelocity;
 
                     // Turn the player character away from the wall they're jumping from
-                    frogMesh.LookAt(frogMesh.position + frontWallHit.normal);
+                    Vector3 newPos = frogMesh.position + frontWallHit.normal;
+                    frogMesh.LookAt(new Vector3(newPos.x, frogMesh.transform.position.y, newPos.z));
 
                     AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
 
@@ -361,7 +362,9 @@ public class PlayerMovement : MonoBehaviour
         // Force the frogMesh to look at the clung-to wall during a cling
         if (clingingState)
         {
-            frogMesh.LookAt(frogMesh.position + -frontWallHit.normal);
+            // Turn the player character away from the wall they're jumping from
+            Vector3 newPos = frogMesh.position + -frontWallHit.normal;
+            frogMesh.LookAt(new Vector3(newPos.x, frogMesh.transform.position.y, newPos.z));
         }
         else
         {
