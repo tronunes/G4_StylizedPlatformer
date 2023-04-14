@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField]
-    private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
 
     //Menu Toggles
     bool cmenuMain = false;
@@ -57,11 +56,6 @@ public class UI : MonoBehaviour
 
         menuCanvas.SetActive(true);
         menuMain.SetActive(currentScene == "Lv0_MainMenu");
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -118,7 +112,7 @@ public class UI : MonoBehaviour
         buttonCloseApp.onClick.AddListener(OnExitClick);
 
         //Pausemenu Buttons
-        buttonContinue.onClick.AddListener(OnPauseInput);
+        //buttonContinue.onClick.AddListener(OnPauseInput);
         buttonPSettings.onClick.AddListener(OnSettingsClick);
         buttonReturnMain.onClick.AddListener(OnExitClick);
 
@@ -141,13 +135,14 @@ public class UI : MonoBehaviour
         SceneManager.LoadScene("MainTesting");
     }
 
-    void OnPauseInput() 
+    public void OnPauseInput() 
     {
         Debug.Log("Pause Input");
         if (menuPause.activeSelf)
         {
             menuPause.SetActive(false);
-            gameManager.UnPause();
+            DisableCursor();
+            if (gameManager.IsPaused()) { gameManager.UnPause(); }
             if (currentScene == "Lv0_MainMenu")
             {
                 menuMain.SetActive(true);
@@ -155,6 +150,7 @@ public class UI : MonoBehaviour
         } else 
         {
             menuPause.SetActive(true);
+            EnableCursor();
             if (currentScene == "Lv0_MainMenu") 
             {
                 menuMain.SetActive(false);
@@ -260,6 +256,19 @@ public class UI : MonoBehaviour
         groupGraphics.SetActive(false);
         groupAudio.SetActive(false);
         groupGameplay.SetActive(true);
+    }
+
+    //move to gameManager if we want to control cursor state globally
+    private void EnableCursor() 
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void DisableCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     //Helpers

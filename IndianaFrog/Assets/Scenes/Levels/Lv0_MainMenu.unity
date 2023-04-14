@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
+  m_IndirectSpecularColor: {r: 262.1853, g: 324.85815, b: 429.9668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf26bc50214a724ba81c1dd974e4a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
 --- !u!1001 &346451542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1044,7 +1045,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5031132679516065252, guid: 294ae7d35f980ad49945823adda2229c,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031132679516065252, guid: 294ae7d35f980ad49945823adda2229c,
+        type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031132679516065252, guid: 294ae7d35f980ad49945823adda2229c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5031132679586047760, guid: 294ae7d35f980ad49945823adda2229c,
@@ -1145,6 +1156,11 @@ PrefabInstance:
     - target: {fileID: 5031132680098019277, guid: 294ae7d35f980ad49945823adda2229c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5031132680310116720, guid: 294ae7d35f980ad49945823adda2229c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5031132680310116720, guid: 294ae7d35f980ad49945823adda2229c,
