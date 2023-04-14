@@ -344,11 +344,16 @@ public class PlayerMovement : MonoBehaviour
         playerPreviousFramePosition = transform.position;
         playerVelocity = Vector3.zero;
         externalVelocity = Vector3.zero;
+        verticalVelocity = 0f;
         isGrounded = false;
 
         chargingJump = false;
         chargeJumpTimer = 0f;
         jumpInputDecayTimer = 0f;
+
+        slidingVelocity = 0f;
+        slidingState = false;
+        slidingInput = false;
 
         frogMesh.localRotation = Quaternion.identity;
     }
