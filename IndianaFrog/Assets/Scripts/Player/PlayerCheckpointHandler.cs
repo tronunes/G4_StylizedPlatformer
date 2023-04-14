@@ -14,6 +14,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
     void Start()
     {
+        latestCheckpoint = null;
         startPosition = transform.position;
         startRotation = transform.rotation;
     }
@@ -105,8 +106,11 @@ public class PlayerCheckpointHandler : MonoBehaviour
         fadeTransitionHandler.event_FadeFinished.RemoveListener(Respawn);
 
         // Respawn the Player
+        // The CharacterController must be disabled or it will override position changes
+        gameObject.GetComponent<CharacterController>().enabled = false;
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
+        gameObject.GetComponent<CharacterController>().enabled = true;
         ResetPlayer();
 
         // Enable input
