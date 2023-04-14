@@ -11,40 +11,37 @@ public class GroundCheck : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         // Grounded
-        if (!collider.gameObject.CompareTag("Player"))
+        if (!collider.gameObject.CompareTag("Player") && !collider.isTrigger)
         {
             overlaps++;
             if (overlaps > 0)
             {
                 playerMovement.SetGroundedState(true);
             }
-        }
 
-        // Parent Character to Platform
-        if (collider.gameObject.CompareTag("Platform"))
-        {
-            // Use the parent of the collider as the parent, so that the collider mesh can be scaled however we want.
-            // The parent's scale needs to be (1,1,1) in order not to skew the Frog
-            playerMovement.ParentToPlatform(collider.transform.parent);
+            // Parent Character to Platform
+            if (collider.gameObject.CompareTag("Platform"))
+            {
+                // Use the parent of the collider as the parent, so that the collider mesh can be scaled however we want.
+                // The parent's scale needs to be (1,1,1) in order not to skew the Frog
+                playerMovement.ParentToPlatform(collider.transform.parent);
+            }
         }
     }
 
     void OnTriggerExit(Collider collider)
     {
         // Ungrounded (i.e. not touching ground)
-        if (!collider.gameObject.CompareTag("Player"))
+        if (!collider.gameObject.CompareTag("Player") && !collider.isTrigger)
         {
             overlaps--;
             if (overlaps == 0)
             {
                 playerMovement.SetGroundedState(false);
-            }
-        }
 
-        // Unparent Character from Platform
-        if (collider.gameObject.CompareTag("Platform"))
-        {
-            playerMovement.ClearParent();
+                // Unparent Character from Platform
+                playerMovement.ClearParent();
+            }
         }
     }
 }
