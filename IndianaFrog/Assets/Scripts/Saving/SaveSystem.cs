@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
@@ -13,16 +12,22 @@ public static class SaveSystem
             completedLevel > previousSaveData._levelCompleted
         )
         {
-            // Initialize binary formatter and file stream
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = new FileStream(GetFilePath(), FileMode.Create);
-
-            // Save the data to a binary file
+            // Serialize the save data to JSON format
             SaveData newSaveData = new SaveData(completedLevel);
-            binaryFormatter.Serialize(fileStream, newSaveData);
+            string jsonData = JsonUtility.ToJson(newSaveData, true);
+
+            // Initialize the file stream and stream writer
+            Directory.CreateDirectory(Path.GetDirectoryName(GetFilePath()));
+            FileStream fileStream = new FileStream(GetFilePath(), FileMode.Create);
+            StreamWriter streamWriter = new StreamWriter(fileStream);
+
+            // Save the data to a JSON file
+            streamWriter.Write(jsonData);
+
+            // Close file stream and writer
+            streamWriter.Close();
             fileStream.Close();
         }
-
     }
 
     public static SaveData LoadGame()
@@ -32,13 +37,19 @@ public static class SaveSystem
         // Case: save found
         if (File.Exists(GetFilePath()))
         {
-            // Initialize binary formatter and file stream
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            // Initialize the file stream and stream reader
             FileStream fileStream = new FileStream(GetFilePath(), FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
 
-            // Load the data from a binary file
-            loadData = binaryFormatter.Deserialize(fileStream) as SaveData;
+            // Load the data from a JSON file
+            string jsonData = streamReader.ReadToEnd();
+
+            // Close file stream and reader
             fileStream.Close();
+            streamReader.Close();
+
+            // Deserialize the JSON data
+            loadData = JsonUtility.FromJson<SaveData>(jsonData);
         }
         // Case: save NOT found
         else
@@ -51,6 +62,6 @@ public static class SaveSystem
 
     private static string GetFilePath()
     {
-        return Application.persistentDataPath + "/save.bin";
+        return Application.persistentDataPath + "/save.json";
     }
 }
