@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float maxAngle;
     [SerializeField] private float wallDetectionLegth;
     [SerializeField] private float sphereCastRadius;
-    [SerializeField] private float wallClingSlideSpeed;
+    [SerializeField] private float wallClingSlideSpeed; // The speed at which the player slides down the wall
     [SerializeField] private bool wallJumpState;
     [SerializeField] private float wallJumpDrag;
     [SerializeField] private float wallJumpLength;
@@ -63,12 +63,12 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpHorizontalVelocity;
     private float wallJumpHorizontalStartVelocity;
     private GameObject previouslyClungWall;
-    private RaycastHit frontWallHit;
+    private RaycastHit frontWallHit; // Stored information from the previous raycast that hit a wall
     private float wallJumpVelocity;
 
     void Start()
     {
-        // SlidingFriction and wallJumpDrag multiplied by ten to keep the friction number small (just looks nicer)
+        // SlidingFriction and wallJumpDrag multiplied by ten to keep the friction numbers small (just looks nicer)
         slidingFriction *= 10;
         wallJumpDrag *= 10;
 
@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
-        // TODO wall cling
+        // If the player isn't on the ground, check if there's a wall in front of them
         if (!isGrounded)
         {
             WallClingCheck();
@@ -199,7 +199,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 ChangeCharacterHeight(1.5f);
             }
-            
         }
 
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
@@ -244,8 +243,10 @@ public class PlayerMovement : MonoBehaviour
             ChangeCharacterHeight(1.5f);
         }
 
+        // If the player is currently in the middle of a wall jump, calculate the externalVelocity 
         if (wallJumpState)
         {
+            // Cut off the externalVelocity jump before either velocity reaches 0, to avoid an abrupt stop
             if (verticalVelocity < 1f || wallJumpHorizontalVelocity < 1f)
             {
                 wallJumpState = false;
@@ -253,6 +254,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                // Detract from both velocities over time
                 wallJumpHorizontalVelocity += wallJumpDrag * Time.fixedDeltaTime;
                 verticalVelocity += wallJumpGravity * Time.fixedDeltaTime;
 
@@ -275,7 +277,7 @@ public class PlayerMovement : MonoBehaviour
             // Also apply constant force downward when grounded, in case of faulty positive isGrounded
             if (clingingState)
             {
-                // TODO comments
+                // If the player is clinging to a wall, drag them downwards at a slower pace
                 verticalVelocity += wallClingSlideSpeed * Time.fixedDeltaTime;
             }
             else
@@ -290,11 +292,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (clingingState)
                 {
-                    // Depending on charge amount, decide which jump to do
+                    // Set velocities for the wall jump
                     verticalVelocity = wallJumpVelocity;
-
                     wallJumpHorizontalVelocity = wallJumpHorizontalStartVelocity;
 
+                    // Turn the player character away from the wall they're jumping from
                     frogMesh.LookAt(frogMesh.position + frontWallHit.normal);
 
                     AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
@@ -340,7 +342,7 @@ public class PlayerMovement : MonoBehaviour
             // Adjust velocity to slope
             movementVector = AdjustVelocityToSlope(movementVector);
 
-            // TODO comments
+            // Lock player's movement to be towards or away from the wall they are clinging to
             if (clingingState)
             {
                 movementVector = LockMovementWhileClinging(movementVector);
@@ -356,6 +358,7 @@ public class PlayerMovement : MonoBehaviour
         // Animate running
         animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
 
+        // Force the frogMesh to look at the clung-to wall during a cling
         if (clingingState)
         {
             frogMesh.LookAt(frogMesh.position + -frontWallHit.normal);
@@ -454,24 +457,34 @@ public class PlayerMovement : MonoBehaviour
         characterController.center = Vector3.up * (characterController.height / 2f);
     }
 
-    // TODO comments
+    // Check if there's a clingable wall in front of the player character
     private void WallClingCheck()
     {
         if(Physics.SphereCast(frogMesh.position, sphereCastRadius, frogMesh.forward, out frontWallHit, wallDetectionLegth))
         {
+            // If the player is already clinging to a wall, keep clinging to it
             if (clingingState)
             {
                 clingingState = true;
             }
             else
             {
-                if (Vector3.Angle(frogMesh.forward, -frontWallHit.normal) <= maxAngle && previouslyClungWall != frontWallHit.collider.gameObject && frontWallHit.collider.gameObject.tag == "ClingableWall")
+                // Check if the player is facing the wall, and if the wall has been clung to before
+                if (Vector3.Angle(frogMesh.forward, -frontWallHit.normal) <= maxAngle && previouslyClungWall != frontWallHit.collider.gameObject && frontWallHit.collider.gameObject.CompareTag("ClingableWall"))
                 {
                     clingingState = true;
+
+                    // Stop player from shooting tongue out during a wall cling
                     grapplingTongueLauncher.ResetTongueLauncher();
                     grapplingTongueLauncher.inputLocked = true;
+
+                    // Set previouslyClungWall so you can't cling to the same wall twice before hitting the ground again
                     previouslyClungWall = frontWallHit.collider.gameObject;
+
+                    // Teleport the player character to the point where the spherecast hit the wall
                     AddExternalVelocity(frontWallHit.point - transform.position);
+
+                    // Stop the player's ascent or descent
                     verticalVelocity = 0f;
                 }
                 else
@@ -488,6 +501,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Get player's movement's velocity in the direction of the clingable wall's normal, and use that instead of the original velocity
     private Vector3 LockMovementWhileClinging(Vector3 velocity)
     {
         Vector3 adjustedVelocity = ( Vector3.Dot(frontWallHit.normal, velocity) / (frontWallHit.normal.magnitude * frontWallHit.normal.magnitude) ) * frontWallHit.normal;
