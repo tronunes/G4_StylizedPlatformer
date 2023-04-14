@@ -6,14 +6,23 @@ public static class SaveSystem
 {
     public static void SaveGame(int completedLevel)
     {
-        // Initialize binary formatter and file stream
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream fileStream = new FileStream(GetFilePath(), FileMode.Create);
+        // Check if an existing save file is OK to overwrite
+        SaveData currentSaveData = LoadGame();
+        if (
+            currentSaveData != null &&
+            completedLevel > currentSaveData._levelCompleted
+        )
+        {
+            // Initialize binary formatter and file stream
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream fileStream = new FileStream(GetFilePath(), FileMode.Create);
 
-        // Save the data to a binary file
-        SaveData saveData = new SaveData(completedLevel);
-        binaryFormatter.Serialize(fileStream, saveData);
-        fileStream.Close();
+            // Save the data to a binary file
+            SaveData newSaveData = new SaveData(completedLevel);
+            binaryFormatter.Serialize(fileStream, newSaveData);
+            fileStream.Close();
+        }
+
     }
 
     public static SaveData LoadGame()

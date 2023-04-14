@@ -28,7 +28,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
         fadeTransitionHandler.Fade();
     }
 
-    public void FinishLevel(string levelName)
+    public void FinishLevel(string levelName, int currentLevelNumber)
     {
         // Disable input
         EnableOrDisablePlayerInput(false);
@@ -36,6 +36,9 @@ public class PlayerCheckpointHandler : MonoBehaviour
         // Create a callback to the "fade finished" event
         UnityAction callback = () => {
             fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
+
+            // Save Player's progress
+            SaveSystem.SaveGame(currentLevelNumber);
 
             // Load a new level when fully faded
             SceneManager.LoadScene(levelName);
