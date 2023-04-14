@@ -7,10 +7,10 @@ public static class SaveSystem
     public static void SaveGame(int completedLevel)
     {
         // Check if an existing save file is OK to overwrite
-        SaveData currentSaveData = LoadGame();
+        SaveData previousSaveData = LoadGame();
         if (
-            currentSaveData != null &&
-            completedLevel > currentSaveData._levelCompleted
+            previousSaveData == null ||
+            completedLevel > previousSaveData._levelCompleted
         )
         {
             // Initialize binary formatter and file stream
