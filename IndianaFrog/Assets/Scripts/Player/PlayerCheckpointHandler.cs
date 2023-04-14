@@ -14,6 +14,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
 
     void Start()
     {
+        latestCheckpoint = null;
         startPosition = transform.position;
         startRotation = transform.rotation;
     }
@@ -28,7 +29,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
         fadeTransitionHandler.Fade();
     }
 
-    public void FinishLevel(string levelName)
+    public void FinishLevel(string levelName, int currentLevelNumber)
     {
         // Disable input
         EnableOrDisablePlayerInput(false);
@@ -36,6 +37,9 @@ public class PlayerCheckpointHandler : MonoBehaviour
         // Create a callback to the "fade finished" event
         UnityAction callback = () => {
             fadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
+
+            // Save Player's progress
+            SaveSystem.SaveGame(currentLevelNumber);
 
             // Load a new level when fully faded
             SceneManager.LoadScene(levelName);
@@ -102,8 +106,11 @@ public class PlayerCheckpointHandler : MonoBehaviour
         fadeTransitionHandler.event_FadeFinished.RemoveListener(Respawn);
 
         // Respawn the Player
+        // The CharacterController must be disabled or it will override position changes
+        gameObject.GetComponent<CharacterController>().enabled = false;
         transform.position = GetRespawnPosition();
         transform.rotation = GetRespawnRotation();
+        gameObject.GetComponent<CharacterController>().enabled = true;
         ResetPlayer();
 
         // Enable input
