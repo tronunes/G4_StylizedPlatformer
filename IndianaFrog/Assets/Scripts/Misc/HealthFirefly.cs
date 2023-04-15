@@ -12,6 +12,8 @@ public class HealthFirefly : MonoBehaviour
     private float randomOffset;
     private bool isBeingReeledIn = false; // When true, the Firefly has been hit by a tongue and is being reeled in
     private Transform tongueTransform; // The tongue, which reels the Firefly in
+    private GameObject player;
+    private GrapplingTongueLauncher launcher; // Player's GrapplingTongueLauncher
 
 
     void Start()
@@ -43,34 +45,27 @@ public class HealthFirefly : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        // Case: being reeled in
-        if (isBeingReeledIn)
-        {
-            PlayerHealth playerHealth = collider.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                // Increase the Player's HP and then destory self
-                playerHealth.AddHealth(1);
-
-                // Disable the Firefly
-                DisableFirefly();
-            }
-        }
         // Case: NOT being reeled in
-        else
+        if (!isBeingReeledIn)
         {
             // Case: a Tongue hit the Firefly
             TongueEnd tongue = collider.gameObject.GetComponent<TongueEnd>();
             if (tongue != null)
             {
                 // Start reeling the Firefly towards the Frog
-                GrapplingTongueLauncher launcher = tongue.GetLauncher();
+                launcher = launcher != null ? launcher : tongue.GetLauncher();
                 launcher.RetractTongue();
                 isBeingReeledIn = true;
                 tongueTransform = tongue.transform;
 
                 // Disable the Firefly's collider
                 gameObject.GetComponent<Collider>().enabled = false;
+
+                // Wait for being fully reeled in
+                launcher.event_TongueFullyRetracted.AddListener(AddHealthToPlayer);
+
+                // Save the Player object for later
+                player = launcher.gameObject;
             }
         }
     }
@@ -86,5 +81,17 @@ public class HealthFirefly : MonoBehaviour
     private void DisableFirefly()
     {
         fireflyMesh.gameObject.SetActive(false);
+    }
+
+    private void AddHealthToPlayer()
+    {
+        // Remove the listener
+        launcher.event_TongueFullyRetracted.RemoveListener(AddHealthToPlayer);
+
+        // Increase the Player's HP and then destory self
+        player.GetComponent<PlayerHealth>().AddHealth(1);
+
+        // Disable the Firefly
+        DisableFirefly();
     }
 }
