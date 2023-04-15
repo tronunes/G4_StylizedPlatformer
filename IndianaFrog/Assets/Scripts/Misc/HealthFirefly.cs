@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class HealthFirefly : MonoBehaviour
 {
+    [Header("Technical")]
     public Transform fireflyMesh;
     public Transform parentTransfrom; // The topmost object of the Firefly hierarchy
 
+    [Header("Firefly movement")]
     [Tooltip("How frequently the Firefly changes directions")] public float oscillateFrequency = 4;
     [Tooltip("Firefly movement radius")] [Range(0f, 1f)] public float movementRadius = 0.5f;
+
     private float randomOffset;
     private bool isBeingReeledIn = false; // When true, the Firefly has been hit by a tongue and is being reeled in
     private Transform tongueTransform; // The tongue, which reels the Firefly in
