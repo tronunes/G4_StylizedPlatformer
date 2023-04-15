@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
     [SerializeField] private float terminalVelocity = -5f; // Has to be a negative value
-    [SerializeField] private float gravity = -10f;
+    [SerializeField] private float gravity = -10f; // Has to be a negative value
 
     [Header("Jumping values")]
     [SerializeField] private float gravityMultiplierPostApex = 5f;
@@ -51,14 +51,14 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Wall -cling and -jump values")]
     [SerializeField] private bool clingingState;
-    [SerializeField] private float maxAngle;
-    [SerializeField] private float wallDetectionLegth;
+    [SerializeField] private float maxAngle; // Determines how large the angle between the character's facing direction and the face of the wall can be
+    [SerializeField] private float wallDetectionLength;
     [SerializeField] private float sphereCastRadius;
     [SerializeField] private float wallClingSlideSpeed; // The speed at which the player slides down the wall
     [SerializeField] private bool wallJumpState;
-    [SerializeField] private float wallJumpDrag;
+    [SerializeField] private float wallJumpDrag; // Has to be a negative value
     [SerializeField] private float wallJumpLength;
-    [SerializeField] private float wallJumpGravity;
+    [SerializeField] private float wallJumpGravity; // Has to be a negative value
     [SerializeField] private float maxWallJumpHeight;
     private float wallJumpHorizontalVelocity;
     private float wallJumpHorizontalStartVelocity;
@@ -148,9 +148,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (clingingState)
+            {
+                grapplingTongueLauncher.inputLocked = false;
+            }
             clingingState = false;
             previouslyClungWall = null;
-            grapplingTongueLauncher.inputLocked = false;
         }
 
         // Set the character's slidingState to true, and set its height and velocity
@@ -468,7 +471,7 @@ public class PlayerMovement : MonoBehaviour
     // Check if there's a clingable wall in front of the player character
     private void WallClingCheck()
     {
-        if(Physics.SphereCast(frogMesh.position, sphereCastRadius, frogMesh.forward, out frontWallHit, wallDetectionLegth))
+        if(Physics.SphereCast(frogMesh.position, sphereCastRadius, frogMesh.forward, out frontWallHit, wallDetectionLength))
         {
             // If the player is already clinging to a wall, keep clinging to it
             if (clingingState)
@@ -477,7 +480,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                // Check if the player is facing the wall, and if the wall has been clung to before
+                // Check that the player is facing the wall, and that the wall has not been clung to before
                 if (Vector3.Angle(frogMesh.forward, -frontWallHit.normal) <= maxAngle && previouslyClungWall != frontWallHit.collider.gameObject && frontWallHit.collider.gameObject.CompareTag("ClingableWall"))
                 {
                     clingingState = true;
@@ -486,7 +489,7 @@ public class PlayerMovement : MonoBehaviour
                     grapplingTongueLauncher.ResetTongueLauncher();
                     grapplingTongueLauncher.inputLocked = true;
 
-                    // Set previouslyClungWall so you can't cling to the same wall twice before hitting the ground again
+                    // Set previouslyClungWall so you can't cling to the same wall twice in a row before hitting the ground again
                     previouslyClungWall = frontWallHit.collider.gameObject;
 
                     // Teleport the player character to the point where the spherecast hit the wall
