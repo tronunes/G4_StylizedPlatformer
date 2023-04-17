@@ -44,6 +44,11 @@ public class TongueEnd : MonoBehaviour
         launcher = givenLauncher;
     }
 
+    public GrapplingTongueLauncher GetLauncher()
+    {
+        return launcher;
+    }
+
     void FixedUpdate()
     {
         // Prevent the Tongue from going through surfaces when velocity is very high and surface very thin

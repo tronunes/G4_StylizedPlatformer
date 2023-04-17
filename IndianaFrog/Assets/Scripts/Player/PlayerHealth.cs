@@ -27,9 +27,9 @@ public class PlayerHealth : MonoBehaviour
 	{
 		// probably not needed but should prevent integer overflow accidents if they would happen
 		healthToAdd = Mathf.Min(healthToAdd, maxHealth - currentHealth);
+		featherManager.AddFeather(currentHealth, "AddHealth");
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
-		featherManager.AddFeather(currentHealth, "AddHealth");
 	}
 
 	public void SubtractHealth(int healthToSubtract)

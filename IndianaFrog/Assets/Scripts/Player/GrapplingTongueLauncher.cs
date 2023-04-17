@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GrapplingTongueLauncher : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
     private bool canShootTongue = true; // Require touching ground before shooting the Tongue again
+
+    [Header("Events")]
+    public UnityEvent event_TongueFullyRetracted = new UnityEvent(); // Triggers when fully retracted
 
     void Start()
     {
@@ -78,6 +82,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
             if (currentTongueDistance < 0.2f || currentTongueDistance > tonguePreviousDistance)
             {
                 DestroyTongueEnd();
+
+                // Trigger the event
+                event_TongueFullyRetracted.Invoke();
             }
             else
             {

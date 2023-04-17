@@ -12,9 +12,9 @@ public class FeatherManager : MonoBehaviour
     private GameObject currentFeather;
     private SkinnedMeshRenderer currentFeatherRenderer;
 
-    [Header("FEATHER DAMAGE")]
+    [Header("FEATHER BLINKING")]
     [Tooltip("How many times feather blinks")]
-    public int blinksFeather = 3; //how many times feather blinks
+    public int featherBlinkCount = 3; //how many times feather blinks
     public float blinkSpeed = 0.1f;
 
     void Awake()
@@ -70,7 +70,7 @@ public class FeatherManager : MonoBehaviour
             if (eventName.Equals("SubtractHealth"))
             {
                 //handle blinking current feather
-                for (int i = 0; i < blinksFeather; i++)
+                for (int i = 0; i < featherBlinkCount; i++)
                 {
                     currentFeatherRenderer.enabled = (false);
                     yield return new WaitForSeconds(blinkSpeed);
@@ -85,7 +85,7 @@ public class FeatherManager : MonoBehaviour
             else if (eventName.Equals("AddHealth"))
             {
                 //handle blinking current feather
-                for (int i = 0; i < blinksFeather; i++)
+                for (int i = 0; i < featherBlinkCount; i++)
                 {
                     currentFeatherRenderer.enabled = (true);
                     yield return new WaitForSeconds(blinkSpeed);
