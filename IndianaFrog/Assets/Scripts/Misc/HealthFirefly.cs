@@ -7,6 +7,7 @@ public class HealthFirefly : MonoBehaviour
     [Header("Technical")]
     public Transform fireflyMesh;
     public Transform parentTransfrom; // The topmost object of the Firefly hierarchy
+    public GameObject eatenParticleEffectPrefab; // The particles which will spawn when the Firefly is eaten
 
     [Header("Firefly movement")]
     [Tooltip("How frequently the Firefly changes directions")] public float oscillateFrequency = 4;
@@ -93,6 +94,9 @@ public class HealthFirefly : MonoBehaviour
 
         // Increase the Player's HP and then destory self
         player.GetComponent<PlayerHealth>().AddHealth(1);
+
+        // Show particle effect
+        Instantiate(eatenParticleEffectPrefab, fireflyMesh.position, Quaternion.identity);
 
         // Disable the Firefly
         DisableFirefly();

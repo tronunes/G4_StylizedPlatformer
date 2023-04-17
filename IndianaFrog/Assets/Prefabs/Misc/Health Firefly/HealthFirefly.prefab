@@ -61,6 +61,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireflyMesh: {fileID: 5374732792582685824}
   parentTransfrom: {fileID: 628463818972383522}
+  eatenParticleEffectPrefab: {fileID: 2895557179624906120, guid: 6bec9cd754b855e4ebb35611a5898139,
+    type: 3}
   oscillateFrequency: 4
   movementRadius: 0.5
 --- !u!1 &2511040909080994820
