@@ -8,6 +8,7 @@ public class HealthFirefly : MonoBehaviour
     public Transform fireflyMesh;
     public Transform parentTransfrom; // The topmost object of the Firefly hierarchy
     public GameObject eatenParticleEffectPrefab; // The particles which will spawn when the Firefly is eaten
+    public GameObject fireflyParticles; // The particles around the Firefly
 
     [Header("Firefly movement")]
     [Tooltip("How frequently the Firefly changes directions")] public float oscillateFrequency = 4;
@@ -62,8 +63,9 @@ public class HealthFirefly : MonoBehaviour
                 isBeingReeledIn = true;
                 tongueTransform = tongue.transform;
 
-                // Disable the Firefly's collider
+                // Disable the Firefly's collider and particles
                 gameObject.GetComponent<Collider>().enabled = false;
+                fireflyParticles.SetActive(false);
 
                 // Wait for being fully reeled in
                 launcher.event_TongueFullyRetracted.AddListener(AddHealthToPlayer);
@@ -80,6 +82,7 @@ public class HealthFirefly : MonoBehaviour
         gameObject.GetComponent<Collider>().enabled = true;
         isBeingReeledIn = false;
         tongueTransform = null;
+        fireflyParticles.SetActive(true);
     }
 
     private void DisableFirefly()
