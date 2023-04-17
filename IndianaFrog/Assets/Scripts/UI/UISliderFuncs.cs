@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class UISliderFuncs : MonoBehaviour
 {
+    GameObject gameManager;
+    void Awake() 
+    {
+        gameManager = GameObject.Find("GameManager");
+    }
+    
     public void SetQuality(System.Single qualityIndex)
     {
         switch (qualityIndex)
         {
             case 0:
-                QualitySettings.SetQualityLevel(0, true);
+                gameManager.GetComponent<GameManager>().SetQuality(0);
                 Debug.Log("Quality set to: " + QualitySettings.names[0]);
                 break;
             case 1:
-                QualitySettings.SetQualityLevel(1, true);
+                gameManager.GetComponent<GameManager>().SetQuality(1);
                 Debug.Log("Quality set to: " + QualitySettings.names[1]);
                 break;
             case 2:
-                QualitySettings.SetQualityLevel(2, true);
+                gameManager.GetComponent<GameManager>().SetQuality(2);
                 Debug.Log("Quality set to: " + QualitySettings.names[2]);
                 break;
         }
@@ -26,19 +32,18 @@ public class UISliderFuncs : MonoBehaviour
     public void SetMasterVol(System.Single value)
     {
         AudioListener.volume = value;
+        gameManager.GetComponent<GameManager>().SetAudio(master: value);
         Debug.Log("Master Volume set to: " + value);
     }
 
     public void SetFXVol(System.Single value)
     {
-        //needs to change some global multiplier
-        
+        gameManager.GetComponent<GameManager>().SetAudio(fx: value);
     }
 
     public void SetMusicVol(System.Single value)
     {
-        //needs to change some global multiplier 
-        
+        gameManager.GetComponent<GameManager>().SetAudio(music: value);
     }
 
 }

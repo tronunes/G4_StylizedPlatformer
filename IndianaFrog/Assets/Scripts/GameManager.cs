@@ -9,6 +9,13 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    //Graphics Quality preset
+    private int gcQuality = 2;
+    //Audio Settings
+    private float audioMaster = 1f;
+    private float audioFX = 1f;
+    private float audioMusic= 1f;
+
     private void Awake()
     {
         if (instance == null)
@@ -38,6 +45,42 @@ public class GameManager : MonoBehaviour
     public bool IsPaused()
     {
         return isPaused;
+    }
+
+    public void SetQuality(int quality)
+    {
+        if (quality >= 0 && quality <= 2)
+        {
+            gcQuality = quality;
+            QualitySettings.SetQualityLevel(quality, true);
+        }
+        else
+        {
+            Debug.Log("Invalid quality index");
+        }
+        
+    }
+
+    public void SetAudio(float master = 1f, float fx = 1f, float music = 1f)
+    {
+        audioMaster = master;
+        audioFX = fx;
+        audioMusic = music;
+    }
+
+    public float GetAudio(string type)
+    {
+        switch (type)
+        {
+            case "master":
+                return audioMaster;
+            case "fx":
+                return audioFX;
+            case "music":
+                return audioMusic;
+            default:
+                return 0f;
+        }
     }
 
     void Update()

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+
 public class UI : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
@@ -19,6 +20,7 @@ public class UI : MonoBehaviour
     GameObject menuMain;
     GameObject menuPause;
     GameObject menuSettings;
+    GameObject menuLevel;
     //GameObjects Layout Groups
     GameObject groupGraphics;
     GameObject groupAudio;
@@ -39,31 +41,49 @@ public class UI : MonoBehaviour
     Button buttonGameplay;
 
     string currentScene; // Current scene name
+    string joystick; //Should return a string for connected controller, "" if none connected
 
     void Awake()
     {
         bindUIVariables();
         bindEventListeners();
-        
+        joystick = Input.GetJoystickNames()[0];
+
         //buttonExit = GameObject.Find("Canvas/Menu_Main/TMPButton_Exit");
         Debug.Log(menuMain);
 
         //listeners
 
-
-        List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings};
+        List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel};
         deActivateObjects(uiObjects);
 
         menuCanvas.SetActive(true);
         menuMain.SetActive(currentScene == "Lv0_MainMenu");
+        if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+        {
+            buttonPlay.Select();
+        }
+        else { EnableCursor(); }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Pause"))
         {
             OnPauseInput();
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (menuPause.activeSelf)
+            {
+                OnPauseInput();
+            }
+            else if (menuSettings.activeSelf)
+            {
+                OnSettingsClick();
+            }
         }
 
     }
@@ -78,6 +98,7 @@ public class UI : MonoBehaviour
         menuMain = GameObject.Find("Menu_Main");
         menuPause = GameObject.Find("Canvas/Menu_Pause");
         menuSettings = GameObject.Find("Canvas/Menu_Settings");
+        menuLevel = GameObject.Find("Canvas/Menu_Level");
 
         //Layout Groups
         groupGraphics = GameObject.Find("Canvas/Menu_Settings/GraphicsGroup");
@@ -105,17 +126,6 @@ public class UI : MonoBehaviour
 
     private void bindEventListeners()
     {
-        //Mainmenu Buttons
-        buttonPlay.onClick.AddListener(OnPlayClick);
-        buttonMSettings.onClick.AddListener(OnSettingsClick);
-        buttonCredits.onClick.AddListener(OnButtonClick);
-        buttonCloseApp.onClick.AddListener(OnExitClick);
-
-        //Pausemenu Buttons
-        //buttonContinue.onClick.AddListener(OnPauseInput);
-        buttonPSettings.onClick.AddListener(OnSettingsClick);
-        buttonReturnMain.onClick.AddListener(OnExitClick);
-
         //Settingsmenu Buttons
         buttonClose.onClick.AddListener(OnSettingsClick);
         buttonGraphics.onClick.AddListener(OnGraphicsClick);
@@ -129,7 +139,7 @@ public class UI : MonoBehaviour
         Debug.Log("Button Clicked");
     }
 
-    void OnPlayClick()
+    public void OnPlayClick()
     {
         Debug.Log("Play Clicked");
         SceneManager.LoadScene("MainTesting");
@@ -140,17 +150,18 @@ public class UI : MonoBehaviour
         Debug.Log("Pause Input");
         if (menuPause.activeSelf)
         {
-            menuPause.SetActive(false);
             DisableCursor();
+            menuPause.SetActive(false);
             if (gameManager.IsPaused()) { gameManager.UnPause(); }
-            if (currentScene == "Lv0_MainMenu")
-            {
-                menuMain.SetActive(true);
-            }
+            if (currentScene == "Lv0_MainMenu") { menuMain.SetActive(true); }
         } else 
         {
+            if ( !(joystick = Input.GetJoystickNames()[0]).Equals("") )
+            {
+                buttonContinue.Select();
+            } else { EnableCursor(); }
+
             menuPause.SetActive(true);
-            EnableCursor();
             if (currentScene == "Lv0_MainMenu") 
             {
                 menuMain.SetActive(false);
@@ -162,50 +173,32 @@ public class UI : MonoBehaviour
         }
     }
 
-    void OnExitClick() 
+    public void OnExitClick() 
     {
         Debug.Log("Exit or Quit Clicked");
         if (menuPause.activeSelf)
         {
             gameManager.UnPause();
             SceneManager.LoadScene("Lv0_MainMenu");
+            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            {
+                buttonContinue.Select();
+            }
+            else { EnableCursor(); }
         } else
         {
             Application.Quit();
         }
     }
 
-    void OnSettingsClickk() 
+    public void OnSettingsClick() 
     {
-        Debug.Log("Settings Clicked");
-        if (menuSettings.activeSelf)
-        {
-            menuSettings.SetActive(false);
-            groupGraphics.SetActive(false);
-            groupAudio.SetActive(false);
-            groupGameplay.SetActive(false);
-        } else 
-        {
-            if (currentScene == "Lv0_MainMenu" && menuPause.activeSelf == true)
+        if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
             {
-                menuSettings.SetActive(true);
-                groupGraphics.SetActive(true);
-                groupAudio.SetActive(false);
-                groupGameplay.SetActive(false);
-                menuPause.SetActive(false);
-            } 
-            {
-
+                buttonGraphics.Select();
             }
-            menuSettings.SetActive(true);
-            groupGraphics.SetActive(true);
-            groupAudio.SetActive(false);
-            groupGameplay.SetActive(false);
-        }
-    }
+            else { EnableCursor(); }
 
-    void OnSettingsClick() 
-    {
         if (menuSettings.activeSelf == false && currentScene == "Lv0_MainMenu")
         {
             menuSettings.SetActive(true);
@@ -214,6 +207,11 @@ public class UI : MonoBehaviour
             groupGameplay.SetActive(false);
         } else if (menuSettings.activeSelf == true && currentScene == "Lv0_MainMenu")
         {
+            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            {
+                buttonPlay.Select();
+            }
+            else { EnableCursor(); }
             menuSettings.SetActive(false);
             groupGraphics.SetActive(false);
             groupAudio.SetActive(false);
@@ -227,6 +225,11 @@ public class UI : MonoBehaviour
             menuPause.SetActive(false);
         } else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
         {
+            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            {
+                buttonContinue.Select();
+            }
+            else { EnableCursor(); }
             menuSettings.SetActive(false);
             groupGraphics.SetActive(false);
             groupAudio.SetActive(false);
