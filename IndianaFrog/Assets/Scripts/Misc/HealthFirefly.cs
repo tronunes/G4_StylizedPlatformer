@@ -7,14 +7,14 @@ public class HealthFirefly : MonoBehaviour
     [Header("Technical")]
     public Transform fireflyMesh;
     public Transform parentTransfrom; // The topmost object of the Firefly hierarchy
-    public GameObject eatenParticleEffectPrefab; // The particles which will spawn when the Firefly is eaten
+    public GameObject eatenParticleEffectPrefab; // Prefab of the particles which will spawn when the Firefly is eaten
     public GameObject fireflyParticles; // The particles around the Firefly
 
     [Header("Firefly movement")]
-    [Tooltip("How frequently the Firefly changes directions")] public float oscillateFrequency = 4;
+    [Tooltip("How frequently the Firefly changes directions")] public float oscillateFrequency = 1;
     [Tooltip("Firefly movement radius")] [Range(0f, 1f)] public float movementRadius = 0.5f;
 
-    private float randomOffset;
+    private float randomOffset; // Variations for the Perlin noise to make many Fireflies fly differently
     private bool isBeingReeledIn = false; // When true, the Firefly has been hit by a tongue and is being reeled in
     private Transform tongueTransform; // The tongue, which reels the Firefly in
     private GameObject player;
@@ -33,9 +33,10 @@ public class HealthFirefly : MonoBehaviour
         // Case: being reeled in by a Tongue
         if (isBeingReeledIn && tongueTransform != null)
         {
+            // Attach the Firefly to the Tongue
             fireflyMesh.transform.position = tongueTransform.position;
         }
-        // Case: Normal Firefly life
+        // Case: Normal Firefly life -> oscillate around a center point chaotically
         else
         {
             // The "10f", "200f" and "3000f" are arbitrary. They are supposed to be different to produce different Perlin values.

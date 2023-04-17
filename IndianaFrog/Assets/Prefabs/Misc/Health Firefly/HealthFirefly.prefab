@@ -281,7 +281,7 @@ MonoBehaviour:
   eatenParticleEffectPrefab: {fileID: 2895557179624906120, guid: 6bec9cd754b855e4ebb35611a5898139,
     type: 3}
   fireflyParticles: {fileID: 6520118415244602857}
-  oscillateFrequency: 4
+  oscillateFrequency: 1
   movementRadius: 0.5
 --- !u!1 &2511040909080994820
 GameObject:
