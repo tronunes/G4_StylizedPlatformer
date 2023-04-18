@@ -116,6 +116,13 @@ public class PlayerCheckpointHandler : MonoBehaviour
         // Enable input
         EnableOrDisablePlayerInput(true);
 
+        // Respawn all Fireflies
+        GameObject[] fireflies = GameObject.FindGameObjectsWithTag("HealthFirefly");
+        foreach(GameObject firefly in fireflies)
+        {
+            firefly.GetComponent<HealthFirefly>().RespawnFirefly();
+        }
+
         // Start unfading
         fadeTransitionHandler.UnFade();
     }

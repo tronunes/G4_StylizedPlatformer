@@ -175,15 +175,26 @@ MonoBehaviour:
   animator: {fileID: 2131154259457372300}
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
+  grapplingTongueLauncher: {fileID: 1799006752889930577}
   inputLocked: 0
-  gravity: -10
   movementSpeed: 6
-  maxJumpHeight: 1.2
-  maxChargeJumpHeight: 5
-  gravityMultiplierPostApex: 1
-  terminalVelocity: -12
+  terminalVelocity: -16
+  gravity: -15
+  gravityMultiplierPostApex: 2
+  maxJumpHeight: 1.5
+  maxChargeJumpHeight: 4
   slidingFriction: 1
   slidingLength: 8
+  clingingState: 0
+  maxAngle: 60
+  wallDetectionLength: 0.4
+  sphereCastRadius: 0.1
+  wallClingSlideSpeed: -2
+  wallJumpState: 0
+  wallJumpDrag: -1
+  wallJumpLength: 5
+  wallJumpGravity: -15
+  maxWallJumpHeight: 2
 --- !u!114 &2070319886851112046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4835533548001883589}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.027, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -444,7 +455,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.31
+  m_Radius: 0.33
   m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!114 &6314123820856467936
 MonoBehaviour:
