@@ -21,8 +21,11 @@ public class KillProjectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		// needs a small delay after contact to blend in better with explosion vfx
-		Destroy(this.gameObject, projectileDestroyDelayTime);
+		if (!other.isTrigger)
+		{
+			// needs a small delay after contact to blend in better with explosion vfx
+			Destroy(this.gameObject, projectileDestroyDelayTime);
+		}
 	}
 
 }

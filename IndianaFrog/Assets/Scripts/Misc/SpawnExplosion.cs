@@ -9,6 +9,9 @@ public class SpawnExplosion : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Instantiate(explosionObj, this.transform.position, this.transform.rotation);
+		if (!other.isTrigger)
+		{
+			Instantiate(explosionObj, this.transform.position, this.transform.rotation);
+		}
 	}
 }
