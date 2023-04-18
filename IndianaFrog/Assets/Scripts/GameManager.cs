@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    //Input
+    private float joystickSensitivity = 1f;
     //Graphics Quality preset
     private int gcQuality = 2;
     //Audio Settings
@@ -61,11 +63,22 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void SetAudio(float master = 1f, float fx = 1f, float music = 1f)
+    public void SetAudioMaster(float volumeMaster)
     {
-        audioMaster = master;
-        audioFX = fx;
-        audioMusic = music;
+        audioMaster = volumeMaster;
+        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
+    }
+
+    public void SetAudioFX(float volumeFX)
+    {
+        audioFX = volumeFX;
+        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
+    }
+
+    public void SetAudioMusic(float volumeMusic)
+    {
+        audioMusic = volumeMusic;
+        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
     }
 
     public float GetAudio(string type)

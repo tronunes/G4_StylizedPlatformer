@@ -29,21 +29,24 @@ public class UISliderFuncs : MonoBehaviour
         }
     }
 
-    public void SetMasterVol(System.Single value)
+    public void SetJSSensitivity(System.Single sensitivity)
     {
-        AudioListener.volume = value;
-        gameManager.GetComponent<GameManager>().SetAudio(master: value);
-        Debug.Log("Master Volume set to: " + value);
+
     }
 
-    public void SetFXVol(System.Single value)
+    public void SetMasterVol(System.Single volumeMaster)
     {
-        gameManager.GetComponent<GameManager>().SetAudio(fx: value);
+        gameManager.GetComponent<GameManager>().SetAudioMaster(volumeMaster);
     }
 
-    public void SetMusicVol(System.Single value)
+    public void SetFXVol(System.Single volumeFX)
     {
-        gameManager.GetComponent<GameManager>().SetAudio(music: value);
+        gameManager.GetComponent<GameManager>().SetAudioFX(volumeFX);
+    }
+
+    public void SetMusicVol(System.Single volumeMusic)
+    {
+        gameManager.GetComponent<GameManager>().SetAudioMusic(volumeMusic);
     }
 
 }

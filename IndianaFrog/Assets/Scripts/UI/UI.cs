@@ -14,6 +14,9 @@ public class UI : MonoBehaviour
     bool cmenuMain = false;
     bool cmenuPause = false;
     bool cmenuSettings = false;
+
+    //Save state
+    int highestLevelCompleted = 1;
     
     //GameObjects Manu Prefabs
     GameObject menuCanvas;
@@ -39,6 +42,8 @@ public class UI : MonoBehaviour
     Button buttonGraphics;
     Button buttonAudio;
     Button buttonGameplay;
+    //Level buttons
+    Button[] buttonLevel;
 
     string currentScene; // Current scene name
     string joystick; //Should return a string for connected controller, "" if none connected
@@ -47,7 +52,8 @@ public class UI : MonoBehaviour
     {
         bindUIVariables();
         bindEventListeners();
-        joystick = Input.GetJoystickNames()[0];
+        //highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
+        joystick = trycatchController();
 
         //buttonExit = GameObject.Find("Canvas/Menu_Main/TMPButton_Exit");
         Debug.Log(menuMain);
@@ -59,7 +65,17 @@ public class UI : MonoBehaviour
 
         menuCanvas.SetActive(true);
         menuMain.SetActive(currentScene == "Lv0_MainMenu");
-        if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+
+        for (int i= 0; i< buttonLevel.Length; i++)
+        {
+            if (i > highestLevelCompleted)
+            {
+                buttonLevel[i].interactable = false;
+                //buttonLevel[i].
+            }
+        }
+
+        if (trycatchController() != "")
         {
             buttonPlay.Select();
         }
@@ -117,11 +133,13 @@ public class UI : MonoBehaviour
         buttonReturnMain = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
 
         //Buttons SettingsMenu
-        buttonClose = GameObject.Find("Canvas/Menu_Settings/TMPButton_Close").GetComponent<Button>();
-        buttonGraphics = GameObject.Find("Canvas/Menu_Settings/SettingsButtonsLayout/TMPButton_Graphics").GetComponent<Button>();
-        buttonAudio = GameObject.Find("Canvas/Menu_Settings/SettingsButtonsLayout/TMPButton_Audio").GetComponent<Button>();
-        buttonGameplay = GameObject.Find("Canvas/Menu_Settings/SettingsButtonsLayout/TMPButton_Gameplay").GetComponent<Button>();
+        buttonClose = GameObject.Find("Canvas/Menu_Settings/BottomBarGroup/TMPButton_Close").GetComponent<Button>();
+        buttonGraphics = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Graphics").GetComponent<Button>();
+        buttonAudio = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Audio").GetComponent<Button>();
+        buttonGameplay = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Gameplay").GetComponent<Button>();
 
+        //Get Level buttons
+        buttonLevel = GameObject.Find("Canvas/Menu_Level/LevelLayoutGroup").GetComponentsInChildren<Button>();
     }
 
     private void bindEventListeners()
@@ -141,8 +159,17 @@ public class UI : MonoBehaviour
 
     public void OnPlayClick()
     {
-        Debug.Log("Play Clicked");
-        SceneManager.LoadScene("MainTesting");
+        Debug.Log($"Play Clicked, highest level {highestLevelCompleted}");
+        if (highestLevelCompleted != 0)
+        {
+            Debug.Log("Load Level " + highestLevelCompleted);
+            Debug.Log("Load Level Riku");
+            menuLevel.SetActive(true);
+        } 
+        else 
+        {
+            Debug.Log("No levels completed");
+        }
     }
 
     public void OnPauseInput() 
@@ -156,7 +183,7 @@ public class UI : MonoBehaviour
             if (currentScene == "Lv0_MainMenu") { menuMain.SetActive(true); }
         } else 
         {
-            if ( !(joystick = Input.GetJoystickNames()[0]).Equals("") )
+            if ( trycatchController() != "" )
             {
                 buttonContinue.Select();
             } else { EnableCursor(); }
@@ -180,7 +207,7 @@ public class UI : MonoBehaviour
         {
             gameManager.UnPause();
             SceneManager.LoadScene("Lv0_MainMenu");
-            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            if ( trycatchController() != "" )
             {
                 buttonContinue.Select();
             }
@@ -193,7 +220,7 @@ public class UI : MonoBehaviour
 
     public void OnSettingsClick() 
     {
-        if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+        if ( trycatchController() != "" )
             {
                 buttonGraphics.Select();
             }
@@ -207,7 +234,7 @@ public class UI : MonoBehaviour
             groupGameplay.SetActive(false);
         } else if (menuSettings.activeSelf == true && currentScene == "Lv0_MainMenu")
         {
-            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            if ( trycatchController() != "" )
             {
                 buttonPlay.Select();
             }
@@ -225,7 +252,7 @@ public class UI : MonoBehaviour
             menuPause.SetActive(false);
         } else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
         {
-            if (!(joystick = Input.GetJoystickNames()[0]).Equals(""))
+            if ( trycatchController() != "" )
             {
                 buttonContinue.Select();
             }
@@ -261,6 +288,12 @@ public class UI : MonoBehaviour
         groupGameplay.SetActive(true);
     }
 
+    public void OnLevelClick(System.String levelName) 
+    {
+        Debug.Log($"Level Clicked: {levelName}");
+        SceneManager.LoadScene(levelName);
+    }
+
     //move to gameManager if we want to control cursor state globally
     private void EnableCursor() 
     {
@@ -282,5 +315,19 @@ public class UI : MonoBehaviour
             obj.SetActive(false);
         }
 
+    }
+
+    public string trycatchController()
+    {
+        try
+        {
+            joystick = Input.GetJoystickNames()[0];
+            return joystick;
+        }
+        catch (System.IndexOutOfRangeException)
+        {
+            Debug.Log("No Controller");
+            return "";
+        }
     }
 }
