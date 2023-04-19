@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8505028987084016204}
   - component: {fileID: 8505028987084016207}
   - component: {fileID: 3697360369350162006}
+  - component: {fileID: 3148244278256602308}
   m_Layer: 9
   m_Name: LavaPool
   m_TagString: Untagged
@@ -111,3 +112,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3148244278256602308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8505028987084016209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: -0.3, z: 0}
