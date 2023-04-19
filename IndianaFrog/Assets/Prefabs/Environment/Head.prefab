@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1112358722710908076
 Transform:
@@ -104,8 +104,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigSquare_low
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f11f8f054791ef84db99d920e4af438b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f11f8f054791ef84db99d920e4af438b, type: 3}
+--- !u!1 &3873604614458232936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f11f8f054791ef84db99d920e4af438b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4107466539825229113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &8003111223888585817
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873604614458232936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.75
+  m_Height: 2.9507499
+  m_Direction: 1
+  m_Center: {x: -0.008830042, y: 0.011184394, z: 0}
 --- !u!4 &4506447857475685074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f11f8f054791ef84db99d920e4af438b,
