@@ -8,59 +8,65 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private GameManager gameManager;
+    string joystick; //Should return a string for connected controller, "" if none connected
 
-    //Menu Toggles
+    //Menu States
+    string currentScene; // Current scene name
     bool cmenuMain = false;
     bool cmenuPause = false;
     bool cmenuSettings = false;
+    bool cmenuLevel = false;
 
     //Save state
     int highestLevelCompleted = 1;
     
-    //GameObjects Manu Prefabs
+    //GameObjects Menu Prefabs
     GameObject menuCanvas;
     GameObject menuMain;
     GameObject menuPause;
     GameObject menuSettings;
     GameObject menuLevel;
+    GameObject menuCredits;
+    
     //GameObjects Layout Groups
     GameObject groupGraphics;
     GameObject groupAudio;
     GameObject groupGameplay;
+    
     //Buttons MainMenu
     Button buttonPlay;
     Button buttonMSettings;
     Button buttonCredits;
     Button buttonCloseApp;
     Button buttonClose;
+    
     //Buttons PauseMenu
     Button buttonContinue;
     Button buttonPSettings;
     Button buttonReturnMain;
+    
     //Buttons SettingsMenu
     Button buttonGraphics;
     Button buttonAudio;
     Button buttonGameplay;
+    
     //Level buttons
     Button[] buttonLevel;
 
-    string currentScene; // Current scene name
-    string joystick; //Should return a string for connected controller, "" if none connected
-
     void Awake()
     {
+        
         bindUIVariables();
         bindEventListeners();
         //highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
         joystick = trycatchController();
 
-        //buttonExit = GameObject.Find("Canvas/Menu_Main/TMPButton_Exit");
+        //buttonExit = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Exit");
         Debug.Log(menuMain);
 
         //listeners
 
-        List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel};
+        List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel, menuCredits};
         deActivateObjects(uiObjects);
 
         menuCanvas.SetActive(true);
@@ -108,38 +114,39 @@ public class UI : MonoBehaviour
     private void bindUIVariables()
     {
         currentScene = SceneManager.GetActiveScene().name;
-        menuCanvas = GameObject.Find("Canvas");
+        menuCanvas = GameObject.Find("Menu_Canvas");
 
         //Menu Prefabs
-        menuMain = GameObject.Find("Menu_Main");
-        menuPause = GameObject.Find("Canvas/Menu_Pause");
-        menuSettings = GameObject.Find("Canvas/Menu_Settings");
-        menuLevel = GameObject.Find("Canvas/Menu_Level");
+        menuMain = GameObject.Find("Menu_Canvas/Menu_Main");
+        menuPause = GameObject.Find("Menu_Canvas/Menu_Pause");
+        menuSettings = GameObject.Find("Menu_Canvas/Menu_Settings");
+        menuLevel = GameObject.Find("Menu_Canvas/Menu_Level");
+        menuCredits = GameObject.Find("Menu_Canvas/Menu_Credits");
 
         //Layout Groups
-        groupGraphics = GameObject.Find("Canvas/Menu_Settings/GraphicsGroup");
-        groupAudio = GameObject.Find("Canvas/Menu_Settings/AudioGroup");
-        groupGameplay = GameObject.Find("Canvas/Menu_Settings/GameplayGroup");
+        groupGraphics = GameObject.Find("Menu_Canvas/Menu_Settings/GraphicsGroup");
+        groupAudio = GameObject.Find("Menu_Canvas/Menu_Settings/AudioGroup");
+        groupGameplay = GameObject.Find("Menu_Canvas/Menu_Settings/GameplayGroup");
         
         //Buttons MainMenu
-        buttonPlay = GameObject.Find("Canvas/Menu_Main/TMPButton_Play").GetComponent<Button>();
-        buttonMSettings = GameObject.Find("Canvas/Menu_Main/TMPButton_Settings").GetComponent<Button>();
-        buttonCredits = GameObject.Find("Canvas/Menu_Main/TMPButton_Credits").GetComponent<Button>();
-        buttonCloseApp = GameObject.Find("Canvas/Menu_Main/TMPButton_Exit").GetComponent<Button>();
+        buttonPlay = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Play").GetComponent<Button>();
+        buttonMSettings = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Settings").GetComponent<Button>();
+        buttonCredits = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Credits").GetComponent<Button>();
+        buttonCloseApp = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Exit").GetComponent<Button>();
         
         //Buttons PauseMenu
-        buttonContinue = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Continue").GetComponent<Button>();
-        buttonPSettings = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Settings").GetComponent<Button>();
-        buttonReturnMain = GameObject.Find("Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
+        buttonContinue = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Continue").GetComponent<Button>();
+        buttonPSettings = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Settings").GetComponent<Button>();
+        buttonReturnMain = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
 
         //Buttons SettingsMenu
-        buttonClose = GameObject.Find("Canvas/Menu_Settings/BottomBarGroup/TMPButton_Close").GetComponent<Button>();
-        buttonGraphics = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Graphics").GetComponent<Button>();
-        buttonAudio = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Audio").GetComponent<Button>();
-        buttonGameplay = GameObject.Find("Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Gameplay").GetComponent<Button>();
+        buttonClose = GameObject.Find("Menu_Canvas/Menu_Settings/BottomBarGroup/TMPButton_Close").GetComponent<Button>();
+        buttonGraphics = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Graphics").GetComponent<Button>();
+        buttonAudio = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Audio").GetComponent<Button>();
+        buttonGameplay = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Gameplay").GetComponent<Button>();
 
         //Get Level buttons
-        buttonLevel = GameObject.Find("Canvas/Menu_Level/LevelLayoutGroup").GetComponentsInChildren<Button>();
+        buttonLevel = GameObject.Find("Menu_Canvas/Menu_Level/LevelLayoutGroup").GetComponentsInChildren<Button>();
     }
 
     private void bindEventListeners()
@@ -164,7 +171,7 @@ public class UI : MonoBehaviour
         {
             Debug.Log("Load Level " + highestLevelCompleted);
             Debug.Log("Load Level Riku");
-            menuLevel.SetActive(true);
+            if ( !(menuLevel.activeSelf) ) { menuLevel.SetActive(true); } else { menuLevel.SetActive(false); }
         } 
         else 
         {
@@ -179,7 +186,7 @@ public class UI : MonoBehaviour
         {
             DisableCursor();
             menuPause.SetActive(false);
-            if (gameManager.IsPaused()) { gameManager.UnPause(); }
+            if (GameManager.instance.IsPaused()) { GameManager.instance.UnPause(); }
             if (currentScene == "Lv0_MainMenu") { menuMain.SetActive(true); }
         } else 
         {
@@ -205,7 +212,7 @@ public class UI : MonoBehaviour
         Debug.Log("Exit or Quit Clicked");
         if (menuPause.activeSelf)
         {
-            gameManager.UnPause();
+            GameManager.instance.UnPause();
             SceneManager.LoadScene("Lv0_MainMenu");
             if ( trycatchController() != "" )
             {
@@ -292,6 +299,11 @@ public class UI : MonoBehaviour
     {
         Debug.Log($"Level Clicked: {levelName}");
         SceneManager.LoadScene(levelName);
+    }
+
+    public void OnCreditsClick()
+    {
+        if ( !(menuCredits.activeSelf) ) { menuCredits.SetActive(true); } else { menuCredits.SetActive(false); }
     }
 
     //move to gameManager if we want to control cursor state globally

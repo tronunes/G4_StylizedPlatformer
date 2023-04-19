@@ -4,34 +4,38 @@ using UnityEngine;
 
 public class UISliderFuncs : MonoBehaviour
 {
-    //public GameObject gameManager;
     void Awake() 
     {
-        //gameManager = GameObject.Find("GameManager");
+        
     }
     
     public void SetQuality(System.Single qualityIndex)
     {
         switch (qualityIndex)
         {
-            case 0:
+            case 0f:
                 GameManager.instance.SetQuality(0);
                 Debug.Log("Quality set to: " + QualitySettings.names[0]);
                 break;
-            case 1:
+            case 1f:
                 GameManager.instance.SetQuality(1);
                 Debug.Log("Quality set to: " + QualitySettings.names[1]);
                 break;
-            case 2:
+            case 2f:
                 GameManager.instance.SetQuality(2);
                 Debug.Log("Quality set to: " + QualitySettings.names[2]);
                 break;
         }
     }
 
-    public void SetJSSensitivity(System.Single sensitivity)
+    public void SetXSensitivity(System.Single sensitivity)
     {
+        GameManager.instance.SetJSXSensitivity(sensitivity);
+    }
 
+    public void SetYSensitivity(System.Single sensitivity)
+    {
+        GameManager.instance.SetJSYSensitivity(sensitivity);
     }
 
     public void SetMasterVol(System.Single volumeMaster)

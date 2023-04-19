@@ -10,9 +10,10 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
 
     //Input
-    private float joystickSensitivity = 1f;
+    private float joystickXSensitivity = 1f;
+    private float joystickYSensitivity = 1f;
     //Graphics Quality preset
-    private int gcQuality = 2;
+    private int gcQuality = 0;
     //Audio Settings
     private float audioMaster = 1f;
     private float audioFX = 1f;
@@ -61,6 +62,18 @@ public class GameManager : MonoBehaviour
             Debug.Log("Invalid quality index");
         }
         
+    }
+
+    public void SetJSXSensitivity(float sensitivity)
+    {
+        joystickXSensitivity = sensitivity;
+        Debug.Log($"Joystick X sensitivity set to: {joystickXSensitivity}");
+    }
+
+    public void SetJSYSensitivity(float sensitivity)
+    {
+        joystickYSensitivity = sensitivity;
+        Debug.Log($"Joystick Y sensitivity set to: {joystickYSensitivity}");
     }
 
     public void SetAudioMaster(float volumeMaster)
