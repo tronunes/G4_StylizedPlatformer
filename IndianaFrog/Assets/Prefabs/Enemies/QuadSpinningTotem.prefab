@@ -236,6 +236,11 @@ PrefabInstance:
       propertyPath: lineRenderer
       value: 
       objectReference: {fileID: 9058955036973027563}
+    - target: {fileID: 808699312896007815, guid: e49964bdf3c00a94c8a5355d88d310ca,
+        type: 3}
+      propertyPath: knockbackForce
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e49964bdf3c00a94c8a5355d88d310ca, type: 3}
 --- !u!198 &3979552163098203119 stripped
@@ -333,6 +338,11 @@ PrefabInstance:
       propertyPath: lineRenderer
       value: 
       objectReference: {fileID: 5994698186055812051}
+    - target: {fileID: 808699312896007815, guid: e49964bdf3c00a94c8a5355d88d310ca,
+        type: 3}
+      propertyPath: knockbackForce
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8890578004880497835, guid: e49964bdf3c00a94c8a5355d88d310ca,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -465,6 +475,11 @@ PrefabInstance:
       propertyPath: lineRenderer
       value: 
       objectReference: {fileID: 5459433583961106498}
+    - target: {fileID: 808699312896007815, guid: e49964bdf3c00a94c8a5355d88d310ca,
+        type: 3}
+      propertyPath: knockbackForce
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e49964bdf3c00a94c8a5355d88d310ca, type: 3}
 --- !u!198 &94056540399381318 stripped

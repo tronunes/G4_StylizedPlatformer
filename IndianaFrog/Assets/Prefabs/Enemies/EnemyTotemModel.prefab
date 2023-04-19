@@ -121,6 +121,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   damageAmount: 1
+  knockbackForce: 10
 --- !u!1 &808699314795225597
 GameObject:
   m_ObjectHideFlags: 0
