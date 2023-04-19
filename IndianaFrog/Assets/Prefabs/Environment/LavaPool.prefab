@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df24422f232e1b348b3a016c27c7987f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
+  knockbackOriginPoint: {fileID: 0}
+  knockbackForce: 20
 --- !u!65 &1536295273854915341
 BoxCollider:
   m_ObjectHideFlags: 0
