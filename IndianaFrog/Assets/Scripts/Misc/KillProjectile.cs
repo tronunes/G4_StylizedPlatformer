@@ -21,8 +21,11 @@ public class KillProjectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		// needs a small delay after contact to blend in better with explosion vfx
-		Destroy(this.gameObject, projectileDestroyDelayTime);
+		// Do not destroy if hit by groundcheck, deletes fireball without doing damage
+		if(other.name != "GroundCheck")
+		{
+			// needs a small delay after contact to blend in better with explosion vfx
+			Destroy(this.gameObject, projectileDestroyDelayTime);
+		}
 	}
-
 }

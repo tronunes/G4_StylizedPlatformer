@@ -135,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         playerPreviousFramePosition = transform.position;
 
         // Perform player knockback for this frame if the player is in the knockback state, is in the air, and isn't travelling directly upwards at a velocity below 9
+        // The latter half is there to make sure the player regains control partway through a lava caused knockback
         if (knockbackState && !isGrounded && (Mathf.Abs(knockbackVelocity.x) != 0f && Mathf.Abs(knockbackVelocity.z) != 0f) ^ knockbackVelocity.y >= 9f)
         {
             // Bring knockbackVelocity x and z values closer to zero, and bring y down continuously, keep x and z at zero if they already are zeros, to avoid errors
