@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
       propertyPath: m_Name
-      value: ProjectileFireBall Variant
+      value: ProjectileFireBall (Gravity)
       objectReference: {fileID: 0}
     - target: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
@@ -26,6 +26,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998603054644830872, guid: c581307650883c14b86fe546a8bbb40e,
+        type: 3}
+      propertyPath: projectileLifeTime
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7998603054644830872, guid: c581307650883c14b86fe546a8bbb40e,
         type: 3}
