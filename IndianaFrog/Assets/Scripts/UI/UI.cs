@@ -124,19 +124,23 @@ public class UI : MonoBehaviour
             if (currentScene == "Main Menu") { menuMain.SetActive(true); }
         } else 
         {
-            if ( trycatchController() != "" )
+            if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
             {
-                buttonContinue.Select();
-            } else { EnableCursor(); }
-
-            menuPause.SetActive(true);
-            if (currentScene == "Main Menu") 
-            {
-                menuMain.SetActive(false);
+                return;
             }
-            if (menuSettings.activeSelf)
+            else
             {
-                menuSettings.SetActive(false);
+                menuPause.SetActive(true);
+                if (trycatchController() != "")
+                {
+                    buttonContinue.Select();
+                }
+                else { EnableCursor(); }
+
+                if (menuSettings.activeSelf)
+                {
+                    menuSettings.SetActive(false);
+                }
             }
         }
     }
