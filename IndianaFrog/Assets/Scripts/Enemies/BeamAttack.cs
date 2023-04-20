@@ -11,7 +11,10 @@ public class BeamAttack : MonoBehaviour
 
 	public LayerMask hitLayer;
 	public int damageAmount = 1;
-	
+
+	private Vector3 knockbackDirection;  // Unit vector in the direction of the player's center from the firePoint
+	[SerializeField] private float knockbackForce;  // Magnitude of the knockback
+
 	private EnemyTotem enemyTotem;
 
 
@@ -28,7 +31,7 @@ public class BeamAttack : MonoBehaviour
 			ActivateBeam();
 			if(!glowEffect.isPlaying)
 				glowEffect.Play();
-		}			
+		}
 		else
 		{
 			lineRenderer.enabled = false;
@@ -40,7 +43,6 @@ public class BeamAttack : MonoBehaviour
 				glowEffect.Stop();
 				glowEffect.Clear();	// have to clear particles also after stopping, or they linger for their lifetime-duration
 			}
-				
 		}
 	}
 
@@ -63,8 +65,21 @@ public class BeamAttack : MonoBehaviour
 			impactEffect.transform.rotation = Quaternion.LookRotation(firePoint.position - hit.point);
 
 			if(hit.transform.CompareTag("Player"))
-					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
+			{
+				if (hit.transform.GetComponent<PlayerHealth>().CanTakeDamage())
+				{
+					// Calculate direction of knockback
+					knockbackDirection = (hit.transform.position - firePoint.position);
 
+					// Standardize knockback height
+					knockbackDirection.y = 0f;
+					knockbackDirection.Normalize();
+					knockbackDirection.y = 0.6f;
+
+					hit.transform.GetComponent<PlayerMovement>().Knockback(knockbackDirection * knockbackForce);
+					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
+				}
+			}
 		}
 		else
 		{
@@ -73,6 +88,6 @@ public class BeamAttack : MonoBehaviour
 
 			if(impactEffect.isPlaying)
 				impactEffect.Stop();
-		}			
+		}
 	}
 }

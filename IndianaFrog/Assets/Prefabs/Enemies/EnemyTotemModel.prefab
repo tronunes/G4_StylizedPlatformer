@@ -151,6 +151,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65
   damageAmount: 1
+  knockbackForce: 10
 --- !u!1001 &750191085242462083
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -27,5 +27,4 @@ public class KillProjectile : MonoBehaviour
 			Destroy(this.gameObject, projectileDestroyDelayTime);
 		}
 	}
-
 }
