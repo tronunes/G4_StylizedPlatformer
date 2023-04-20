@@ -103,6 +103,10 @@ public class UI : MonoBehaviour
         if (highestLevelCompleted != 0)
         {
             if ( !(menuLevel.activeSelf) ) { menuLevel.SetActive(true); } else { menuLevel.SetActive(false); }
+            if ( trycatchController() != "" )
+            {
+                buttonLevel[0].Select();
+            } else { EnableCursor(); }
         } 
         else 
         {
