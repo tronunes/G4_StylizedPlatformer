@@ -6,82 +6,70 @@ using UnityEngine.UI;
 public class UISliderFuncs : MonoBehaviour
 {
     [SerializeField] Slider sliderQuality;
-    GameObject sliderAudioMaster;
-    GameObject sliderAudioFX;
-    GameObject sliderAudioMusic;
-    GameObject sliderXsensitivity;
-    GameObject sliderYsensitivity;
+    [SerializeField] Slider sliderAudioMaster;
+    [SerializeField] Slider sliderAudioFX;
+    [SerializeField] Slider sliderAudioMusic;
+    [SerializeField] Slider sliderXsensitivity;
+    [SerializeField] Slider sliderYsensitivity;
+
     void Awake() 
     {
-        BindSliderVariables();
         UpdateFromPrefs();
-    }
-
-    private void BindSliderVariables()
-    {
-        //sliderQuality = GameObject.Find("TMPSlider_Quality/TMPSlider_Quality").GetComponent<Slider>();
-        sliderAudioMaster = GameObject.Find("TMPSlider_Master");
-        sliderAudioFX = GameObject.Find("TMPSlider_Effects");
-        sliderAudioMusic = GameObject.Find("TMPSlider_Music");
-        sliderXsensitivity = GameObject.Find("Slider_XSensitivity");
-        sliderYsensitivity = GameObject.Find("Slider_YSensitivity");
     }
 
     private void UpdateFromPrefs()
     {
-        Debug.Log("Print From PlayerPrefs: " + PlayerPrefs.GetFloat("GCQuality", 0f));
-        sliderQuality.value = PlayerPrefs.GetFloat("GCQuality", 0f);
-        
-        SetQuality(PlayerPrefs.GetFloat("GCQuality", 0f));
+        sliderQuality.value = (float)(PlayerPrefs.GetInt("GraphicsQuality", 0));
+        SetQuality((float)PlayerPrefs.GetInt("GraphicsQuality", 0));
+
+        sliderAudioMaster.value = PlayerPrefs.GetFloat("VolumeMaster", 1f);
+        SetMasterVol(PlayerPrefs.GetFloat("VolumeMaster", 1f));
+
+        sliderAudioFX.value = PlayerPrefs.GetFloat("VolumeEffects", 1f);
+        SetFXVol(PlayerPrefs.GetFloat("VolumeEffects", 1f));
+
+        sliderAudioMusic.value = PlayerPrefs.GetFloat("VolumeMusic", 1f);
+        SetMusicVol(PlayerPrefs.GetFloat("VolumeMusic", 1f));
+
+        sliderXsensitivity.value = PlayerPrefs.GetFloat("XSensitivity", 1f);
+        SetXSensitivity(PlayerPrefs.GetFloat("XSensitivity", 1f));
+
+        sliderYsensitivity.value = PlayerPrefs.GetFloat("YSensitivity", 1f);
+        SetYSensitivity(PlayerPrefs.GetFloat("YSensitivity", 1f));
     }
     
-    public void SetQuality(System.Single qualityIndex)
+    public void SetQuality(float qualityFloat)
     {
-        switch (qualityIndex)
-        {
-            case 0f:
-                GameManager.instance.SetQuality(0);
-                PlayerPrefs.SetFloat("GCQuality", 0f);
-                Debug.Log("Quality set to: " + QualitySettings.names[0]);
-                break;
-            case 1f:
-                GameManager.instance.SetQuality(1);
-                PlayerPrefs.SetFloat("GCQuality", 1f);
-                Debug.Log("Quality set to: " + QualitySettings.names[1]);
-                break;
-            case 2f:
-                GameManager.instance.SetQuality(2);
-                PlayerPrefs.SetFloat("GCQuality", 2f);
-                Debug.Log("Quality set to: " + QualitySettings.names[2]);
-                break;
-        }
+        int qualityIndex = Mathf.FloorToInt(qualityFloat);
+        GameManager.instance.SetQuality(qualityIndex);
+        PlayerPrefs.SetInt("GraphicsQuality", qualityIndex);
     }
 
-    public void SetXSensitivity(System.Single sensitivity)
+    public void SetXSensitivity(float sensitivity)
     {
         GameManager.instance.SetJSXSensitivity(sensitivity);
         PlayerPrefs.SetFloat("XSensitivity", sensitivity);
     }
 
-    public void SetYSensitivity(System.Single sensitivity)
+    public void SetYSensitivity(float sensitivity)
     {
         GameManager.instance.SetJSYSensitivity(sensitivity);
         PlayerPrefs.SetFloat("YSensitivity", sensitivity);
     }
 
-    public void SetMasterVol(System.Single volumeMaster)
+    public void SetMasterVol(float volumeMaster)
     {
         GameManager.instance.SetAudioMaster(volumeMaster);
         PlayerPrefs.SetFloat("VolumeMaster", volumeMaster);
     }
 
-    public void SetFXVol(System.Single volumeFX)
+    public void SetFXVol(float volumeFX)
     {
         GameManager.instance.SetAudioFX(volumeFX);
         PlayerPrefs.SetFloat("VolumeEffects", volumeFX);
     }
 
-    public void SetMusicVol(System.Single volumeMusic)
+    public void SetMusicVol(float volumeMusic)
     {
         GameManager.instance.SetAudioMusic(volumeMusic);
         PlayerPrefs.SetFloat("VolumeMusic", volumeMusic);

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 
+
 public class UI : MonoBehaviour
 {
     string joystick; //Should return a string for connected controller, "" if none connected
@@ -49,7 +50,6 @@ public class UI : MonoBehaviour
 
     void Awake()
     {
-        
         bindUIVariables();
         joystick = trycatchController();
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
@@ -85,13 +85,13 @@ public class UI : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            if (menuPause.activeSelf)
+            if ( menuSettings.activeSelf)
+            {
+                OnSettingsBackClick();
+            }
+            else if (menuPause.activeSelf)
             {
                 OnPauseInput();
-            }
-            else if (menuSettings.activeSelf)
-            {
-                OnSettingsPauseClick();
             }
         }
 
@@ -197,20 +197,14 @@ public class UI : MonoBehaviour
 
     public void OnSettingsPauseClick() 
     {
-        if ( trycatchController() != "" )
-            {
-                buttonGraphics.Select();
-            }
-            else { EnableCursor(); }
-
-        if ( menuCredits.activeSelf ) { menuCredits.SetActive(false);}
-        else if (menuLevel.activeSelf) { menuLevel.SetActive(false);}
+        if (menuCredits.activeSelf) { menuCredits.SetActive(false); }
+        else if (menuLevel.activeSelf) { menuLevel.SetActive(false); }
 
         if (menuSettings.activeSelf == false && menuPause.activeSelf == true)
         {
-            if ( trycatchController() != "" )
+            if (trycatchController() != "")
             {
-                buttonContinue.Select();
+                buttonGraphics.Select();
             }
             else { EnableCursor(); }
             menuSettings.SetActive(true);
@@ -218,9 +212,10 @@ public class UI : MonoBehaviour
             groupAudio.SetActive(false);
             groupGameplay.SetActive(false);
             menuPause.SetActive(false);
-        } else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
+        }
+        else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
         {
-            if ( trycatchController() != "" )
+            if (trycatchController() != "")
             {
                 buttonContinue.Select();
             }
@@ -323,7 +318,7 @@ public class UI : MonoBehaviour
         groupGameplay.SetActive(true);
     }
 
-    public void OnLevelClick(System.String levelName) 
+    public void OnLevelClick(string levelName) 
     {
         Debug.Log($"Level Clicked: {levelName}");
         SceneManager.LoadScene(levelName);
