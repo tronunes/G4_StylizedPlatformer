@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
     //Input
     private float joystickXSensitivity = 1f;
     private float joystickYSensitivity = 1f;
+    
     //Graphics Quality preset
     private int graphicsQuality = 0;
+    
     //Audio Settings
     private float audioMaster = 1f;
     private float audioFX = 1f;
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Invalid quality index");
+            Debug.LogWarning($"Quality index should be in range 0..2, index was {quality}", GameManager.instance);
         }
         
     }
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
             case "music":
                 return audioMusic;
             default:
-                Debug.Log("No Audio type was returned");
+                Debug.LogWarning($"No known Audio type was returned: called Audio type was {type}", GameManager.instance);
                 return 0f;
         }
     }

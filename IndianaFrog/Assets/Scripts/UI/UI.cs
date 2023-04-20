@@ -15,7 +15,8 @@ public class UI : MonoBehaviour
     //Save state
     int highestLevelCompleted = 0;
     
-    //GameObjects Menu Prefabs
+    [Header("GameObjects Menu Prefabs")]
+    //Menu Prefabs
     [SerializeField] GameObject menuCanvas;
     [SerializeField] GameObject menuMain;
     [SerializeField] GameObject menuPause;
@@ -23,43 +24,46 @@ public class UI : MonoBehaviour
     [SerializeField] GameObject menuLevel;
     [SerializeField] GameObject menuCredits;
     
-    //GameObjects Layout Groups
+    //Layout Group Prefabs
     [SerializeField] GameObject groupGraphics;
     [SerializeField] GameObject groupAudio;
     [SerializeField] GameObject groupGameplay;
     
-    //Buttons MainMenu
+    //MainMenu Buttons
     [SerializeField] Button buttonPlay;
     [SerializeField] Button buttonMainSettings;
     [SerializeField] Button buttonCredits;
     [SerializeField] Button buttonCloseApp;
     [SerializeField] Button buttonClose;
     
-    //Buttons PauseMenu
+    //PauseMenu Buttons
     [SerializeField] Button buttonContinue;
     [SerializeField] Button buttonPauseSettings;
     [SerializeField] Button buttonReturnMain;
     
-    //Buttons SettingsMenu
+    //SettingsMenu Buttons
     [SerializeField] Button buttonGraphics;
     [SerializeField] Button buttonAudio;
     [SerializeField] Button buttonGameplay;
     
-    //Level buttons
+    //LevelMenu Buttons
     [SerializeField] Button[] buttonLevel;
 
     void Awake()
     {
+        //intialize knowledge about the scene
         currentScene = SceneManager.GetActiveScene().name;
-        joystick = trycatchController();
+        joystick = TryCatchController();
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
 
+        //Collect UI elements together and disable/hide them from view
         List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel, menuCredits};
-        deActivateObjects(uiObjects);
+        DeActivateObjects(uiObjects);
 
         menuCanvas.SetActive(true);
         menuMain.SetActive(currentScene == "Main Menu");
 
+        //Disable Level buttons based on Save data 
         for (int i= 0; i< buttonLevel.Length; i++)
         {
             if (i > highestLevelCompleted)
@@ -68,11 +72,8 @@ public class UI : MonoBehaviour
             }
         }
 
-        if (trycatchController() != "")
-        {
-            buttonPlay.Select();
-        }
-        else { EnableCursor(); }
+        //Set active button for controller if connected
+        SelectButtonOrEnableCursor(buttonPlay);
     }
 
     // Update is called once per frame
@@ -80,7 +81,14 @@ public class UI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Pause"))
         {
-            OnPauseInput();
+            if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
+            {
+                return;
+            }
+            else
+            {
+                OnPauseInput();
+            }
         }
 
         if (Input.GetButtonDown("Cancel"))
@@ -102,13 +110,15 @@ public class UI : MonoBehaviour
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
         if (highestLevelCompleted != 0)
         {
-            if ( !(menuLevel.activeSelf) ) { menuLevel.SetActive(true); } else { menuLevel.SetActive(false); }
-            if ( trycatchController() != "" )
+            if (!(menuLevel.activeSelf))
             {
-                buttonLevel[0].Select();
-            } else { EnableCursor(); }
-        } 
-        else 
+                menuLevel.SetActive(true);
+                SelectButtonOrEnableCursor(buttonLevel[0]);
+            }
+            else
+            { menuLevel.SetActive(false); }
+        }
+        else
         {
             SceneManager.LoadScene("Level 1");
         }
@@ -116,31 +126,22 @@ public class UI : MonoBehaviour
 
     public void OnPauseInput() 
     {
+        //Unpause
         if (menuPause.activeSelf)
         {
             DisableCursor();
             menuPause.SetActive(false);
             if (GameManager.instance.IsPaused()) { GameManager.instance.UnPause(); }
-            if (currentScene == "Main Menu") { menuMain.SetActive(true); }
-        } else 
+        }
+        //Pause
+        else
         {
-            if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
-            {
-                return;
-            }
-            else
-            {
-                menuPause.SetActive(true);
-                if (trycatchController() != "")
-                {
-                    buttonContinue.Select();
-                }
-                else { EnableCursor(); }
+            menuPause.SetActive(true);
+            SelectButtonOrEnableCursor(buttonContinue);
 
-                if (menuSettings.activeSelf)
-                {
-                    menuSettings.SetActive(false);
-                }
+            if (menuSettings.activeSelf)
+            {
+                menuSettings.SetActive(false);
             }
         }
     }
@@ -151,11 +152,7 @@ public class UI : MonoBehaviour
         {
             GameManager.instance.UnPause();
             SceneManager.LoadScene("Main Menu");
-            if ( trycatchController() != "" )
-            {
-                buttonContinue.Select();
-            }
-            else { EnableCursor(); }
+            SelectButtonOrEnableCursor(buttonContinue);
         } else
         {
             Application.Quit();
@@ -169,11 +166,7 @@ public class UI : MonoBehaviour
 
         if (menuSettings.activeSelf == false && menuPause.activeSelf == true)
         {
-            if (trycatchController() != "")
-            {
-                buttonGraphics.Select();
-            }
-            else { EnableCursor(); }
+            SelectButtonOrEnableCursor(buttonGraphics);
             menuSettings.SetActive(true);
             groupGraphics.SetActive(true);
             groupAudio.SetActive(false);
@@ -182,11 +175,7 @@ public class UI : MonoBehaviour
         }
         else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
         {
-            if (trycatchController() != "")
-            {
-                buttonContinue.Select();
-            }
-            else { EnableCursor(); }
+            SelectButtonOrEnableCursor(buttonContinue);
             menuSettings.SetActive(false);
             groupGraphics.SetActive(false);
             groupAudio.SetActive(false);
@@ -197,14 +186,9 @@ public class UI : MonoBehaviour
 
     public void OnSettingsMainClick() 
     {
-        if ( trycatchController() != "" )
-            {
-                buttonGraphics.Select();
-            }
-            else { EnableCursor(); }
-
         if ( menuCredits.activeSelf ) { menuCredits.SetActive(false);}
         else if (menuLevel.activeSelf) { menuLevel.SetActive(false);}
+        SelectButtonOrEnableCursor(buttonGraphics);
 
         if ( menuSettings.activeSelf == false )
         {
@@ -214,11 +198,7 @@ public class UI : MonoBehaviour
             groupGameplay.SetActive(false);
         } else if (menuSettings.activeSelf == true )
         {
-            if ( trycatchController() != "" )
-            {
-                buttonPlay.Select();
-            }
-            else { EnableCursor(); }
+            SelectButtonOrEnableCursor(buttonPlay);
             menuSettings.SetActive(false);
             groupGraphics.SetActive(false);
             groupAudio.SetActive(false);
@@ -232,11 +212,7 @@ public class UI : MonoBehaviour
         {
             if (menuSettings.activeSelf)
             {
-                if (trycatchController() != "")
-                {
-                    buttonPlay.Select();
-                }
-                else { EnableCursor(); }
+                SelectButtonOrEnableCursor(buttonPlay);
                 menuSettings.SetActive(false);
                 groupGraphics.SetActive(false);
                 groupAudio.SetActive(false);
@@ -247,11 +223,7 @@ public class UI : MonoBehaviour
         {
             if (menuSettings.activeSelf)
             {
-                if (trycatchController() != "")
-                {
-                    buttonContinue.Select();
-                }
-                else { EnableCursor(); }
+                SelectButtonOrEnableCursor(buttonContinue);
                 menuSettings.SetActive(false);
                 groupGraphics.SetActive(false);
                 groupAudio.SetActive(false);
@@ -289,12 +261,13 @@ public class UI : MonoBehaviour
 
     public void OnCreditsClick()
     {
-        if ( menuSettings.activeSelf ) { menuSettings.SetActive(false);}
-        else if (menuSettings.activeSelf) { menuSettings.SetActive(false);}
         if ( !(menuCredits.activeSelf) ) { menuCredits.SetActive(true); } else { menuCredits.SetActive(false); }
+        if ( menuSettings.activeSelf ) { menuSettings.SetActive(false);}
+        if (menuLevel.activeSelf) { menuLevel.SetActive(false); }
     }
 
-    //move to gameManager if we want to control cursor state globally
+    //Helper Functions
+    //move Cursor ones to gameManager if we want to control cursor state globally
     private void EnableCursor() 
     {
         Cursor.visible = true;
@@ -307,8 +280,7 @@ public class UI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    //Helpers
-    private void deActivateObjects(List<GameObject> inputObjects) 
+    private void DeActivateObjects(List<GameObject> inputObjects) 
     {
         foreach (GameObject obj in inputObjects)
         {
@@ -317,7 +289,7 @@ public class UI : MonoBehaviour
 
     }
 
-    public string trycatchController()
+    private string TryCatchController()
     {
         try
         {
@@ -328,5 +300,14 @@ public class UI : MonoBehaviour
         {
             return "";
         }
+    }
+
+    private void SelectButtonOrEnableCursor(Button button)
+    {
+        if (TryCatchController() != "")
+        {
+            button.Select();
+        }
+        else { EnableCursor(); }
     }
 }
