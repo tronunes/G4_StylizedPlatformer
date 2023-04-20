@@ -139,11 +139,11 @@ public class PlayerMovement : MonoBehaviour
         if (knockbackState && !isGrounded && (Mathf.Abs(knockbackVelocity.x) != 0f && Mathf.Abs(knockbackVelocity.z) != 0f) ^ knockbackVelocity.y >= 9f)
         {
             // Bring knockbackVelocity x and z values closer to zero, and bring y down continuously, keep x and z at zero if they already are zeros, to avoid errors
-            knockbackVelocity.x = knockbackVelocity.x == 0f ? 0f : knockbackVelocity.x - GetSign(knockbackVelocity.x) * horizontalKnockbackDrag * Time.fixedDeltaTime;
-            knockbackVelocity.z = knockbackVelocity.z == 0f ? 0f : knockbackVelocity.z - GetSign(knockbackVelocity.z) * horizontalKnockbackDrag * Time.fixedDeltaTime;
+            knockbackVelocity.x = knockbackVelocity.x == 0f ? 0f : knockbackVelocity.x - Mathf.Sign(knockbackVelocity.x) * horizontalKnockbackDrag * Time.fixedDeltaTime;
+            knockbackVelocity.z = knockbackVelocity.z == 0f ? 0f : knockbackVelocity.z - Mathf.Sign(knockbackVelocity.z) * horizontalKnockbackDrag * Time.fixedDeltaTime;
             knockbackVelocity.y -= 30f * Time.fixedDeltaTime;
 
-            // Stop knockback if player is still
+            // Add knockback only if the Player isn't still
             if (playerVelocity != Vector3.zero)
             {
                 AddExternalVelocity(knockbackVelocity * Time.fixedDeltaTime);
@@ -565,11 +565,5 @@ public class PlayerMovement : MonoBehaviour
         SetGroundedState(false);
 
         verticalVelocity = 0f;
-    }
-
-    // Return 1 or -1, depending on the sign of inserted number's sign
-    private float GetSign(float number)
-    {
-        return number / Mathf.Abs(number);
     }
 }

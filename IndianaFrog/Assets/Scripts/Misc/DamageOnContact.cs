@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DamageOnContact : MonoBehaviour
 {
-	private int damageAmount = 1;
+    public int damageAmount = 1;
 
-	private Vector3 knockbackDirection; // Unit vector in the direction of the player's center from the knockbackOriginPoint
+    private Vector3 knockbackDirection; // Unit vector in the direction of the player's center from the knockbackOriginPoint
 
     [SerializeField] private Transform knockbackOriginPoint;
     [SerializeField] private float knockbackForce; // Magnitude of the knockback
@@ -14,9 +14,9 @@ public class DamageOnContact : MonoBehaviour
     // using OnTriggerStay instead of OnTriggerEnter because of continuous lava damage,
     // having both modes makes player take damage twice on the first frame of contact
     private void OnTriggerStay(Collider other)
-	{
-		if (other) // Other-if statements cause errors without this
-		{
+    {
+        if (other) // Other if-statements cause errors without this
+        {
             if (other.CompareTag("Player"))
             {
                 if (other.GetComponent<PlayerHealth>().CanTakeDamage())
@@ -33,8 +33,8 @@ public class DamageOnContact : MonoBehaviour
                     knockbackDirection.y = 0.6f;
 
                     other.GetComponent<PlayerMovement>().Knockback(knockbackDirection * knockbackForce);
+                    other.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
                 }
-                other.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
             }
         }
     }
