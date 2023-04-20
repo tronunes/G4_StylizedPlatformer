@@ -15,7 +15,7 @@ public class DamageOnContact : MonoBehaviour
     // having both modes makes player take damage twice on the first frame of contact
     private void OnTriggerStay(Collider other)
     {
-        if (other) // Other-if statements cause errors without this
+        if (other) // Other if-statements cause errors without this
         {
             if (other.CompareTag("Player"))
             {
