@@ -78,4 +78,9 @@ public class PlayerHealth : MonoBehaviour
 		healthbar.SetMaxHealth(maxHealth);
 		featherManager.FeatherReset();
 	}
+
+	public bool CanTakeDamage()
+	{
+		return canTakeDamage;
+	}
 }
