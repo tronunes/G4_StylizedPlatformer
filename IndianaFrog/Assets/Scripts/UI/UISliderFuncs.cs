@@ -47,13 +47,13 @@ public class UISliderFuncs : MonoBehaviour
 
     public void SetXSensitivity(float sensitivity)
     {
-        GameManager.instance.SetJSXSensitivity(sensitivity);
+        GameManager.instance.SetJoystickXSensitivity(sensitivity);
         PlayerPrefs.SetFloat("XSensitivity", sensitivity);
     }
 
     public void SetYSensitivity(float sensitivity)
     {
-        GameManager.instance.SetJSYSensitivity(sensitivity);
+        GameManager.instance.SetJoystickYSensitivity(sensitivity);
         PlayerPrefs.SetFloat("YSensitivity", sensitivity);
     }
 

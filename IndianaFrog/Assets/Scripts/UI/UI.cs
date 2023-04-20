@@ -9,48 +9,48 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
-    string joystick; //Should return a string for connected controller, "" if none connected
-    string currentScene; // Current scene name
+    string joystick; //Should be a string for connected controller, "" if none connected
+    string currentScene;
 
     //Save state
     int highestLevelCompleted = 0;
     
     //GameObjects Menu Prefabs
-    GameObject menuCanvas;
-    GameObject menuMain;
-    GameObject menuPause;
-    GameObject menuSettings;
-    GameObject menuLevel;
-    GameObject menuCredits;
+    [SerializeField] GameObject menuCanvas;
+    [SerializeField] GameObject menuMain;
+    [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject menuLevel;
+    [SerializeField] GameObject menuCredits;
     
     //GameObjects Layout Groups
-    GameObject groupGraphics;
-    GameObject groupAudio;
-    GameObject groupGameplay;
+    [SerializeField] GameObject groupGraphics;
+    [SerializeField] GameObject groupAudio;
+    [SerializeField] GameObject groupGameplay;
     
     //Buttons MainMenu
-    Button buttonPlay;
-    Button buttonMSettings;
-    Button buttonCredits;
-    Button buttonCloseApp;
-    Button buttonClose;
+    [SerializeField] Button buttonPlay;
+    [SerializeField] Button buttonMainSettings;
+    [SerializeField] Button buttonCredits;
+    [SerializeField] Button buttonCloseApp;
+    [SerializeField] Button buttonClose;
     
     //Buttons PauseMenu
-    Button buttonContinue;
-    Button buttonPSettings;
-    Button buttonReturnMain;
+    [SerializeField] Button buttonContinue;
+    [SerializeField] Button buttonPauseSettings;
+    [SerializeField] Button buttonReturnMain;
     
     //Buttons SettingsMenu
-    Button buttonGraphics;
-    Button buttonAudio;
-    Button buttonGameplay;
+    [SerializeField] Button buttonGraphics;
+    [SerializeField] Button buttonAudio;
+    [SerializeField] Button buttonGameplay;
     
     //Level buttons
-    Button[] buttonLevel;
+    [SerializeField] Button[] buttonLevel;
 
     void Awake()
     {
-        bindUIVariables();
+        currentScene = SceneManager.GetActiveScene().name;
         joystick = trycatchController();
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
 
@@ -97,45 +97,6 @@ public class UI : MonoBehaviour
 
     }
     
-    //UI Events
-    private void bindUIVariables()
-    {
-        currentScene = SceneManager.GetActiveScene().name;
-        menuCanvas = GameObject.Find("Menu_Canvas");
-
-        //Menu Prefabs
-        menuMain = GameObject.Find("Menu_Canvas/Menu_Main");
-        menuPause = GameObject.Find("Menu_Canvas/Menu_Pause");
-        menuSettings = GameObject.Find("Menu_Canvas/Menu_Settings");
-        menuLevel = GameObject.Find("Menu_Canvas/Menu_Level");
-        menuCredits = GameObject.Find("Menu_Canvas/Menu_Credits");
-
-        //Layout Groups
-        groupGraphics = GameObject.Find("Menu_Canvas/Menu_Settings/GraphicsGroup");
-        groupAudio = GameObject.Find("Menu_Canvas/Menu_Settings/AudioGroup");
-        groupGameplay = GameObject.Find("Menu_Canvas/Menu_Settings/GameplayGroup");
-        
-        //Buttons MainMenu
-        buttonPlay = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Play").GetComponent<Button>();
-        buttonMSettings = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Settings").GetComponent<Button>();
-        buttonCredits = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Credits").GetComponent<Button>();
-        buttonCloseApp = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Exit").GetComponent<Button>();
-        
-        //Buttons PauseMenu
-        buttonContinue = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Continue").GetComponent<Button>();
-        buttonPSettings = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Settings").GetComponent<Button>();
-        buttonReturnMain = GameObject.Find("Menu_Canvas/Menu_Pause/PauseBG/PauseButtonsLayout/TMPButton_Quit").GetComponent<Button>();
-
-        //Buttons SettingsMenu
-        buttonClose = GameObject.Find("Menu_Canvas/Menu_Settings/BottomBarGroup/TMPButton_Close").GetComponent<Button>();
-        buttonGraphics = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Graphics").GetComponent<Button>();
-        buttonAudio = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Audio").GetComponent<Button>();
-        buttonGameplay = GameObject.Find("Menu_Canvas/Menu_Settings/TopBarGroup/SettingsButtonsLayout/TMPButton_Gameplay").GetComponent<Button>();
-
-        //Get Level buttons
-        buttonLevel = GameObject.Find("Menu_Canvas/Menu_Level/LevelLayoutGroup").GetComponentsInChildren<Button>();
-    }
-
     public void OnPlayClick()
     {
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
@@ -151,13 +112,12 @@ public class UI : MonoBehaviour
 
     public void OnPauseInput() 
     {
-        Debug.Log("Pause Input");
         if (menuPause.activeSelf)
         {
             DisableCursor();
             menuPause.SetActive(false);
             if (GameManager.instance.IsPaused()) { GameManager.instance.UnPause(); }
-            if (currentScene == "Lv0_MainMenu") { menuMain.SetActive(true); }
+            if (currentScene == "Main Menu") { menuMain.SetActive(true); }
         } else 
         {
             if ( trycatchController() != "" )
@@ -166,7 +126,7 @@ public class UI : MonoBehaviour
             } else { EnableCursor(); }
 
             menuPause.SetActive(true);
-            if (currentScene == "Lv0_MainMenu") 
+            if (currentScene == "Main Menu") 
             {
                 menuMain.SetActive(false);
             }
@@ -179,7 +139,6 @@ public class UI : MonoBehaviour
 
     public void OnExitClick() 
     {
-        Debug.Log("Exit or Quit Clicked");
         if (menuPause.activeSelf)
         {
             GameManager.instance.UnPause();
@@ -296,7 +255,6 @@ public class UI : MonoBehaviour
 
     public void OnGraphicsClick() 
     {
-        Debug.Log("Graphics Clicked");
         groupGraphics.SetActive(true);
         groupAudio.SetActive(false);
         groupGameplay.SetActive(false);
@@ -304,7 +262,6 @@ public class UI : MonoBehaviour
 
     public void OnAudioClick() 
     {
-        Debug.Log("Audio Clicked");
         groupGraphics.SetActive(false);
         groupAudio.SetActive(true);
         groupGameplay.SetActive(false);
@@ -312,7 +269,6 @@ public class UI : MonoBehaviour
 
     public void OnGameplayClick() 
     {
-        Debug.Log("Gameplay Clicked");
         groupGraphics.SetActive(false);
         groupAudio.SetActive(false);
         groupGameplay.SetActive(true);
@@ -320,7 +276,6 @@ public class UI : MonoBehaviour
 
     public void OnLevelClick(string levelName) 
     {
-        Debug.Log($"Level Clicked: {levelName}");
         SceneManager.LoadScene(levelName);
     }
 
@@ -363,7 +318,6 @@ public class UI : MonoBehaviour
         }
         catch (System.IndexOutOfRangeException)
         {
-            Debug.Log("No Controller");
             return "";
         }
     }

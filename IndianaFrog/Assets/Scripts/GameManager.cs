@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private float joystickXSensitivity = 1f;
     private float joystickYSensitivity = 1f;
     //Graphics Quality preset
-    private int gcQuality = 0;
+    private int graphicsQuality = 0;
     //Audio Settings
     private float audioMaster = 1f;
     private float audioFX = 1f;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         if (quality >= 0 && quality <= 2)
         {
-            gcQuality = quality;
+            graphicsQuality = quality;
             QualitySettings.SetQualityLevel(quality, true);
         }
         else
@@ -64,34 +64,29 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void SetJSXSensitivity(float sensitivity)
+    public void SetJoystickXSensitivity(float sensitivity)
     {
         joystickXSensitivity = sensitivity;
-        Debug.Log($"Joystick X sensitivity set to: {joystickXSensitivity}");
     }
 
-    public void SetJSYSensitivity(float sensitivity)
+    public void SetJoystickYSensitivity(float sensitivity)
     {
         joystickYSensitivity = sensitivity;
-        Debug.Log($"Joystick Y sensitivity set to: {joystickYSensitivity}");
     }
 
     public void SetAudioMaster(float volumeMaster)
     {
         audioMaster = volumeMaster;
-        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
     }
 
     public void SetAudioFX(float volumeFX)
     {
         audioFX = volumeFX;
-        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
     }
 
     public void SetAudioMusic(float volumeMusic)
     {
         audioMusic = volumeMusic;
-        Debug.Log($"Volume set to master: {audioMaster}, fx: {audioFX}, music: {audioMusic}");
     }
 
     public float GetAudio(string type)
@@ -105,6 +100,7 @@ public class GameManager : MonoBehaviour
             case "music":
                 return audioMusic;
             default:
+                Debug.Log("No Audio type was returned");
                 return 0f;
         }
     }
