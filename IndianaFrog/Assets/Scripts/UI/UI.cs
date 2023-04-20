@@ -9,16 +9,10 @@ using UnityEngine.SceneManagement;
 public class UI : MonoBehaviour
 {
     string joystick; //Should return a string for connected controller, "" if none connected
-
-    //Menu States
     string currentScene; // Current scene name
-    bool cmenuMain = false;
-    bool cmenuPause = false;
-    bool cmenuSettings = false;
-    bool cmenuLevel = false;
 
     //Save state
-    int highestLevelCompleted = 1;
+    int highestLevelCompleted = 0;
     
     //GameObjects Menu Prefabs
     GameObject menuCanvas;
@@ -57,27 +51,20 @@ public class UI : MonoBehaviour
     {
         
         bindUIVariables();
-        bindEventListeners();
-        //highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
         joystick = trycatchController();
-
-        //buttonExit = GameObject.Find("Menu_Canvas/Menu_Main/TMPButton_Exit");
-        Debug.Log(menuMain);
-
-        //listeners
+        highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
 
         List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel, menuCredits};
         deActivateObjects(uiObjects);
 
         menuCanvas.SetActive(true);
-        menuMain.SetActive(currentScene == "Lv0_MainMenu");
+        menuMain.SetActive(currentScene == "Main Menu");
 
         for (int i= 0; i< buttonLevel.Length; i++)
         {
             if (i > highestLevelCompleted)
             {
                 buttonLevel[i].interactable = false;
-                //buttonLevel[i].
             }
         }
 
@@ -104,7 +91,7 @@ public class UI : MonoBehaviour
             }
             else if (menuSettings.activeSelf)
             {
-                OnSettingsClick();
+                OnSettingsPauseClick();
             }
         }
 
@@ -149,33 +136,16 @@ public class UI : MonoBehaviour
         buttonLevel = GameObject.Find("Menu_Canvas/Menu_Level/LevelLayoutGroup").GetComponentsInChildren<Button>();
     }
 
-    private void bindEventListeners()
-    {
-        //Settingsmenu Buttons
-        buttonClose.onClick.AddListener(OnSettingsClick);
-        buttonGraphics.onClick.AddListener(OnGraphicsClick);
-        buttonAudio.onClick.AddListener(OnAudioClick);
-        buttonGameplay.onClick.AddListener(OnGameplayClick);
-
-    }
-
-    void OnButtonClick() 
-    {
-        Debug.Log("Button Clicked");
-    }
-
     public void OnPlayClick()
     {
-        Debug.Log($"Play Clicked, highest level {highestLevelCompleted}");
+        highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
         if (highestLevelCompleted != 0)
         {
-            Debug.Log("Load Level " + highestLevelCompleted);
-            Debug.Log("Load Level Riku");
             if ( !(menuLevel.activeSelf) ) { menuLevel.SetActive(true); } else { menuLevel.SetActive(false); }
         } 
         else 
         {
-            Debug.Log("No levels completed");
+            SceneManager.LoadScene("Level 1");
         }
     }
 
@@ -213,7 +183,7 @@ public class UI : MonoBehaviour
         if (menuPause.activeSelf)
         {
             GameManager.instance.UnPause();
-            SceneManager.LoadScene("Lv0_MainMenu");
+            SceneManager.LoadScene("Main Menu");
             if ( trycatchController() != "" )
             {
                 buttonContinue.Select();
@@ -225,7 +195,7 @@ public class UI : MonoBehaviour
         }
     }
 
-    public void OnSettingsClick() 
+    public void OnSettingsPauseClick() 
     {
         if ( trycatchController() != "" )
             {
@@ -233,25 +203,16 @@ public class UI : MonoBehaviour
             }
             else { EnableCursor(); }
 
-        if (menuSettings.activeSelf == false && currentScene == "Lv0_MainMenu")
-        {
-            menuSettings.SetActive(true);
-            groupGraphics.SetActive(true);
-            groupAudio.SetActive(false);
-            groupGameplay.SetActive(false);
-        } else if (menuSettings.activeSelf == true && currentScene == "Lv0_MainMenu")
+        if ( menuCredits.activeSelf ) { menuCredits.SetActive(false);}
+        else if (menuLevel.activeSelf) { menuLevel.SetActive(false);}
+
+        if (menuSettings.activeSelf == false && menuPause.activeSelf == true)
         {
             if ( trycatchController() != "" )
             {
-                buttonPlay.Select();
+                buttonContinue.Select();
             }
             else { EnableCursor(); }
-            menuSettings.SetActive(false);
-            groupGraphics.SetActive(false);
-            groupAudio.SetActive(false);
-            groupGameplay.SetActive(false);
-        } else if (menuSettings.activeSelf == false && menuPause.activeSelf == true)
-        {
             menuSettings.SetActive(true);
             groupGraphics.SetActive(true);
             groupAudio.SetActive(false);
@@ -271,7 +232,74 @@ public class UI : MonoBehaviour
             menuPause.SetActive(true);
         }
     }
-    void OnGraphicsClick() 
+
+    public void OnSettingsMainClick() 
+    {
+        if ( trycatchController() != "" )
+            {
+                buttonGraphics.Select();
+            }
+            else { EnableCursor(); }
+
+        if ( menuCredits.activeSelf ) { menuCredits.SetActive(false);}
+        else if (menuLevel.activeSelf) { menuLevel.SetActive(false);}
+
+        if ( menuSettings.activeSelf == false )
+        {
+            menuSettings.SetActive(true);
+            groupGraphics.SetActive(true);
+            groupAudio.SetActive(false);
+            groupGameplay.SetActive(false);
+        } else if (menuSettings.activeSelf == true )
+        {
+            if ( trycatchController() != "" )
+            {
+                buttonPlay.Select();
+            }
+            else { EnableCursor(); }
+            menuSettings.SetActive(false);
+            groupGraphics.SetActive(false);
+            groupAudio.SetActive(false);
+            groupGameplay.SetActive(false);
+        }
+    }
+
+    public void OnSettingsBackClick()
+    {
+        if (currentScene.Equals("Main Menu"))
+        {
+            if (menuSettings.activeSelf)
+            {
+                if (trycatchController() != "")
+                {
+                    buttonPlay.Select();
+                }
+                else { EnableCursor(); }
+                menuSettings.SetActive(false);
+                groupGraphics.SetActive(false);
+                groupAudio.SetActive(false);
+                groupGameplay.SetActive(false);
+            }
+        }
+        else
+        {
+            if (menuSettings.activeSelf)
+            {
+                if (trycatchController() != "")
+                {
+                    buttonContinue.Select();
+                }
+                else { EnableCursor(); }
+                menuSettings.SetActive(false);
+                groupGraphics.SetActive(false);
+                groupAudio.SetActive(false);
+                groupGameplay.SetActive(false);
+                menuPause.SetActive(true);
+            }
+        }
+    }
+
+    public void OnGraphicsClick() 
     {
         Debug.Log("Graphics Clicked");
         groupGraphics.SetActive(true);
@@ -279,7 +307,7 @@ public class UI : MonoBehaviour
         groupGameplay.SetActive(false);
     }
 
-    void OnAudioClick() 
+    public void OnAudioClick() 
     {
         Debug.Log("Audio Clicked");
         groupGraphics.SetActive(false);
@@ -287,7 +315,7 @@ public class UI : MonoBehaviour
         groupGameplay.SetActive(false);
     }
 
-    void OnGameplayClick() 
+    public void OnGameplayClick() 
     {
         Debug.Log("Gameplay Clicked");
         groupGraphics.SetActive(false);
@@ -303,6 +331,8 @@ public class UI : MonoBehaviour
 
     public void OnCreditsClick()
     {
+        if ( menuSettings.activeSelf ) { menuSettings.SetActive(false);}
+        else if (menuSettings.activeSelf) { menuSettings.SetActive(false);}
         if ( !(menuCredits.activeSelf) ) { menuCredits.SetActive(true); } else { menuCredits.SetActive(false); }
     }
 
