@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
             knockbackVelocity.z = knockbackVelocity.z == 0f ? 0f : knockbackVelocity.z - Mathf.Sign(knockbackVelocity.z) * horizontalKnockbackDrag * Time.fixedDeltaTime;
             knockbackVelocity.y -= 30f * Time.fixedDeltaTime;
 
-            // Stop knockback if player is still
+            // Add knockback only if the Player isn't still
             if (playerVelocity != Vector3.zero)
             {
                 AddExternalVelocity(knockbackVelocity * Time.fixedDeltaTime);
