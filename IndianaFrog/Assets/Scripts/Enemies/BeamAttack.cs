@@ -77,8 +77,8 @@ public class BeamAttack : MonoBehaviour
 					knockbackDirection.y = 0.6f;
 
 					hit.transform.GetComponent<PlayerMovement>().Knockback(knockbackDirection * knockbackForce);
+					hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
 				}
-				hit.transform.GetComponent<PlayerHealth>().SubtractHealth(damageAmount);
 			}
 		}
 		else
