@@ -2639,7 +2639,7 @@ PrefabInstance:
     - target: {fileID: 2026671138831364910, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.33
+      value: 0.321
       objectReference: {fileID: 0}
     - target: {fileID: 2026671138831364910, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}
@@ -4064,6 +4064,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 2026671138831364910, guid: a27283d6f307e1b43843b32a3a943a3e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.892
+      objectReference: {fileID: 0}
     - target: {fileID: 2600002006472404812, guid: a27283d6f307e1b43843b32a3a943a3e,
         type: 3}
       propertyPath: checkpointIndex
@@ -4617,15 +4622,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frog
       objectReference: {fileID: 0}
-    - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
+    - target: {fileID: 723754090840151393, guid: 765147221b9d5804399e885852232e94,
         type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
+        type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765147221b9d5804399e885852232e94, type: 3}
@@ -7677,17 +7687,17 @@ PrefabInstance:
     - target: {fileID: 723754090840151393, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765147221b9d5804399e885852232e94, type: 3}
@@ -11573,6 +11583,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 4
+  knockbackOriginPoint: {fileID: 0}
+  knockbackForce: 0
 --- !u!64 &1836473682
 MeshCollider:
   m_ObjectHideFlags: 0
