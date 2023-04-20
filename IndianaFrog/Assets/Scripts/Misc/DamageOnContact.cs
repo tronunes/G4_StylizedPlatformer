@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DamageOnContact : MonoBehaviour
 {
-    private int damageAmount = 1;
+    public int damageAmount = 1;
 
     private Vector3 knockbackDirection; // Unit vector in the direction of the player's center from the knockbackOriginPoint
 
