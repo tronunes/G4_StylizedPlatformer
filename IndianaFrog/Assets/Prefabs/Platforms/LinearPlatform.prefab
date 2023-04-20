@@ -169,6 +169,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1d237de8cabec346b416fa46f91fa86, type: 3}
+--- !u!64 &3472103528175150383 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 1795875493664493126, guid: e1d237de8cabec346b416fa46f91fa86,
+    type: 3}
+  m_PrefabInstance: {fileID: 2937289222688680809}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6135571214862851510 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9072138058411947743, guid: e1d237de8cabec346b416fa46f91fa86,
@@ -188,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 6947617156163694573}
-  meshCollider: {fileID: 7430352423466091638}
+  meshCollider: {fileID: 3472103528175150383}
   waypoints:
   - {fileID: 2491846491866132884}
   - {fileID: 8125852454401736906}
@@ -220,12 +226,6 @@ MonoBehaviour:
 --- !u!4 &6947617156163694573 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5235922758646023300, guid: e1d237de8cabec346b416fa46f91fa86,
-    type: 3}
-  m_PrefabInstance: {fileID: 2937289222688680809}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7430352423466091638 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 5755234001796853535, guid: e1d237de8cabec346b416fa46f91fa86,
     type: 3}
   m_PrefabInstance: {fileID: 2937289222688680809}
   m_PrefabAsset: {fileID: 0}

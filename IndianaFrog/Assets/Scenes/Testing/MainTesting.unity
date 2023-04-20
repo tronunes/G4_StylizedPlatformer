@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 2158.245, g: 2262.0332, b: 3284.0469, a: 1}
+  m_IndirectSpecularColor: {r: 2164.1045, g: 2272.3867, b: 3310.2578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -818,12 +818,75 @@ Transform:
   m_Father: {fileID: 577353255}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
---- !u!224 &197888937 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6274957802230829182, guid: e75878386449cfd458f5d40c8686e194,
-    type: 3}
-  m_PrefabInstance: {fileID: 1827479128}
-  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &188931801
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220589, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767695286569220590, guid: 931e1219277dba44bb3c35689e15399c,
+        type: 3}
+      propertyPath: m_Name
+      value: KillPlane
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 931e1219277dba44bb3c35689e15399c, type: 3}
 --- !u!1 &275753750
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,9 +1405,10 @@ GameObject:
   - component: {fileID: 539816073}
   - component: {fileID: 539816072}
   - component: {fileID: 539816071}
+  - component: {fileID: 539816075}
   m_Layer: 0
   m_Name: Cube (12)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1427,6 +1491,18 @@ Transform:
   m_Father: {fileID: 577353255}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539816075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539816070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f0adc464986ea4c98000f352916ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &577353254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,9 +2918,10 @@ GameObject:
   - component: {fileID: 979198832}
   - component: {fileID: 979198831}
   - component: {fileID: 979198830}
+  - component: {fileID: 979198834}
   m_Layer: 0
   m_Name: Cube (11)
-  m_TagString: Untagged
+  m_TagString: ClingableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2927,6 +3004,18 @@ Transform:
   m_Father: {fileID: 577353255}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &979198834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979198829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f0adc464986ea4c98000f352916ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1020318794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4905,7 +4994,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2108255579 stripped
 RectTransform:
