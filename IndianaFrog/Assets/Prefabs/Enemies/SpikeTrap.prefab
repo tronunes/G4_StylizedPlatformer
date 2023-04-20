@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spike: {fileID: 7258974679417947718}
   spikeHeight: 0.7
-  trapTriggerTime: 2
-  spikesDuration: 3
+  trapTriggerTime: 0.8
+  spikesDuration: 0.5
   spikesSpeed: 11.85
   spikesRetractSpeed: 0.4
