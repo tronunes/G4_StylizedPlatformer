@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // A Singleton, prevent duplicates
 public class GameManager : MonoBehaviour
@@ -35,6 +36,10 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
+        {
+            return;
+        }
         Time.timeScale = 0f;
         isPaused = true;
     }
