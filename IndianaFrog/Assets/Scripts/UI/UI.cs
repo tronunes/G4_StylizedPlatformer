@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
 {
     string joystick; //Should be a string for connected controller, "" if none connected
     string currentScene;
+    RectTransform tempRect;
 
     //Save state
     int highestLevelCompleted = 0;
@@ -191,6 +192,9 @@ public class UI : MonoBehaviour
 
         if (menuSettings.activeSelf == false && menuPause.activeSelf == true)
         {
+            StoreRectTransform(menuSettings.GetComponent<RectTransform>());
+            SetRectTransformStretched(menuSettings.GetComponent<RectTransform>());
+
             SelectButtonOrEnableCursor(buttonGraphics);
             menuSettings.SetActive(true);
             groupGraphics.SetActive(true);
@@ -200,6 +204,8 @@ public class UI : MonoBehaviour
         }
         else if (menuSettings.activeSelf == true && menuPause.activeSelf == false)
         {
+            RestoreRectTransform(menuSettings.GetComponent<RectTransform>());
+            
             SelectButtonOrEnableCursor(buttonContinue);
             menuSettings.SetActive(false);
             groupGraphics.SetActive(false);
@@ -335,4 +341,24 @@ public class UI : MonoBehaviour
         }
         else { EnableCursor(); }
     }
+
+    private void SetRectTransformStretched(RectTransform rectTransform)
+    {
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(1, 1);
+        rectTransform.offsetMin = new Vector2(0, 0);
+        rectTransform.offsetMax = new Vector2(0, 0);
+    }
+
+    private void StoreRectTransform(RectTransform storedRect)
+    {
+        tempRect = storedRect;
+    }
+
+    private void RestoreRectTransform(RectTransform modifiedRect)
+    {
+        modifiedRect = tempRect;
+        tempRect = null;
+    }
+
 }
