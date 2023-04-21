@@ -38,6 +38,7 @@ public class UI : MonoBehaviour
     
     //PauseMenu Buttons
     [SerializeField] Button buttonContinue;
+    [SerializeField] Button buttonResartLevel;
     [SerializeField] Button buttonPauseSettings;
     [SerializeField] Button buttonReturnMain;
     
@@ -103,9 +104,19 @@ public class UI : MonoBehaviour
             {
                 OnSettingsBackClick();
             }
-            else if (menuPause.activeSelf)
+            if ( menuPause.activeSelf)
             {
                 OnPauseInput();
+            }
+            if ( menuLevel.activeSelf)
+            {
+                menuLevel.SetActive(false);
+                SelectButtonOrEnableCursor(buttonPlay);
+            }
+            if ( menuCredits.activeSelf)
+            {
+                menuCredits.SetActive(false);
+                SelectButtonOrEnableCursor(buttonPlay);
             }
         }
 
@@ -153,6 +164,11 @@ public class UI : MonoBehaviour
                 menuSettings.SetActive(false);
             }
         }
+    }
+
+    public void OnRestartLevelClick()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OnExitClick() 
