@@ -84,6 +84,12 @@ public class UI : MonoBehaviour
             if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
             {
                 return;
+            } 
+            else if (menuSettings.activeSelf) 
+            {
+                //Hackyway to handle the case of pressing pause when in settings menu
+                GameManager.instance.Pause();
+                OnPauseInput();
             }
             else
             {
@@ -107,6 +113,7 @@ public class UI : MonoBehaviour
     
     public void OnPlayClick()
     {
+        //Check for save data: load level selector or first level
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
         if (highestLevelCompleted != 0)
         {
@@ -114,6 +121,8 @@ public class UI : MonoBehaviour
             {
                 menuLevel.SetActive(true);
                 SelectButtonOrEnableCursor(buttonLevel[0]);
+                if (menuCredits.activeSelf) { menuCredits.SetActive(false); }
+                if (menuSettings.activeSelf) { menuSettings.SetActive(false); }
             }
             else
             { menuLevel.SetActive(false); }
