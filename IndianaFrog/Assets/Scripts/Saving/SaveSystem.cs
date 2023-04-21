@@ -6,11 +6,7 @@ public static class SaveSystem
     public static void SaveGame(int completedLevel)
     {
         // Check if an existing save file is OK to overwrite
-        SaveData previousSaveData = LoadGame();
-        if (
-            previousSaveData == null ||
-            completedLevel > previousSaveData._levelCompleted
-        )
+        if (completedLevel > GetHighestLevelCompleted())
         {
             // Serialize the save data to JSON format
             SaveData newSaveData = new SaveData(completedLevel);
@@ -63,5 +59,19 @@ public static class SaveSystem
     private static string GetFilePath()
     {
         return Application.persistentDataPath + "/save.json";
+    }
+
+    public static int GetHighestLevelCompleted()
+    {
+        int highestLevelCompleted = 0;
+
+        // Try loading a previous save for the highest level integer
+        SaveData previousSaveData = LoadGame();
+        if (previousSaveData != null)
+        {
+            highestLevelCompleted = previousSaveData._levelCompleted;
+        }
+
+        return highestLevelCompleted;
     }
 }

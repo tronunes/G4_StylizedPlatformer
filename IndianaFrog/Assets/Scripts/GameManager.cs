@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // A Singleton, prevent duplicates
 public class GameManager : MonoBehaviour
@@ -8,6 +9,18 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     private bool isPaused = false;
+
+    //Input
+    private float joystickXSensitivity = 1f;
+    private float joystickYSensitivity = 1f;
+    
+    //Graphics Quality preset
+    private int graphicsQuality = 0;
+    
+    //Audio Settings
+    private float audioMaster = 1f;
+    private float audioFX = 1f;
+    private float audioMusic= 1f;
 
     private void Awake()
     {
@@ -25,6 +38,10 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        if (SceneManager.GetActiveScene().name.Equals("Main Menu"))
+        {
+            return;
+        }
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -38,6 +55,61 @@ public class GameManager : MonoBehaviour
     public bool IsPaused()
     {
         return isPaused;
+    }
+
+    public void SetQuality(int quality)
+    {
+        if (quality >= 0 && quality <= 2)
+        {
+            graphicsQuality = quality;
+            QualitySettings.SetQualityLevel(quality, true);
+        }
+        else
+        {
+            Debug.LogWarning($"Quality index should be in range 0..2, index was {quality}", GameManager.instance);
+        }
+        
+    }
+
+    public void SetJoystickXSensitivity(float sensitivity)
+    {
+        joystickXSensitivity = sensitivity;
+    }
+
+    public void SetJoystickYSensitivity(float sensitivity)
+    {
+        joystickYSensitivity = sensitivity;
+    }
+
+    public void SetAudioMaster(float volumeMaster)
+    {
+        audioMaster = volumeMaster;
+    }
+
+    public void SetAudioFX(float volumeFX)
+    {
+        audioFX = volumeFX;
+    }
+
+    public void SetAudioMusic(float volumeMusic)
+    {
+        audioMusic = volumeMusic;
+    }
+
+    public float GetAudio(string type)
+    {
+        switch (type)
+        {
+            case "master":
+                return audioMaster;
+            case "fx":
+                return audioFX;
+            case "music":
+                return audioMusic;
+            default:
+                Debug.LogWarning($"No known Audio type was returned: called Audio type was {type}", GameManager.instance);
+                return 0f;
+        }
     }
 
     void Update()
