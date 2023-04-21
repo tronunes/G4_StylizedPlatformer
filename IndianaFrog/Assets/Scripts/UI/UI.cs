@@ -169,6 +169,7 @@ public class UI : MonoBehaviour
 
     public void OnRestartLevelClick()
     {
+        GameManager.instance.UnPause();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
