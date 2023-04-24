@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float maxJumpHeight = 1f;
     [SerializeField] private float maxChargeJumpHeight = 1f;
+    [SerializeField] private float chargeJumpTimerThreshold = 0.15f; // I.e. what time counts as "holding down jump button"
 
     private float chargeJumpTimer = 0f;
     private float jumpInputDecayTimer = 0f;
@@ -313,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Add to chargeJumpTimer if the jump button is held down
-        if (chargingJump && chargeJumpTimer <= 0.5f)
+        if (chargingJump && chargeJumpTimer <= chargeJumpTimerThreshold)
         {
             chargeJumpTimer += Time.deltaTime;
         }
@@ -406,7 +407,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     // Depending on charge amount, decide which jump to do
-                    verticalVelocity = chargeJumpTimer >= 0.5f ? chargeJumpVelocity : jumpVelocity;
+                    verticalVelocity = chargeJumpTimer >= chargeJumpTimerThreshold ? chargeJumpVelocity : jumpVelocity;
 
                     // Animate Jump
                     animator.SetTrigger("Jump");
