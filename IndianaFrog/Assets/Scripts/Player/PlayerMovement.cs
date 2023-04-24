@@ -72,8 +72,8 @@ public class PlayerMovement : MonoBehaviour
     float horizontalKnockbackDrag = 15f;
 
     [Header("Reeling slingshot")]
-    public bool slingshotState = false;
-    private float slingshotDrag = 4f;
+    private bool slingshotState = false;
+    private float slingshotDrag = 0.1f;
 
 
     void Start()
@@ -202,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isGrounded && slingshotVelocityMagnitude > slingshotVelocityThreshold)
             {
                 // Reduce slingshotVelocity by drag
-                Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.deltaTime);
+                slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.deltaTime);
 
                 // Add slingshot velocity to Frog's velocity
                 AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
