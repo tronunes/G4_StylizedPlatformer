@@ -108,7 +108,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             chargingJump = true;
-        } else if (Input.GetButtonUp("Jump"))
+        }
+        else if (Input.GetButtonUp("Jump"))
         {
             chargingJump = false;
         }
@@ -133,6 +134,10 @@ public class PlayerMovement : MonoBehaviour
         // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
+
+
+        // KNOCKBACK
+        // =========
 
         // Perform player knockback for this frame if the player is in the knockback state, is in the air, and isn't travelling directly upwards at a velocity below 9
         // The latter half is there to make sure the player regains control partway through a lava caused knockback
@@ -163,6 +168,10 @@ public class PlayerMovement : MonoBehaviour
             knockbackState = false;
         }
 
+
+        // INPUT LOCK
+        // ==========
+
         // Prevent the Frog receiving input from the Player
         if (inputLocked)
         {
@@ -179,6 +188,10 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
+
+        // WALL CLING
+        // ==========
+
         // If the player isn't on the ground, check if there's a wall in front of them
         if (!isGrounded)
         {
@@ -193,6 +206,10 @@ public class PlayerMovement : MonoBehaviour
             clingingState = false;
             previouslyClungWall = null;
         }
+
+
+        // SLIDING
+        // =======
 
         // Set the character's slidingState to true, and set its height and velocity
         if (slidingInput && !slidingState && externalVelocity == Vector3.zero && !knockbackState)
@@ -241,6 +258,10 @@ public class PlayerMovement : MonoBehaviour
                 ChangeCharacterHeight(1.5f);
             }
         }
+
+
+        // JUMP, CHARGE JUMP AND WALL JUMP
+        // ===============================
 
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
         if (jumpInputDecayTimer >= 0.2f)
@@ -297,6 +318,10 @@ public class PlayerMovement : MonoBehaviour
                 AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
             }
         }
+
+
+        // MOVEMENT
+        // ========
 
         // Case: external velocity given -> don't calculate velocity from movement or gravity
         if (externalVelocity != Vector3.zero)
@@ -394,6 +419,10 @@ public class PlayerMovement : MonoBehaviour
 
         // Animate running
         animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
+
+
+        // MESH ROTATION
+        // =============
 
         // Force the frogMesh to look at the clung-to wall during a cling
         if (clingingState)
