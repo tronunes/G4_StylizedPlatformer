@@ -193,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         // ==========
 
         // If the player isn't on the ground, check if there's a wall in front of them
-        if (!isGrounded)
+        if (!isGrounded && verticalVelocity <= 0f)
         {
             WallClingCheck();
         }
