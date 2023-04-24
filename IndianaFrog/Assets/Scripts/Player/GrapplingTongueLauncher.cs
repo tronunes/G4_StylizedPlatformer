@@ -72,6 +72,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
         {
             RetractTongue();
             fire1PressedButNotReleased = true;
+
+            // Slingshot the Player with the current velocity
+            playerMovement.Slingshot(playerMovement.GetPlayerVelocity());
         }
 
         // Case: Retracting the Tongue back towards the Frog

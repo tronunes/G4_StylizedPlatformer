@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private float verticalVelocity;
     private Vector3 knockbackVelocity;
     private float wallJumpHorizontalVelocity;
+    private Vector3 slingshotVelocity;
 
     [Header("Jumping values")]
     [SerializeField] private float gravityMultiplierPostApex = 5f;
@@ -68,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Knockback")]
     public bool knockbackState;
     float horizontalKnockbackDrag = 15f;
+
+    [Header("Reeling slingshot")]
+    public bool slingshotState = false;
+    float horizontalSlingshotDrag = 15f;
 
 
     void Start()
@@ -182,6 +187,36 @@ public class PlayerMovement : MonoBehaviour
             slidingVelocity = 0f;
             slidingState = false;
             slidingInput = false;
+        }
+
+        // REELING SLINGSHOT
+        // =================
+
+        if (slingshotState && !isGrounded && (Mathf.Abs(slingshotVelocity.x) != 0f && Mathf.Abs(slingshotVelocity.z) != 0f) ^ slingshotVelocity.y >= 9f)
+        {
+            // Bring slingshotVelocity x and z values closer to zero, and bring y down continuously, keep x and z at zero if they already are zeros, to avoid errors
+            slingshotVelocity.x = slingshotVelocity.x == 0f ? 0f : slingshotVelocity.x - Mathf.Sign(slingshotVelocity.x) * horizontalSlingshotDrag * Time.deltaTime;
+            slingshotVelocity.z = slingshotVelocity.z == 0f ? 0f : slingshotVelocity.z - Mathf.Sign(slingshotVelocity.z) * horizontalSlingshotDrag * Time.deltaTime;
+            slingshotVelocity.y -= 30f * Time.deltaTime;
+
+            // Add slingshotVelocity only if the Player isn't still
+            if (playerVelocity != Vector3.zero)
+            {
+                AddExternalVelocity(slingshotVelocity * Time.deltaTime);
+            }
+
+            // Make sure the player can't slide during a slingshot
+            slidingInput = false;
+            slidingVelocity = 0f;
+            slidingState = false;
+        } 
+        // Exit slingshotState
+        else if (slingshotState)
+        {
+            // Keep the player's vertical velocity to avoid a sudden stop in the air
+            verticalVelocity = slingshotVelocity.y;
+
+            slingshotState = false;
         }
 
 
@@ -588,6 +623,17 @@ public class PlayerMovement : MonoBehaviour
         knockbackState = true;
 
         SetGroundedState(false);
+
+        verticalVelocity = 0f;
+    }
+
+    public void Slingshot(Vector3 slingshotVector)
+    {
+        slingshotVelocity = slingshotVector;
+
+        AddExternalVelocity(slingshotVelocity * Time.deltaTime);
+
+        slingshotState = true;
 
         verticalVelocity = 0f;
     }
