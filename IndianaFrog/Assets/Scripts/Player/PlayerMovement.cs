@@ -198,9 +198,10 @@ public class PlayerMovement : MonoBehaviour
         {
             float slingshotVelocityThreshold = 0.1f; // If the velocity is smaller than this -> stop slingshot
             float slingshotVelocityMagnitude = slingshotVelocity.magnitude;
+            float slingshotHorizontalVelocityMagnitude = new Vector3(slingshotVelocity.x, 0f, slingshotVelocity.z).magnitude;
 
             // Case: Moving airborne -> keep (drag reduced) slingshot velocity
-            if (!isGrounded && slingshotVelocityMagnitude > slingshotVelocityThreshold)
+            if (!isGrounded && slingshotHorizontalVelocityMagnitude > slingshotVelocityThreshold)
             {
                 // Reduce slingshotVelocity by drag
                 slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.deltaTime);
@@ -209,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
                 AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
             }
             // Case: Either grounded or slingshotVelocity too small to continue slingshot -> stop slingshot
-            else if (isGrounded || slingshotVelocityMagnitude <= slingshotVelocityThreshold)
+            else if (isGrounded || slingshotHorizontalVelocityMagnitude <= slingshotVelocityThreshold)
             {
                 slingshotVelocity = Vector3.zero;
                 slingshotState = false;
@@ -553,6 +554,8 @@ public class PlayerMovement : MonoBehaviour
         playerPreviousFramePosition = transform.position;
         playerVelocity = Vector3.zero;
         externalVelocity = Vector3.zero;
+        slingshotVelocity = Vector3.zero;
+        knockbackVelocity = Vector3.zero;
         verticalVelocity = 0f;
         isGrounded = false;
 
@@ -563,6 +566,9 @@ public class PlayerMovement : MonoBehaviour
         slidingVelocity = 0f;
         slidingState = false;
         slidingInput = false;
+
+        knockbackState = false;
+        slingshotState = false;
 
         frogMesh.localRotation = Quaternion.identity;
     }
