@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 // A Singleton, prevent duplicates
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
+
+    //add serialized audio mixer here
+    public AudioMixer audioMixer;
 
     private bool isPaused = false;
 
@@ -84,6 +88,7 @@ public class GameManager : MonoBehaviour
     public void SetAudioMaster(float volumeMaster)
     {
         audioMaster = volumeMaster;
+        audioMixer.SetFloat("MasterVol", Mathf.Log10(volumeMaster) * 20);
     }
 
     public void SetAudioFX(float volumeFX)
@@ -94,6 +99,7 @@ public class GameManager : MonoBehaviour
     public void SetAudioMusic(float volumeMusic)
     {
         audioMusic = volumeMusic;
+        audioMixer.SetFloat("MusicVol", Mathf.Log10(volumeMusic) * 20);
     }
 
     public float GetAudio(string type)
