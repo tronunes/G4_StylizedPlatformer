@@ -40,18 +40,16 @@ public class PlayerMovement : MonoBehaviour
     private float chargeJumpVelocity;
 
 
-    [Header("Sliding values")]
+    [Header("Sliding")]
     [SerializeField] private float slidingFriction; // Higher number means the slide is faster
     [SerializeField] private float slidingLength; // How many units the slide moves the character forward
-
-
     private bool slidingInput;
     private bool slidingState;
     private float slideStartVelocity;
     private float slidingVelocity;
     private float slidingCooldown;
 
-    [Header("Wall -cling and -jump values")]
+    [Header("Wall Cling and Wall Jump")]
     [SerializeField] private bool clingingState;
     [SerializeField] private float maxAngle; // Determines how large the angle between the character's facing direction and the face of the wall can be
     [SerializeField] private float wallDetectionLength;
@@ -67,8 +65,10 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit frontWallHit; // Stored information from the previous raycast that hit a wall
     private float wallJumpVelocity;
 
+    [Header("Knockback")]
     public bool knockbackState;
     float horizontalKnockbackDrag = 15f;
+
 
     void Start()
     {
