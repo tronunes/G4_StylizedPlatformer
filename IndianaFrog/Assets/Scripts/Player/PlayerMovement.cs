@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float maxJumpHeight = 1f;
     [SerializeField] private float maxChargeJumpHeight = 1f;
-    private float chargeJumpTimerThreshold = 0.3f; // I.e. what time counts as "holding down jump button"
+    private float chargeJumpTimerThreshold = 0.5f; // I.e. what time counts as "holding down jump button"
 
     private float chargeJumpTimer = 0f;
     private float jumpInputDecayTimer = 0f;
