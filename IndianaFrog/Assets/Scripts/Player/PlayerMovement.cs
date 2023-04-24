@@ -315,7 +315,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Add to chargeJumpTimer if the jump button is held down
-        if (chargingJump && chargeJumpTimer <= chargeJumpTimerThreshold)
+        if (chargingJump)
         {
             chargeJumpTimer += Time.deltaTime;
         }
@@ -385,6 +385,7 @@ public class PlayerMovement : MonoBehaviour
             // Jump if the jump button is let go of and there is any amount of charge
             if (!chargingJump && chargeJumpTimer > 0 && (isGrounded || clingingState))
             {
+                // Case: Wall jump
                 if (clingingState)
                 {
                     // Set velocities for the wall jump
@@ -405,6 +406,7 @@ public class PlayerMovement : MonoBehaviour
                     // Animate Jump
                     animator.SetTrigger("Jump");
                 }
+                // Case: normal or charge jump
                 else
                 {
                     // Depending on charge amount, decide which jump to do
