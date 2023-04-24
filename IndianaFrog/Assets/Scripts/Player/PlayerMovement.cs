@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Reeling slingshot")]
     public bool slingshotState = false;
-    private float slingshotDrag = 0.1f;
+    private float slingshotDrag = 4f;
 
 
     void Start()
@@ -195,13 +195,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (slingshotState)
         {
-            // Moving airborne
-            if (!isGrounded && slingshotVelocity.sqrMagnitude > 0.1f)
+            float slingshotVelocityThreshold = 0.1f; // If the velocity is smaller than this -> stop slingshot
+            float slingshotVelocityMagnitude = slingshotVelocity.magnitude;
+
+            // Case: Moving airborne -> keep (drag reduced) slingshot velocity
+            if (!isGrounded && slingshotVelocityMagnitude > slingshotVelocityThreshold)
             {
-                Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocity.magnitude - (1f - slingshotDrag) * Time.deltaTime);
+                // Reduce slingshotVelocity by drag
+                Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.deltaTime);
+
+                // Add slingshot velocity to Frog's velocity
                 AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
             }
-            else if (isGrounded || slingshotVelocity.sqrMagnitude <= 0.1f)
+            // Case: Either grounded or slingshotVelocity too small to continue slingshot -> stop slingshot
+            else if (isGrounded || slingshotVelocityMagnitude <= slingshotVelocityThreshold)
             {
                 slingshotVelocity = Vector3.zero;
                 slingshotState = false;
@@ -634,9 +641,6 @@ public class PlayerMovement : MonoBehaviour
     public void Slingshot(Vector3 slingshotVector)
     {
         slingshotVelocity = slingshotVector;
-
-        AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
-
         slingshotState = true;
     }
 }
