@@ -18,9 +18,10 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
     // Stats
     private float shootForce = 35f;
-    private float frogReelingSpeed = 10f; // Reeling = Frog moves towards the tongue end (which is attached to a wall)
+    private float frogReelingSpeedMax = 25f; // Reeling = Frog moves towards the tongue end (which is attached to a wall)
     private float tongueRetractSpeed = 100f; // Rectracting = the tongue moves towards the Frog without moving the Frog
     private float maxTongueLength = 30f;
+    [Tooltip("Make sure the value at T-0 is >= 0.1")] public AnimationCurve reelingCurve;
 
     // Helpers
     private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
@@ -97,13 +98,23 @@ public class GrapplingTongueLauncher : MonoBehaviour
             // Case: Reeling the Frog in
             if (isReelingFrogIn)
             {
-                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * frogReelingSpeed * Time.deltaTime);
+                Vector3 tongueLengthVector = tongueEnd.transform.position - tongueStart.position;
+                Vector3 tongueDirection = tongueLengthVector.normalized;
+                float tongueLength = tongueLengthVector.magnitude;
+                float reelingCompletePercentage = tongueLength / maxTongueLength;
+                float reelingForceNormalized = reelingCurve.Evaluate(1f - reelingCompletePercentage);
+                float reelingForce = frogReelingSpeedMax * reelingForceNormalized;
+
+                Vector3 externalVelocity = tongueDirection * reelingForce * Time.deltaTime;
+
+                Debug.Log(reelingForce);
+
+                playerMovement.AddExternalVelocity(externalVelocity);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
-                float frogDistanceToTongueEnd = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
                 if (
-                    frogDistanceToTongueEnd < 0.2f ||                                                           // "Frog is close enough"
-                    (frogDistanceToTongueEnd < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
+                    tongueLength < 0.5f ||                                                           // "Frog is close enough"
+                    (tongueLength < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
                 {
                     RetractTongue();
                 }
