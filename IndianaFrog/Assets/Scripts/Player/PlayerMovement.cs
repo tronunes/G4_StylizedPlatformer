@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isZoomed = false;
     private Vector3 playerPreviousFramePosition;
     private bool chargingJump = false;
-    private Vector3 externalVelocity = Vector3.zero;
+    private Vector3 externalVelocity = Vector3.zero; // Alternative velocity to movement input velocity. Blocks movement input velocity. Only affects one frame.
+    private Vector3 additionalVelocity = Vector3.zero; // Like externalVelocity, but doesn't block movement input velocity. Only affects one frame.
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Reeling slingshot")]
     public bool slingshotState = false;
-    float horizontalSlingshotDrag = 15f;
+    private float slingshotDrag = 0.1f;
 
 
     void Start()
@@ -192,17 +193,18 @@ public class PlayerMovement : MonoBehaviour
         // REELING SLINGSHOT
         // =================
 
-        if (slingshotState && !isGrounded && (Mathf.Abs(slingshotVelocity.x) != 0f && Mathf.Abs(slingshotVelocity.z) != 0f) ^ slingshotVelocity.y >= 9f)
+        if (slingshotState)
         {
-            // Bring slingshotVelocity x and z values closer to zero, and bring y down continuously, keep x and z at zero if they already are zeros, to avoid errors
-            slingshotVelocity.x = slingshotVelocity.x == 0f ? 0f : slingshotVelocity.x - Mathf.Sign(slingshotVelocity.x) * horizontalSlingshotDrag * Time.deltaTime;
-            slingshotVelocity.z = slingshotVelocity.z == 0f ? 0f : slingshotVelocity.z - Mathf.Sign(slingshotVelocity.z) * horizontalSlingshotDrag * Time.deltaTime;
-            slingshotVelocity.y -= 30f * Time.deltaTime;
-
-            // Add slingshotVelocity only if the Player isn't still
-            if (playerVelocity != Vector3.zero)
+            // Moving airborne
+            if (!isGrounded && slingshotVelocity.sqrMagnitude > 0.1f)
             {
-                AddExternalVelocity(slingshotVelocity * Time.deltaTime);
+                Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocity.magnitude - (1f - slingshotDrag) * Time.deltaTime);
+                AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
+            }
+            else if (isGrounded || slingshotVelocity.sqrMagnitude <= 0.1f)
+            {
+                slingshotVelocity = Vector3.zero;
+                slingshotState = false;
             }
 
             // Make sure the player can't slide during a slingshot
@@ -210,14 +212,6 @@ public class PlayerMovement : MonoBehaviour
             slidingVelocity = 0f;
             slidingState = false;
         } 
-        // Exit slingshotState
-        else if (slingshotState)
-        {
-            // Keep the player's vertical velocity to avoid a sudden stop in the air
-            verticalVelocity = slingshotVelocity.y;
-
-            slingshotState = false;
-        }
 
 
         // WALL CLING
@@ -446,7 +440,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Move
-        characterController.Move(movementVector);
+        characterController.Move(movementVector + additionalVelocity);
 
         // Animate running
         animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
@@ -477,6 +471,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        additionalVelocity = Vector3.zero;
+    }
+
     public void SetGroundedState(bool newState)
     {
         isGrounded = newState;
@@ -504,6 +503,11 @@ public class PlayerMovement : MonoBehaviour
         // Divide by deltaTime here, and when calling this function multiply the external speed by deltaTime
         // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
         externalVelocity += additionalExternalVelocity / Time.deltaTime;
+    }
+
+    public void AddAdditionalVelocity(Vector3 _additionalVelocity)
+    {
+        additionalVelocity += _additionalVelocity / Time.deltaTime;
     }
 
     public bool IsGrounded()
@@ -631,10 +635,8 @@ public class PlayerMovement : MonoBehaviour
     {
         slingshotVelocity = slingshotVector;
 
-        AddExternalVelocity(slingshotVelocity * Time.deltaTime);
+        AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
 
         slingshotState = true;
-
-        verticalVelocity = 0f;
     }
 }
