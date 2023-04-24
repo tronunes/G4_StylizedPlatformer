@@ -22,6 +22,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float tongueRetractSpeed = 100f; // Rectracting = the tongue moves towards the Frog without moving the Frog
     private float maxTongueLength = 30f;
     [Tooltip("Make sure the value at T-0 is >= 0.1")] public AnimationCurve reelingCurve;
+    [Tooltip("Does the Player get slingshot also when fully reeled in?")] public bool slingshotWhenReachingEnd = false;
 
     // Helpers
     private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
@@ -71,10 +72,8 @@ public class GrapplingTongueLauncher : MonoBehaviour
         else if (tongueEnd && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             RetractTongue();
+            SlingshotPlayer();
             fire1PressedButNotReleased = true;
-
-            // Slingshot the Player with the current velocity
-            playerMovement.Slingshot(playerMovement.GetPlayerVelocity() * Time.deltaTime);
         }
 
         // Case: Retracting the Tongue back towards the Frog
@@ -119,6 +118,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
                     (tongueLength < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
                 {
                     RetractTongue();
+
+                    // Slingshot the Player depending on settings
+                    if (slingshotWhenReachingEnd)
+                    {
+                        SlingshotPlayer();
+                    }
                 }
             }
             // Case: not reeling
@@ -224,5 +229,11 @@ public class GrapplingTongueLauncher : MonoBehaviour
     {
         DestroyTongueEnd();
         HideTongue();
+    }
+
+    private void SlingshotPlayer()
+    {
+        // Slingshot the Player with the current velocity
+        playerMovement.Slingshot(playerMovement.GetPlayerVelocity() * Time.deltaTime);
     }
 }
