@@ -29,6 +29,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
     private bool canShootTongue = true; // Require touching ground before shooting the Tongue again
+    private float reelingInitialDistance; // The initial distance from TongueStart to TongueEnd when reeling begins
 
     [Header("Events")]
     public UnityEvent event_TongueFullyRetracted = new UnityEvent(); // Triggers when fully retracted
@@ -101,14 +102,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
                 Vector3 tongueLengthVector = tongueEnd.transform.position - tongueStart.position;
                 Vector3 tongueDirection = tongueLengthVector.normalized;
                 float tongueLength = tongueLengthVector.magnitude;
-                float reelingCompletePercentage = tongueLength / maxTongueLength;
+                float reelingCompletePercentage = tongueLength / reelingInitialDistance;
                 float reelingForceNormalized = reelingCurve.Evaluate(1f - reelingCompletePercentage);
                 float reelingForce = frogReelingSpeedMax * reelingForceNormalized;
 
+                // Add external velocity to the Frog
                 Vector3 externalVelocity = tongueDirection * reelingForce * Time.deltaTime;
-
-                Debug.Log(reelingForce);
-
                 playerMovement.AddExternalVelocity(externalVelocity);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
@@ -190,6 +189,8 @@ public class GrapplingTongueLauncher : MonoBehaviour
     public void StartReeling()
     {
         isReelingFrogIn = true;
+
+        reelingInitialDistance = Vector3.Distance(tongueEnd.transform.position, tongueStart.position);
 
         // Prevent shooting the Tongue again before touching ground
         canShootTongue = false;
