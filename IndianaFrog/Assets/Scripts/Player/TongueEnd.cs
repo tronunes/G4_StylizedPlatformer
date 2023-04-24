@@ -49,15 +49,15 @@ public class TongueEnd : MonoBehaviour
         return launcher;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Prevent the Tongue from going through surfaces when velocity is very high and surface very thin
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude * Time.fixedDeltaTime))
+        if (Physics.Raycast(transform.position, tongueRb.velocity, out hit, tongueRb.velocity.magnitude * Time.deltaTime))
         {
             if (!hit.collider.isTrigger)
             {
-                tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.fixedDeltaTime);
+                tongueRb.velocity = Vector3.ClampMagnitude(tongueRb.velocity, hit.distance / Time.deltaTime);
             }
         }
     }

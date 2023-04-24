@@ -104,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        // The input needs to be caught outside of FixedUpdate
         if (Input.GetButtonDown("Jump"))
         {
             chargingJump = true;
@@ -123,16 +122,13 @@ public class PlayerMovement : MonoBehaviour
         {
             slidingInput = false;
         }
-    }
 
-    void FixedUpdate()
-    {
         float inputVerticalAxisValue = Input.GetAxis("Vertical");
         float inputHorizontalAxisValue = Input.GetAxis("Horizontal");
 
         // Calculate Player's velocity
         // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
-        playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
+        playerVelocity = (transform.position - playerPreviousFramePosition) / Time.deltaTime;
         playerPreviousFramePosition = transform.position;
 
 
@@ -144,14 +140,14 @@ public class PlayerMovement : MonoBehaviour
         if (knockbackState && !isGrounded && (Mathf.Abs(knockbackVelocity.x) != 0f && Mathf.Abs(knockbackVelocity.z) != 0f) ^ knockbackVelocity.y >= 9f)
         {
             // Bring knockbackVelocity x and z values closer to zero, and bring y down continuously, keep x and z at zero if they already are zeros, to avoid errors
-            knockbackVelocity.x = knockbackVelocity.x == 0f ? 0f : knockbackVelocity.x - Mathf.Sign(knockbackVelocity.x) * horizontalKnockbackDrag * Time.fixedDeltaTime;
-            knockbackVelocity.z = knockbackVelocity.z == 0f ? 0f : knockbackVelocity.z - Mathf.Sign(knockbackVelocity.z) * horizontalKnockbackDrag * Time.fixedDeltaTime;
-            knockbackVelocity.y -= 30f * Time.fixedDeltaTime;
+            knockbackVelocity.x = knockbackVelocity.x == 0f ? 0f : knockbackVelocity.x - Mathf.Sign(knockbackVelocity.x) * horizontalKnockbackDrag * Time.deltaTime;
+            knockbackVelocity.z = knockbackVelocity.z == 0f ? 0f : knockbackVelocity.z - Mathf.Sign(knockbackVelocity.z) * horizontalKnockbackDrag * Time.deltaTime;
+            knockbackVelocity.y -= 30f * Time.deltaTime;
 
             // Add knockback only if the Player isn't still
             if (playerVelocity != Vector3.zero)
             {
-                AddExternalVelocity(knockbackVelocity * Time.fixedDeltaTime);
+                AddExternalVelocity(knockbackVelocity * Time.deltaTime);
             }
 
             // Make sure the player can't slide during a knockback
@@ -228,24 +224,24 @@ public class PlayerMovement : MonoBehaviour
         // Progress cooldown if grounded
         if (!slidingState && slidingCooldown > 0f && isGrounded)
         {
-            slidingCooldown -= Time.fixedDeltaTime;
+            slidingCooldown -= Time.deltaTime;
         }
 
         // Handle sliding on the ground
         if (isGrounded && slidingState && slidingVelocity >= 0f && slidingCooldown <= 0f && !knockbackState)
         {
-            AddExternalVelocity(frogMesh.forward * slidingVelocity * Time.fixedDeltaTime);
+            AddExternalVelocity(frogMesh.forward * slidingVelocity * Time.deltaTime);
             
-            slidingVelocity -= slidingFriction * Time.fixedDeltaTime;
+            slidingVelocity -= slidingFriction * Time.deltaTime;
         }
         // Handle sliding in the air, end slide at velocity 5 instead of 0, in order to stop an abrupt pause in the air after a slide reaches its end
         else if (slidingState && slidingVelocity >= 5f && slidingCooldown <= 0f && !clingingState && !knockbackState) 
         {
-            verticalVelocity = verticalVelocity > 0f ? 0f : verticalVelocity + gravity * Time.fixedDeltaTime;
+            verticalVelocity = verticalVelocity > 0f ? 0f : verticalVelocity + gravity * Time.deltaTime;
 
-            AddExternalVelocity((frogMesh.forward * slidingVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
+            AddExternalVelocity((frogMesh.forward * slidingVelocity * Time.deltaTime) + (Vector3.up * verticalVelocity * Time.deltaTime));
 
-            slidingVelocity -= slidingFriction * Time.fixedDeltaTime;
+            slidingVelocity -= slidingFriction * Time.deltaTime;
         }
         // When not sliding / After a slide is done
         else
@@ -273,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
         // Progress jumpInputDecayTimer
         if (!chargingJump && chargeJumpTimer > 0f)
         {
-            jumpInputDecayTimer += Time.fixedDeltaTime;
+            jumpInputDecayTimer += Time.deltaTime;
         } else if (chargingJump)
         {
             // Reset jumpInputDecayTimer if player presses down jump button again
@@ -283,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
         // Add to chargeJumpTimer if the jump button is held down
         if (chargingJump && chargeJumpTimer <= 0.5f)
         {
-            chargeJumpTimer += Time.fixedDeltaTime;
+            chargeJumpTimer += Time.deltaTime;
         }
 
         Vector3 movementVector = Vector3.zero;
@@ -312,10 +308,10 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 // Detract from both velocities over time
-                wallJumpHorizontalVelocity += wallJumpDrag * Time.fixedDeltaTime;
-                verticalVelocity += wallJumpGravity * Time.fixedDeltaTime;
+                wallJumpHorizontalVelocity += wallJumpDrag * Time.deltaTime;
+                verticalVelocity += wallJumpGravity * Time.deltaTime;
 
-                AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
+                AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.deltaTime) + (Vector3.up * verticalVelocity * Time.deltaTime));
             }
         }
 
@@ -326,7 +322,7 @@ public class PlayerMovement : MonoBehaviour
         // Case: external velocity given -> don't calculate velocity from movement or gravity
         if (externalVelocity != Vector3.zero)
         {
-            movementVector = externalVelocity * Time.fixedDeltaTime;
+            movementVector = externalVelocity * Time.deltaTime;
 
             // Reset the external velocity (it should only affect this frame)
             externalVelocity = Vector3.zero;
@@ -339,13 +335,13 @@ public class PlayerMovement : MonoBehaviour
             if (clingingState)
             {
                 // If the player is clinging to a wall, drag them downwards at a slower pace
-                verticalVelocity += wallClingSlideSpeed * Time.fixedDeltaTime;
+                verticalVelocity += wallClingSlideSpeed * Time.deltaTime;
             }
             else
             {
                 verticalVelocity = isGrounded ?
                     -5f :
-                    verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.fixedDeltaTime;
+                    verticalVelocity + gravity * (playerVelocity.y < 0f ? gravityMultiplierPostApex : 1) * Time.deltaTime;
             }
 
             // Jump if the jump button is let go of and there is any amount of charge
@@ -361,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
                     Vector3 newPos = frogMesh.position + frontWallHit.normal;
                     frogMesh.LookAt(new Vector3(newPos.x, frogMesh.transform.position.y, newPos.z));
 
-                    AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
+                    AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.deltaTime) + (Vector3.up * verticalVelocity * Time.deltaTime));
 
                     wallJumpState = true;
                     clingingState = false;
@@ -390,16 +386,16 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Calculate player's vertical movement into a Vector3
-            Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.fixedDeltaTime;
+            Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.deltaTime;
 
             // Forward / backward input
-            movementVectorForward = inputVerticalAxisValue * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
+            movementVectorForward = inputVerticalAxisValue * cameraLookTransform.forward * movementSpeed * Time.deltaTime;
 
             // Right / left input
-            movementVectorRight = inputHorizontalAxisValue * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
+            movementVectorRight = inputHorizontalAxisValue * cameraLookTransform.right * movementSpeed * Time.deltaTime;
 
             // Construct the movementVector from inputs
-            movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
+            movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.deltaTime);
 
             // Adjust velocity to slope
             movementVector = AdjustVelocityToSlope(movementVector);
@@ -587,7 +583,7 @@ public class PlayerMovement : MonoBehaviour
     {
         knockbackVelocity = knockbackVector;
 
-        AddExternalVelocity(knockbackVelocity * Time.fixedDeltaTime);
+        AddExternalVelocity(knockbackVelocity * Time.deltaTime);
 
         knockbackState = true;
 
