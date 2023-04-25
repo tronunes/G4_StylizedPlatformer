@@ -42,7 +42,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         HideTongue();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Prevent the Frog receiving input from the Player
         if (inputLocked)
@@ -79,7 +79,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         // Case: Retracting the Tongue back towards the Frog
         if (tongueEnd && isRetractingTongue)
         {
-            tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.deltaTime;
+            tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.fixedDeltaTime;
             float currentTongueDistance = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
 
             // Destroy the Tongue when reaching the Frog
@@ -109,7 +109,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
                 float reelingForce = frogReelingSpeedMax * reelingForceNormalized;
 
                 // Add external velocity to the Frog
-                Vector3 externalVelocity = tongueDirection * reelingForce * Time.deltaTime;
+                Vector3 externalVelocity = tongueDirection * reelingForce * Time.fixedDeltaTime;
                 playerMovement.AddExternalVelocity(externalVelocity);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
@@ -234,6 +234,6 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private void SlingshotPlayer()
     {
         // Slingshot the Player with the current velocity
-        playerMovement.Slingshot(playerMovement.GetPlayerVelocity() * Time.deltaTime);
+        playerMovement.Slingshot(playerMovement.GetPlayerVelocity() * Time.fixedDeltaTime);
     }
 }
