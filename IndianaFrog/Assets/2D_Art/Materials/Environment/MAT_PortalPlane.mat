@@ -86,6 +86,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ParallaxOcclusionMapping_50de18c00dea438c88b3ef40862c21bc_Heightmap_2:
+        m_Texture: {fileID: 2800000, guid: 7c14443e123b5974e8ac1f33af03802c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecularColorMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -239,6 +243,7 @@ Material:
     - _TransparentSortPriority: 0
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
+    - _TwirlStrength: 20
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
