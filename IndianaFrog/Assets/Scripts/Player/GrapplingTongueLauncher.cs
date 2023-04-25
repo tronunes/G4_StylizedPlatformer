@@ -104,8 +104,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
                 Vector3 tongueLengthVector = tongueEnd.transform.position - tongueStart.position;
                 Vector3 tongueDirection = tongueLengthVector.normalized;
                 float tongueLength = tongueLengthVector.magnitude;
-                float reelingCompletePercentage = tongueLength / reelingInitialDistance;
-                float reelingForceNormalized = reelingCurve.Evaluate(1f - reelingCompletePercentage);
+                float reelingForceNormalized = reelingCurve.Evaluate(1f - (tongueLength / reelingInitialDistance));
                 float reelingForce = frogReelingSpeedMax * reelingForceNormalized;
 
                 // Add external velocity to the Frog
