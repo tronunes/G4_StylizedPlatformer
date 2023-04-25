@@ -16,6 +16,7 @@ public class PlayerEmblemHandler : MonoBehaviour
         emblemsCollected++;
 
         UpdateEmblemsUI(partType);
+        UpdateCirclingEmblems(partType);
     }
 
     void UpdateEmblemsUI(EmblemPartChoices partType)
@@ -30,6 +31,11 @@ public class PlayerEmblemHandler : MonoBehaviour
         Transform emblemIcon = emblemsUIWrapper.Find("Emblem_" + nameSuffix);
         emblemIcon.Find("Active").gameObject.SetActive(true);
         emblemIcon.Find("Inactive").gameObject.SetActive(false);
+    }
+
+    void UpdateCirclingEmblems(EmblemPartChoices partType)
+    {
+
     }
 
     public bool CanDoorBeOpened()
