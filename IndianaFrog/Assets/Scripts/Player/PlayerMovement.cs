@@ -206,6 +206,9 @@ public class PlayerMovement : MonoBehaviour
                 // Reduce slingshotVelocity by drag
                 slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.deltaTime);
 
+                // Also clamp slingshotVelocity so that it's never higher than the Player's current velocity
+                slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, playerVelocity.magnitude);
+
                 // Add slingshot velocity to Frog's velocity
                 AddAdditionalVelocity(slingshotVelocity * Time.deltaTime);
             }
