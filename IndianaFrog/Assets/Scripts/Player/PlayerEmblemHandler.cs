@@ -9,6 +9,14 @@ public class PlayerEmblemHandler : MonoBehaviour
 
     [Header("Technical")]
     [SerializeField] private Transform emblemsUIWrapper;
+    [SerializeField] private GameObject circlingEmblemTop;
+    [SerializeField] private GameObject circlingEmblemRight;
+    [SerializeField] private GameObject circlingEmblemBottom;
+
+    void Start()
+    {
+        HideCirclingEmblems();
+    }
 
 
     public void CollectEmblem(EmblemPartChoices partType)
@@ -35,7 +43,25 @@ public class PlayerEmblemHandler : MonoBehaviour
 
     void UpdateCirclingEmblems(EmblemPartChoices partType)
     {
+        if (partType == EmblemPartChoices.TOP)
+        {
+            circlingEmblemTop.SetActive(true);
+        }
+        else if (partType == EmblemPartChoices.RIGHT)
+        {
+            circlingEmblemRight.SetActive(true);
+        }
+        else if (partType == EmblemPartChoices.BOTTOM)
+        {
+            circlingEmblemBottom.SetActive(true);
+        }
+    }
 
+    public void HideCirclingEmblems()
+    {
+        circlingEmblemTop.SetActive(false);
+        circlingEmblemRight.SetActive(false);
+        circlingEmblemBottom.SetActive(false);
     }
 
     public bool CanDoorBeOpened()
