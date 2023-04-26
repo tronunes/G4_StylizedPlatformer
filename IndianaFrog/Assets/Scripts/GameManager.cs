@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     public void SetAudioFX(float volumeFX)
     {
         audioFX = volumeFX;
+        audioMixer.SetFloat("EffectsVol", Mathf.Log10(volumeFX) * 20);
     }
 
     public void SetAudioMusic(float volumeMusic)
