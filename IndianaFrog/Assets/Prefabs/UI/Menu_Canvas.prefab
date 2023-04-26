@@ -3080,11 +3080,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5792430623632248602, guid: bb0451465cbd41a43b03642dede55ba8,
         type: 3}
-      propertyPath: startFullyUnfaded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792430623632248602, guid: bb0451465cbd41a43b03642dede55ba8,
-        type: 3}
       propertyPath: transitionDuration
       value: 0.1
       objectReference: {fileID: 0}

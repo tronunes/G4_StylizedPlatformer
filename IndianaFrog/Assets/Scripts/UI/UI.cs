@@ -62,6 +62,9 @@ public class UI : MonoBehaviour
         joystick = TryCatchController();
         highestLevelCompleted = SaveSystem.GetHighestLevelCompleted();
 
+        // Allow UI to make unfade transitions in Main Menu, but not in other scenes
+        menuFadeTransitionHandler.startFullyUnfaded = currentScene == "Main Menu" ? false : true;
+
         //Collect UI elements together and disable/hide them from view
         List<GameObject> uiObjects = new List<GameObject>{menuCanvas, menuMain, menuPause, menuSettings, menuLevel, menuCredits};
         DeActivateObjects(uiObjects);
