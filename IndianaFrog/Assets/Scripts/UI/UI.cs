@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -50,6 +51,9 @@ public class UI : MonoBehaviour
     
     //LevelMenu Buttons
     [SerializeField] Button[] buttonLevel;
+
+    [Header("Fading Effect")]
+    [SerializeField] private FadeTransition menuFadeTransitionHandler;
 
     void Awake()
     {
@@ -141,7 +145,7 @@ public class UI : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Level 1");
+            LoadSceneWithTransition("Level 1");
         }
     }
 
@@ -170,7 +174,7 @@ public class UI : MonoBehaviour
     public void OnRestartLevelClick()
     {
         GameManager.instance.UnPause();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        LoadSceneWithTransition(SceneManager.GetActiveScene().name);
     }
 
     public void OnExitClick() 
@@ -178,7 +182,7 @@ public class UI : MonoBehaviour
         if (menuPause.activeSelf)
         {
             GameManager.instance.UnPause();
-            SceneManager.LoadScene("Main Menu");
+            LoadSceneWithTransition("Main Menu");
             SelectButtonOrEnableCursor(buttonContinue);
         } else
         {
@@ -288,7 +292,7 @@ public class UI : MonoBehaviour
 
     public void OnLevelClick(string levelName) 
     {
-        SceneManager.LoadScene(levelName);
+        LoadSceneWithTransition(levelName);
     }
 
     public void OnCreditsClick()
@@ -362,4 +366,18 @@ public class UI : MonoBehaviour
         tempRect = null;
     }
 
+    private void LoadSceneWithTransition(string sceneName)
+    {
+        // Create a callback for the "fade finished" event
+        UnityAction callback = () => {
+            menuFadeTransitionHandler.event_FadeFinished.RemoveAllListeners();
+
+            // Load the desired scene
+            SceneManager.LoadScene(sceneName);
+        };
+        menuFadeTransitionHandler.event_FadeFinished.AddListener(() => callback.Invoke());
+
+        // Start fading
+        menuFadeTransitionHandler.Fade();
+    }
 }
