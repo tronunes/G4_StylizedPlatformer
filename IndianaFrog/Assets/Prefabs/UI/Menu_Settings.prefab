@@ -2017,6 +2017,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
         type: 3}
+      propertyPath: m_Value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 5031132681123425265}
@@ -2605,6 +2620,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TMPSlider_ySensitivity
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_Value
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
         type: 3}
