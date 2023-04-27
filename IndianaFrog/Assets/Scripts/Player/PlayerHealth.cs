@@ -67,6 +67,9 @@ public class PlayerHealth : MonoBehaviour
 		// Prevent spamming death
 		canTakeDamage = false;
 
+		// Disable input
+		gameObject.GetComponent<PlayerCheckpointHandler>().EnableOrDisablePlayerInput(false);
+
 		// Play death animation (which will trigger the actual death)
 		animator.SetTrigger("Death");
 	}
