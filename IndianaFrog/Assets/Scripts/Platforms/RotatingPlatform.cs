@@ -26,18 +26,18 @@ public class RotatingPlatform : MonoBehaviour
     void Update()
     {
         // Calculate values for linear interpolation to get the target yaw angle
-        float startYaw = pivotOriginalRotation.eulerAngles.y;
-        float endYaw = pivotOriginalRotation.eulerAngles.y + 360f;
+        float startYaw = transform.localEulerAngles.y;
+        float endYaw = transform.localEulerAngles.y + 360f;
         float lerpTime = counterClockwise ?
             timeLeft / orbitingTime :
             1f - timeLeft / orbitingTime;
         float targetYaw = Mathf.Lerp(startYaw, endYaw, lerpTime);
 
         // Rotate the pivot
-        rotationPivot.rotation = Quaternion.Euler(
-            pivotOriginalRotation.eulerAngles.x,
+        rotationPivot.transform.localRotation = Quaternion.Euler(
+             transform.localEulerAngles.x,
             targetYaw,
-            pivotOriginalRotation.eulerAngles.z
+             transform.localEulerAngles.z
         );
 
         // Keep Platform's original rotation if needed
