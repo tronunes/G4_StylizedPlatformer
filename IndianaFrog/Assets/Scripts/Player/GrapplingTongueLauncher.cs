@@ -211,6 +211,10 @@ public class GrapplingTongueLauncher : MonoBehaviour
 
         reelingInitialDistance = Vector3.Distance(tongueEnd.transform.position, tongueStart.position);
 
+        // Rotate the Frog correctly
+        Vector3 lookAtPosition = tongueEnd.transform.position;
+        frogMesh.LookAt(new Vector3(lookAtPosition.x, frogMesh.transform.position.y, lookAtPosition.z));
+
         // Prevent shooting the Tongue again before touching ground
         canShootTongue = false;
     }

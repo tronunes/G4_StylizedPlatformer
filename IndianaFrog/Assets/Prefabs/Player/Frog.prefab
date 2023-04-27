@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 2466033907667562758}
   playerCamera: {fileID: 5650701305420499420}
-  frogMesh: {fileID: 3508855198504708752}
+  frogMesh: {fileID: 4734240938723017431}
   tongueStart: {fileID: 6713714576557914720}
   tongueMid: {fileID: 7928620274742984346}
   tongueEndPrefab: {fileID: 5486396794392725225, guid: d0ce5d24e73560a409bf3b91c2eaa800,
@@ -1499,12 +1499,6 @@ PrefabInstance:
 --- !u!4 &1720364045002313812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3321919801592875672, guid: 9e8164433d869014bb6e25bf9657ad26,
-    type: 3}
-  m_PrefabInstance: {fileID: 5060320235506099516}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3508855198504708752 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -682247755910344788, guid: 9e8164433d869014bb6e25bf9657ad26,
     type: 3}
   m_PrefabInstance: {fileID: 5060320235506099516}
   m_PrefabAsset: {fileID: 0}
