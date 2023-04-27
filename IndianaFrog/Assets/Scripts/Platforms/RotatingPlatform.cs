@@ -17,7 +17,7 @@ public class RotatingPlatform : MonoBehaviour
     {
         // Save the original rotations at Start
         meshOrignalRotation = platform.rotation;
-        pivotOriginalRotation = rotationPivot.rotation;
+        pivotOriginalRotation = rotationPivot.localRotation;
 
         // Reset current time left
         timeLeft = orbitingTime;
@@ -26,18 +26,18 @@ public class RotatingPlatform : MonoBehaviour
     void Update()
     {
         // Calculate values for linear interpolation to get the target yaw angle
-        float startYaw = transform.localEulerAngles.y;
-        float endYaw = transform.localEulerAngles.y + 360f;
+        float startYaw = pivotOriginalRotation.eulerAngles.y;
+        float endYaw = pivotOriginalRotation.eulerAngles.y + 360f;
         float lerpTime = counterClockwise ?
             timeLeft / orbitingTime :
             1f - timeLeft / orbitingTime;
         float targetYaw = Mathf.Lerp(startYaw, endYaw, lerpTime);
 
         // Rotate the pivot
-        rotationPivot.transform.localRotation = Quaternion.Euler(
-             transform.localEulerAngles.x,
+        rotationPivot.localRotation = Quaternion.Euler(
+            pivotOriginalRotation.eulerAngles.x,
             targetYaw,
-             transform.localEulerAngles.z
+            pivotOriginalRotation.eulerAngles.z
         );
 
         // Keep Platform's original rotation if needed
