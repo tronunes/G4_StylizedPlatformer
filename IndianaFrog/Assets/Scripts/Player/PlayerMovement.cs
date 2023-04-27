@@ -246,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
                 grapplingTongueLauncher.inputLocked = false;
             }
             clingingState = false;
+            animator.SetBool("WallClinging", false);
             previouslyClungWall = null;
         }
 
@@ -259,12 +260,14 @@ public class PlayerMovement : MonoBehaviour
             slidingState = true;
             slidingVelocity = slideStartVelocity;
             ChangeCharacterHeight(0.7f);
+            animator.SetBool("Sliding", true);
         }
         else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
             slidingState = false;
             slidingCooldown = 0.1f;
             ChangeCharacterHeight(1.5f);
+            animator.SetBool("Sliding", false);
         }
 
         // Progress cooldown if grounded
@@ -298,6 +301,7 @@ public class PlayerMovement : MonoBehaviour
             if (characterController.height == 0.7f) // Make sure that the character's height is right when not sliding
             {
                 ChangeCharacterHeight(1.5f);
+                animator.SetBool("Sliding", false);
             }
         }
 
@@ -340,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
             slidingState = false;
             slidingInput = false;
             ChangeCharacterHeight(1.5f);
+            animator.SetBool("Sliding", false);
         }
 
         // If the player is currently in the middle of a wall jump, calculate the externalVelocity 
@@ -408,6 +413,7 @@ public class PlayerMovement : MonoBehaviour
 
                     wallJumpState = true;
                     clingingState = false;
+                    animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                     chargeJumpTimer = 0f;
 
@@ -500,6 +506,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetGroundedState(bool newState)
     {
         isGrounded = newState;
+        animator.SetBool("Airborne", !newState);
     }
 
     // To match the platform's velocity and rotation
@@ -600,6 +607,7 @@ public class PlayerMovement : MonoBehaviour
             if (clingingState)
             {
                 clingingState = true;
+                animator.SetBool("WallClinging", true);
             }
             else
             {
@@ -607,6 +615,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Vector3.Angle(frogMesh.forward, -frontWallHit.normal) <= maxAngle && previouslyClungWall != frontWallHit.collider.gameObject && frontWallHit.collider.gameObject.CompareTag("ClingableWall"))
                 {
                     clingingState = true;
+                    animator.SetBool("WallClinging", true);
 
                     // Stop player from shooting tongue out during a wall cling
                     grapplingTongueLauncher.ResetTongueLauncher();
@@ -624,6 +633,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     clingingState = false;
+                    animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                 }
             }
@@ -631,6 +641,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             clingingState = false;
+            animator.SetBool("WallClinging", false);
             grapplingTongueLauncher.inputLocked = false;
         }
     }
