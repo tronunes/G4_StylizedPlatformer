@@ -464,9 +464,6 @@ public class PlayerMovement : MonoBehaviour
         // Clear additionalVelocity every frame
         additionalVelocity = Vector3.zero;
 
-        // Animate running
-        animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
-
 
         // MESH ROTATION
         // =============
@@ -491,6 +488,13 @@ public class PlayerMovement : MonoBehaviour
                 frogMesh.LookAt(frogMesh.position + movementVectorForward + movementVectorRight);
             }
         }
+
+        // ANIMATION
+        // =========
+
+        // Animate idle / run
+        float animationMovementSpeed = (movementVectorForward + movementVectorRight).magnitude * 10f;
+        animator.SetFloat("MovementSpeed", animationMovementSpeed);
     }
 
     public void SetGroundedState(bool newState)
