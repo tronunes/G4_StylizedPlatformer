@@ -127,7 +127,7 @@ public class PlayerCheckpointHandler : MonoBehaviour
         fadeTransitionHandler.UnFade();
     }
 
-    void EnableOrDisablePlayerInput(bool newEnabledState)
+    public void EnableOrDisablePlayerInput(bool newEnabledState)
     {
         gameObject.GetComponent<PlayerMovement>().inputLocked = !newEnabledState;
         gameObject.GetComponent<PlayerCameraController>().inputLocked = !newEnabledState;
