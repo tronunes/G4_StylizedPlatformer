@@ -22,11 +22,16 @@ public class EmblemDoor : MonoBehaviour
         // Case: Player enters the Door's trigger volume
         if (collider.gameObject.CompareTag("Player"))
         {
+            PlayerEmblemHandler playerEmblemHandler = collider.gameObject.GetComponent<PlayerEmblemHandler>();
+
             // Check if the Player has enough Emblems collected
-            if (collider.gameObject.GetComponent<PlayerEmblemHandler>().CanDoorBeOpened())
+            if (playerEmblemHandler.CanDoorBeOpened())
             {
                 // Begin animating Emblems' insertion to the Door
                 InsertEmblems();
+
+                // Hide the Player's circling emblems
+                playerEmblemHandler.HideCirclingEmblems();
             }
         }
     }

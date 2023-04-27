@@ -9,6 +9,14 @@ public class PlayerEmblemHandler : MonoBehaviour
 
     [Header("Technical")]
     [SerializeField] private Transform emblemsUIWrapper;
+    [SerializeField] private GameObject circlingEmblemTop;
+    [SerializeField] private GameObject circlingEmblemRight;
+    [SerializeField] private GameObject circlingEmblemBottom;
+
+    void Start()
+    {
+        HideCirclingEmblems();
+    }
 
 
     public void CollectEmblem(EmblemPartChoices partType)
@@ -16,6 +24,7 @@ public class PlayerEmblemHandler : MonoBehaviour
         emblemsCollected++;
 
         UpdateEmblemsUI(partType);
+        UpdateCirclingEmblems(partType);
     }
 
     void UpdateEmblemsUI(EmblemPartChoices partType)
@@ -30,6 +39,29 @@ public class PlayerEmblemHandler : MonoBehaviour
         Transform emblemIcon = emblemsUIWrapper.Find("Emblem_" + nameSuffix);
         emblemIcon.Find("Active").gameObject.SetActive(true);
         emblemIcon.Find("Inactive").gameObject.SetActive(false);
+    }
+
+    void UpdateCirclingEmblems(EmblemPartChoices partType)
+    {
+        if (partType == EmblemPartChoices.TOP)
+        {
+            circlingEmblemTop.SetActive(true);
+        }
+        else if (partType == EmblemPartChoices.RIGHT)
+        {
+            circlingEmblemRight.SetActive(true);
+        }
+        else if (partType == EmblemPartChoices.BOTTOM)
+        {
+            circlingEmblemBottom.SetActive(true);
+        }
+    }
+
+    public void HideCirclingEmblems()
+    {
+        circlingEmblemTop.SetActive(false);
+        circlingEmblemRight.SetActive(false);
+        circlingEmblemBottom.SetActive(false);
     }
 
     public bool CanDoorBeOpened()
