@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+	public Animator animator;
+
 	[Header("HEALTH")]
 	public int maxHealth = 4;
 	public int currentHealth;
@@ -43,10 +45,13 @@ public class PlayerHealth : MonoBehaviour
 
 			if (currentHealth <= 0)
 			{
-				KillPlayer();
+				PlayDeathAnimation();
 			}
 			else
 			{
+				// Play animation
+				animator.SetTrigger("TakeDamage");
+
 				StartCoroutine(BecomeInvulnerable());
 			}
 		}
@@ -60,13 +65,16 @@ public class PlayerHealth : MonoBehaviour
 		canTakeDamage = true;
 	}
 
-	private void KillPlayer()
+	private void PlayDeathAnimation()
 	{
 		// Prevent spamming death
 		canTakeDamage = false;
 
-		// Reset the player to the most recent checkpoint
-		gameObject.GetComponent<PlayerCheckpointHandler>().Die();
+		// Disable input
+		gameObject.GetComponent<PlayerCheckpointHandler>().EnableOrDisablePlayerInput(false);
+
+		// Play death animation (which will trigger the actual death)
+		animator.SetTrigger("Death");
 	}
 
 	public void ResetHealth()
