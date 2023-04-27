@@ -8,6 +8,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     [Header("Technical")]
     private PlayerMovement playerMovement;
     private PlayerCameraController cameraController;
+    [SerializeField] private Animator animator;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform frogMesh;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
@@ -106,6 +107,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
             // Case: Reeling the Frog in
             if (isReelingFrogIn)
             {
+                // Use reeling animation
+                animator.SetBool("Reeling", true);
+
                 Vector3 tongueLengthVector = tongueEnd.transform.position - tongueStart.position;
                 Vector3 tongueDirection = tongueLengthVector.normalized;
                 float tongueLength = tongueLengthVector.magnitude;
@@ -166,6 +170,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
         tongueRb.AddForce(playerCamera.transform.forward * shootForce, ForceMode.Impulse);
 
         ShowTongue();
+
+        // Animate the Tongue shooting
+        animator.SetTrigger("Spit");
     }
 
     void ShowTongue()
@@ -211,6 +218,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
     // This is "Start retracting", so only call when retracting starts, not every frame.
     public void RetractTongue()
     {
+        // Stop reeling animation
+        animator.SetBool("Reeling", false);
+
         if (tongueEnd)
         {
             isRetractingTongue = true;

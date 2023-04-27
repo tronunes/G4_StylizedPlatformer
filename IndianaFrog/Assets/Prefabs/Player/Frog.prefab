@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1c1306549612242b1ba442db916e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2466033907667562758}
   playerCamera: {fileID: 5650701305420499420}
   frogMesh: {fileID: 3508855198504708752}
   tongueStart: {fileID: 6713714576557914720}
