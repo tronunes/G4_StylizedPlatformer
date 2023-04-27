@@ -49,6 +49,9 @@ public class PlayerHealth : MonoBehaviour
 			}
 			else
 			{
+				// Play animation
+				animator.SetTrigger("TakeDamage");
+
 				StartCoroutine(BecomeInvulnerable());
 			}
 		}
