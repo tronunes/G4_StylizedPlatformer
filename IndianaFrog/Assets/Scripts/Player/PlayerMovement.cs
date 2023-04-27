@@ -14,12 +14,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isGrounded;
     [SerializeField] private GrapplingTongueLauncher grapplingTongueLauncher;
     public bool inputLocked = false;
+    private float inputHorizontalAxisValue;
+    private float inputVerticalAxisValue;
 
     private CharacterController characterController;
     private bool isZoomed = false;
     private Vector3 playerPreviousFramePosition;
     private bool chargingJump = false;
-    private Vector3 externalVelocity = Vector3.zero;
+    private Vector3 externalVelocity = Vector3.zero; // Alternative velocity to movement input velocity. Blocks movement input velocity. Only affects one frame.
+    private Vector3 additionalVelocity = Vector3.zero; // Like externalVelocity, but doesn't block movement input velocity. Only affects one frame.
 
     [Header("Movement values")]
     [SerializeField] private float movementSpeed = 6f;
@@ -28,11 +31,13 @@ public class PlayerMovement : MonoBehaviour
     private float verticalVelocity;
     private Vector3 knockbackVelocity;
     private float wallJumpHorizontalVelocity;
+    private Vector3 slingshotVelocity;
 
     [Header("Jumping values")]
     [SerializeField] private float gravityMultiplierPostApex = 5f;
     [SerializeField] private float maxJumpHeight = 1f;
     [SerializeField] private float maxChargeJumpHeight = 1f;
+    private float chargeJumpTimerThreshold = 0.5f; // I.e. what time counts as "holding down jump button"
 
     private float chargeJumpTimer = 0f;
     private float jumpInputDecayTimer = 0f;
@@ -40,18 +45,16 @@ public class PlayerMovement : MonoBehaviour
     private float chargeJumpVelocity;
 
 
-    [Header("Sliding values")]
+    [Header("Sliding")]
     [SerializeField] private float slidingFriction; // Higher number means the slide is faster
     [SerializeField] private float slidingLength; // How many units the slide moves the character forward
-
-
     private bool slidingInput;
     private bool slidingState;
     private float slideStartVelocity;
     private float slidingVelocity;
     private float slidingCooldown;
 
-    [Header("Wall -cling and -jump values")]
+    [Header("Wall Cling and Wall Jump")]
     [SerializeField] private bool clingingState;
     [SerializeField] private float maxAngle; // Determines how large the angle between the character's facing direction and the face of the wall can be
     [SerializeField] private float wallDetectionLength;
@@ -67,8 +70,14 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit frontWallHit; // Stored information from the previous raycast that hit a wall
     private float wallJumpVelocity;
 
+    [Header("Knockback")]
     public bool knockbackState;
     float horizontalKnockbackDrag = 15f;
+
+    [Header("Reeling slingshot")]
+    private bool slingshotState = false;
+    private float slingshotDrag = 0.1f;
+
 
     void Start()
     {
@@ -104,11 +113,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        // The input needs to be caught outside of FixedUpdate
         if (Input.GetButtonDown("Jump"))
         {
             chargingJump = true;
-        } else if (Input.GetButtonUp("Jump"))
+        }
+        else if (Input.GetButtonUp("Jump"))
         {
             chargingJump = false;
         }
@@ -122,17 +131,21 @@ public class PlayerMovement : MonoBehaviour
         {
             slidingInput = false;
         }
+
+        inputVerticalAxisValue = Input.GetAxis("Vertical");
+        inputHorizontalAxisValue = Input.GetAxis("Horizontal");
     }
 
     void FixedUpdate()
     {
-        float inputVerticalAxisValue = Input.GetAxis("Vertical");
-        float inputHorizontalAxisValue = Input.GetAxis("Horizontal");
-
         // Calculate Player's velocity
         // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
         playerVelocity = (transform.position - playerPreviousFramePosition) / Time.fixedDeltaTime;
         playerPreviousFramePosition = transform.position;
+
+
+        // KNOCKBACK
+        // =========
 
         // Perform player knockback for this frame if the player is in the knockback state, is in the air, and isn't travelling directly upwards at a velocity below 9
         // The latter half is there to make sure the player regains control partway through a lava caused knockback
@@ -163,6 +176,10 @@ public class PlayerMovement : MonoBehaviour
             knockbackState = false;
         }
 
+
+        // INPUT LOCK
+        // ==========
+
         // Prevent the Frog receiving input from the Player
         if (inputLocked)
         {
@@ -179,8 +196,46 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
-        // If the player isn't on the ground, check if there's a wall in front of them
-        if (!isGrounded)
+        // REELING SLINGSHOT
+        // =================
+
+        if (slingshotState)
+        {
+            float slingshotVelocityThreshold = 0.1f; // If the velocity is smaller than this -> stop slingshot
+            float slingshotVelocityMagnitude = slingshotVelocity.magnitude;
+            float slingshotHorizontalVelocityMagnitude = new Vector3(slingshotVelocity.x, 0f, slingshotVelocity.z).magnitude;
+
+            // Case: Moving airborne -> keep (drag reduced) slingshot velocity
+            if (!isGrounded && slingshotHorizontalVelocityMagnitude > slingshotVelocityThreshold)
+            {
+                // Reduce slingshotVelocity by drag
+                slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, slingshotVelocityMagnitude - slingshotDrag * Time.fixedDeltaTime);
+
+                // Also clamp slingshotVelocity so that it's never higher than the Player's current velocity
+                slingshotVelocity = Vector3.ClampMagnitude(slingshotVelocity, playerVelocity.magnitude);
+
+                // Add slingshot velocity to Frog's velocity
+                AddAdditionalVelocity(slingshotVelocity * Time.fixedDeltaTime);
+            }
+            // Case: Either grounded or slingshotVelocity too small to continue slingshot -> stop slingshot
+            else if (isGrounded || slingshotHorizontalVelocityMagnitude <= slingshotVelocityThreshold)
+            {
+                slingshotVelocity = Vector3.zero;
+                slingshotState = false;
+            }
+
+            // Make sure the player can't slide during a slingshot
+            slidingInput = false;
+            slidingVelocity = 0f;
+            slidingState = false;
+        } 
+
+
+        // WALL CLING
+        // ==========
+
+        // If the player isn't on the ground, check if there's a wall in front of them (when falling down)
+        if (!isGrounded && verticalVelocity <= 0f)
         {
             WallClingCheck();
         }
@@ -191,8 +246,13 @@ public class PlayerMovement : MonoBehaviour
                 grapplingTongueLauncher.inputLocked = false;
             }
             clingingState = false;
+            animator.SetBool("WallClinging", false);
             previouslyClungWall = null;
         }
+
+
+        // SLIDING
+        // =======
 
         // Set the character's slidingState to true, and set its height and velocity
         if (slidingInput && !slidingState && externalVelocity == Vector3.zero && !knockbackState)
@@ -200,12 +260,14 @@ public class PlayerMovement : MonoBehaviour
             slidingState = true;
             slidingVelocity = slideStartVelocity;
             ChangeCharacterHeight(0.7f);
+            animator.SetBool("Sliding", true);
         }
         else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
             slidingState = false;
             slidingCooldown = 0.1f;
             ChangeCharacterHeight(1.5f);
+            animator.SetBool("Sliding", false);
         }
 
         // Progress cooldown if grounded
@@ -239,8 +301,13 @@ public class PlayerMovement : MonoBehaviour
             if (characterController.height == 0.7f) // Make sure that the character's height is right when not sliding
             {
                 ChangeCharacterHeight(1.5f);
+                animator.SetBool("Sliding", false);
             }
         }
+
+
+        // JUMP, CHARGE JUMP AND WALL JUMP
+        // ===============================
 
         // If the player lets go of the jump button 0.2 or more seconds before hitting the ground, clear the jump command, else store the command for when the player lands 
         if (jumpInputDecayTimer >= 0.2f)
@@ -260,7 +327,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Add to chargeJumpTimer if the jump button is held down
-        if (chargingJump && chargeJumpTimer <= 0.5f)
+        if (chargingJump)
         {
             chargeJumpTimer += Time.fixedDeltaTime;
         }
@@ -277,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
             slidingState = false;
             slidingInput = false;
             ChangeCharacterHeight(1.5f);
+            animator.SetBool("Sliding", false);
         }
 
         // If the player is currently in the middle of a wall jump, calculate the externalVelocity 
@@ -297,6 +365,10 @@ public class PlayerMovement : MonoBehaviour
                 AddExternalVelocity((frogMesh.forward * wallJumpHorizontalVelocity * Time.fixedDeltaTime) + (Vector3.up * verticalVelocity * Time.fixedDeltaTime));
             }
         }
+
+
+        // MOVEMENT
+        // ========
 
         // Case: external velocity given -> don't calculate velocity from movement or gravity
         if (externalVelocity != Vector3.zero)
@@ -326,6 +398,7 @@ public class PlayerMovement : MonoBehaviour
             // Jump if the jump button is let go of and there is any amount of charge
             if (!chargingJump && chargeJumpTimer > 0 && (isGrounded || clingingState))
             {
+                // Case: Wall jump
                 if (clingingState)
                 {
                     // Set velocities for the wall jump
@@ -340,16 +413,18 @@ public class PlayerMovement : MonoBehaviour
 
                     wallJumpState = true;
                     clingingState = false;
+                    animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                     chargeJumpTimer = 0f;
 
                     // Animate Jump
                     animator.SetTrigger("Jump");
                 }
+                // Case: normal or charge jump
                 else
                 {
                     // Depending on charge amount, decide which jump to do
-                    verticalVelocity = chargeJumpTimer >= 0.5f ? chargeJumpVelocity : jumpVelocity;
+                    verticalVelocity = chargeJumpTimer >= chargeJumpTimerThreshold ? chargeJumpVelocity : jumpVelocity;
 
                     // Animate Jump
                     animator.SetTrigger("Jump");
@@ -390,10 +465,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Move
-        characterController.Move(movementVector);
+        characterController.Move(movementVector + additionalVelocity);
 
-        // Animate running
-        animator.SetBool("Running", (movementVectorForward + movementVectorRight).magnitude > 0f);
+        // Clear additionalVelocity every frame
+        additionalVelocity = Vector3.zero;
+
+
+        // MESH ROTATION
+        // =============
 
         // Force the frogMesh to look at the clung-to wall during a cling
         if (clingingState)
@@ -415,11 +494,24 @@ public class PlayerMovement : MonoBehaviour
                 frogMesh.LookAt(frogMesh.position + movementVectorForward + movementVectorRight);
             }
         }
+
+        // ANIMATION
+        // =========
+
+        // Animate idle / run
+        /*
+            The animationMovementSpeed is usually between 0.12 and 0.16 when running,
+            so it needs to be multiplied by roughly 10 to reach required values for the animation: 0 = idle, 1 = run
+            Tested, and 10 seems to be just fine.
+        */
+        float animationMovementSpeed = (movementVectorForward + movementVectorRight).magnitude * 10f;
+        animator.SetFloat("MovementSpeed", animationMovementSpeed);
     }
 
     public void SetGroundedState(bool newState)
     {
         isGrounded = newState;
+        animator.SetBool("Airborne", !newState);
     }
 
     // To match the platform's velocity and rotation
@@ -441,9 +533,14 @@ public class PlayerMovement : MonoBehaviour
     public void AddExternalVelocity(Vector3 additionalExternalVelocity)
     {
         // To make pausing work:
-        // Divide by deltaTime here, and when calling this function multiply the external speed by deltaTime
+        // Divide by fixedDeltaTime here, and when calling this function multiply the external speed by fixedDeltaTime
         // NOTE: I don't know why this doesn't cause error when Time.timeScale = 0
-        externalVelocity += additionalExternalVelocity / Time.deltaTime;
+        externalVelocity += additionalExternalVelocity / Time.fixedDeltaTime;
+    }
+
+    public void AddAdditionalVelocity(Vector3 _additionalVelocity)
+    {
+        additionalVelocity += _additionalVelocity / Time.fixedDeltaTime;
     }
 
     public bool IsGrounded()
@@ -481,6 +578,8 @@ public class PlayerMovement : MonoBehaviour
         playerPreviousFramePosition = transform.position;
         playerVelocity = Vector3.zero;
         externalVelocity = Vector3.zero;
+        slingshotVelocity = Vector3.zero;
+        knockbackVelocity = Vector3.zero;
         verticalVelocity = 0f;
         isGrounded = false;
 
@@ -491,6 +590,9 @@ public class PlayerMovement : MonoBehaviour
         slidingVelocity = 0f;
         slidingState = false;
         slidingInput = false;
+
+        knockbackState = false;
+        slingshotState = false;
 
         frogMesh.localRotation = Quaternion.identity;
     }
@@ -510,6 +612,7 @@ public class PlayerMovement : MonoBehaviour
             if (clingingState)
             {
                 clingingState = true;
+                animator.SetBool("WallClinging", true);
             }
             else
             {
@@ -517,6 +620,7 @@ public class PlayerMovement : MonoBehaviour
                 if (Vector3.Angle(frogMesh.forward, -frontWallHit.normal) <= maxAngle && previouslyClungWall != frontWallHit.collider.gameObject && frontWallHit.collider.gameObject.CompareTag("ClingableWall"))
                 {
                     clingingState = true;
+                    animator.SetBool("WallClinging", true);
 
                     // Stop player from shooting tongue out during a wall cling
                     grapplingTongueLauncher.ResetTongueLauncher();
@@ -534,6 +638,7 @@ public class PlayerMovement : MonoBehaviour
                 else
                 {
                     clingingState = false;
+                    animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                 }
             }
@@ -541,6 +646,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             clingingState = false;
+            animator.SetBool("WallClinging", false);
             grapplingTongueLauncher.inputLocked = false;
         }
     }
@@ -565,5 +671,11 @@ public class PlayerMovement : MonoBehaviour
         SetGroundedState(false);
 
         verticalVelocity = 0f;
+    }
+
+    public void Slingshot(Vector3 slingshotVector)
+    {
+        slingshotVelocity = slingshotVector;
+        slingshotState = true;
     }
 }

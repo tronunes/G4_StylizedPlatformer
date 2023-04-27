@@ -9,6 +9,7 @@ public class LinearPlatform : MonoBehaviour
     [SerializeField] private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex; // Index of the waypoint the platform is currently travelling towards
     [SerializeField] private float travelTime = 3f; // Between two waypoints
+    [SerializeField] private float startDelay = 0f;
     private float timeLeft; // Time left before reaching the next waypoint 
     [SerializeField] private AnimationCurve travelTimeCurve; // A curve to smooth out the movement
 
@@ -26,20 +27,29 @@ public class LinearPlatform : MonoBehaviour
 
     void Update()
     {
-        // Set the platform position using linear interpolation
-        Vector3 startPosition = waypoints[currentWaypointIndex].localPosition;
-        Vector3 endPosition = waypoints[GetNextWaypointIndex()].localPosition;
-        float lerpTime = travelTimeCurve.Evaluate(1f - timeLeft / travelTime);
-        platform.transform.localPosition = Vector3.Lerp(startPosition, endPosition, lerpTime);
-
-        // Case: Reached the current waypoint -> Start moving towards the next waypoint in the list
-        if (timeLeft <= 0f)
+        // Move only after the start delay
+        if (startDelay < 0f)
         {
-            currentWaypointIndex = GetNextWaypointIndex();
-            timeLeft = travelTime;
-        }
+            // Set the platform position using linear interpolation
+            Vector3 startPosition = waypoints[currentWaypointIndex].localPosition;
+            Vector3 endPosition = waypoints[GetNextWaypointIndex()].localPosition;
+            float lerpTime = travelTimeCurve.Evaluate(1f - timeLeft / travelTime);
+            platform.transform.localPosition = Vector3.Lerp(startPosition, endPosition, lerpTime);
 
-        timeLeft -= Time.deltaTime;
+            // Case: Reached the current waypoint -> Start moving towards the next waypoint in the list
+            if (timeLeft <= 0f)
+            {
+                currentWaypointIndex = GetNextWaypointIndex();
+                timeLeft = travelTime;
+            }
+
+            timeLeft -= Time.deltaTime;
+        }
+        else
+        {
+            // Reduce delay timer
+            startDelay -= Time.deltaTime;
+        }
 
         // In case player is parented to the platform -> update its position as well
         Physics.SyncTransforms();

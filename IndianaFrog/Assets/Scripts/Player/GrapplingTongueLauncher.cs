@@ -8,6 +8,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     [Header("Technical")]
     private PlayerMovement playerMovement;
     private PlayerCameraController cameraController;
+    [SerializeField] private Animator animator;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Transform frogMesh;
     [SerializeField] private Transform tongueStart; // Where the tongue starts
@@ -15,12 +16,15 @@ public class GrapplingTongueLauncher : MonoBehaviour
     [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
     private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot, destroyed when reeled back in.
     public bool inputLocked = false;
+    private float tongueMiddleScaler; // A scaler to scale the middle part of the tongue correctly
 
     // Stats
     private float shootForce = 35f;
-    private float frogReelingSpeed = 10f; // Reeling = Frog moves towards the tongue end (which is attached to a wall)
+    private float frogReelingSpeedMax = 25f; // Reeling = Frog moves towards the tongue end (which is attached to a wall)
     private float tongueRetractSpeed = 100f; // Rectracting = the tongue moves towards the Frog without moving the Frog
     private float maxTongueLength = 30f;
+    [Tooltip("Make sure the value at T-0 is >= 0.1")] public AnimationCurve reelingCurve;
+    [Tooltip("Does the Player get slingshot also when fully reeled in?")] public bool slingshotWhenReachingEnd = false;
 
     // Helpers
     private bool isReelingFrogIn = false; // Are we reeling the Frog towards TongueEnd
@@ -28,6 +32,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     private float tonguePreviousDistance; // Used to determine when the Tongue has been fully retracted (to prevent over retracting)
     private bool fire1PressedButNotReleased = false; // A helper boolean to know when Axis-type button is released (i.e. ButtonUp event but for Axis)
     private bool canShootTongue = true; // Require touching ground before shooting the Tongue again
+    private float reelingInitialDistance; // The initial distance from TongueStart to TongueEnd when reeling begins
 
     [Header("Events")]
     public UnityEvent event_TongueFullyRetracted = new UnityEvent(); // Triggers when fully retracted
@@ -37,9 +42,13 @@ public class GrapplingTongueLauncher : MonoBehaviour
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         cameraController = gameObject.GetComponent<PlayerCameraController>();
         HideTongue();
+
+        // Calculate how much the tongue middle needs to be scaled
+        // The 0.93f is just a scaler to fix the visuals
+        tongueMiddleScaler = 0.93f / tongueMid.GetChild(0).GetComponent<Renderer>().bounds.size.z;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Prevent the Frog receiving input from the Player
         if (inputLocked)
@@ -69,13 +78,14 @@ public class GrapplingTongueLauncher : MonoBehaviour
         else if (tongueEnd && Input.GetAxis("Fire1") > 0f && !fire1PressedButNotReleased)
         {
             RetractTongue();
+            SlingshotPlayer();
             fire1PressedButNotReleased = true;
         }
 
         // Case: Retracting the Tongue back towards the Frog
         if (tongueEnd && isRetractingTongue)
         {
-            tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.deltaTime;
+            tongueEnd.transform.position += (tongueStart.position - tongueEnd.transform.position).normalized * tongueRetractSpeed * Time.fixedDeltaTime;
             float currentTongueDistance = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
 
             // Destroy the Tongue when reaching the Frog
@@ -97,15 +107,31 @@ public class GrapplingTongueLauncher : MonoBehaviour
             // Case: Reeling the Frog in
             if (isReelingFrogIn)
             {
-                playerMovement.AddExternalVelocity((tongueEnd.transform.position - tongueStart.position).normalized * frogReelingSpeed * Time.deltaTime);
+                // Use reeling animation
+                animator.SetBool("Reeling", true);
+
+                Vector3 tongueLengthVector = tongueEnd.transform.position - tongueStart.position;
+                Vector3 tongueDirection = tongueLengthVector.normalized;
+                float tongueLength = tongueLengthVector.magnitude;
+                float reelingForceNormalized = reelingCurve.Evaluate(1f - (tongueLength / reelingInitialDistance));
+                float reelingForce = frogReelingSpeedMax * reelingForceNormalized;
+
+                // Add external velocity to the Frog
+                Vector3 externalVelocity = tongueDirection * reelingForce * Time.fixedDeltaTime;
+                playerMovement.AddExternalVelocity(externalVelocity);
 
                 // Stop reeling when reaching the end (i.e. fully reeled in)
-                float frogDistanceToTongueEnd = Vector3.Distance(tongueStart.position, tongueEnd.transform.position);
                 if (
-                    frogDistanceToTongueEnd < 0.2f ||                                                           // "Frog is close enough"
-                    (frogDistanceToTongueEnd < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
+                    tongueLength < 0.5f ||                                                           // "Frog is close enough"
+                    (tongueLength < 1.5f && playerMovement.GetPlayerVelocity().magnitude < 0.1f))    // "Frog isn't moving anymore and relatively close enough"
                 {
                     RetractTongue();
+
+                    // Slingshot the Player depending on settings
+                    if (slingshotWhenReachingEnd)
+                    {
+                        SlingshotPlayer();
+                    }
                 }
             }
             // Case: not reeling
@@ -144,6 +170,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
         tongueRb.AddForce(playerCamera.transform.forward * shootForce, ForceMode.Impulse);
 
         ShowTongue();
+
+        // Animate the Tongue shooting
+        animator.SetTrigger("Spit");
     }
 
     void ShowTongue()
@@ -166,7 +195,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
             tongueMid.localScale = new Vector3(
                 1f,
                 1f,
-                (tongueEnd.transform.position - tongueStart.position).magnitude * 5f
+                (tongueEnd.transform.position - tongueStart.position).magnitude * tongueMiddleScaler
             );
         }
         else
@@ -180,6 +209,12 @@ public class GrapplingTongueLauncher : MonoBehaviour
     {
         isReelingFrogIn = true;
 
+        reelingInitialDistance = Vector3.Distance(tongueEnd.transform.position, tongueStart.position);
+
+        // Rotate the Frog correctly
+        Vector3 lookAtPosition = tongueEnd.transform.position;
+        frogMesh.LookAt(new Vector3(lookAtPosition.x, frogMesh.transform.position.y, lookAtPosition.z));
+
         // Prevent shooting the Tongue again before touching ground
         canShootTongue = false;
     }
@@ -187,6 +222,9 @@ public class GrapplingTongueLauncher : MonoBehaviour
     // This is "Start retracting", so only call when retracting starts, not every frame.
     public void RetractTongue()
     {
+        // Stop reeling animation
+        animator.SetBool("Reeling", false);
+
         if (tongueEnd)
         {
             isRetractingTongue = true;
@@ -209,5 +247,11 @@ public class GrapplingTongueLauncher : MonoBehaviour
     {
         DestroyTongueEnd();
         HideTongue();
+    }
+
+    private void SlingshotPlayer()
+    {
+        // Slingshot the Player with the current velocity
+        playerMovement.Slingshot(playerMovement.GetPlayerVelocity() * Time.fixedDeltaTime);
     }
 }
