@@ -15,6 +15,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
     [SerializeField] private GameObject tongueEndPrefab; // Prefab reference to the end part of the tongue which latches onto walls
     private GameObject tongueEnd = null; // The actual end part of the tongue. Created when shot, destroyed when reeled back in.
     public bool inputLocked = false;
+    private float tongueMiddleScaler; // A scaler to scale the middle part of the tongue correctly
 
     // Stats
     private float shootForce = 35f;
@@ -40,6 +41,10 @@ public class GrapplingTongueLauncher : MonoBehaviour
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         cameraController = gameObject.GetComponent<PlayerCameraController>();
         HideTongue();
+
+        // Calculate how much the tongue middle needs to be scaled
+        // The 0.93f is just a scaler to fix the visuals
+        tongueMiddleScaler = 0.93f / tongueMid.GetChild(0).GetComponent<Renderer>().bounds.size.z;
     }
 
     void FixedUpdate()
@@ -183,7 +188,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
             tongueMid.localScale = new Vector3(
                 1f,
                 1f,
-                (tongueEnd.transform.position - tongueStart.position).magnitude * 5f
+                (tongueEnd.transform.position - tongueStart.position).magnitude * tongueMiddleScaler
             );
         }
         else
