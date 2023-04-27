@@ -1988,6 +1988,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
         type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 8021619288964460123, guid: 1f89b8a2cfa96e64eb88e8cb551e8aac,
+        type: 3}
+    - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
+        type: 3}
       propertyPath: fireInterval
       value: 2.3
       objectReference: {fileID: 0}
@@ -4892,7 +4898,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 477574311}
-  m_RootOrder: 26
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -57.915, y: 90, z: 90}
 --- !u!4 &405088164 stripped
 Transform:
@@ -5386,6 +5392,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1502197312}
+  - {fileID: 392816617}
   - {fileID: 322227322}
   - {fileID: 1354595913}
   - {fileID: 5800151}
@@ -5411,7 +5418,6 @@ Transform:
   - {fileID: 1284973486}
   - {fileID: 383243691}
   - {fileID: 1077171544}
-  - {fileID: 392816617}
   - {fileID: 1530752922653879670}
   - {fileID: 1234454518}
   - {fileID: 1941679758}
@@ -17541,6 +17547,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
         type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 8021619288964460123, guid: 1f89b8a2cfa96e64eb88e8cb551e8aac,
+        type: 3}
+    - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
+        type: 3}
       propertyPath: fireInterval
       value: 1.5
       objectReference: {fileID: 0}
@@ -19301,6 +19313,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
+        type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 8021619288964460123, guid: 1f89b8a2cfa96e64eb88e8cb551e8aac,
+        type: 3}
     - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
         type: 3}
       propertyPath: fireInterval
