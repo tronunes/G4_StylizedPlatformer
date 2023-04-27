@@ -499,6 +499,11 @@ public class PlayerMovement : MonoBehaviour
         // =========
 
         // Animate idle / run
+        /*
+            The animationMovementSpeed is usually between 0.12 and 0.16 when running,
+            so it needs to be multiplied by roughly 10 to reach required values for the animation: 0 = idle, 1 = run
+            Tested, and 10 seems to be just fine.
+        */
         float animationMovementSpeed = (movementVectorForward + movementVectorRight).magnitude * 10f;
         animator.SetFloat("MovementSpeed", animationMovementSpeed);
     }
