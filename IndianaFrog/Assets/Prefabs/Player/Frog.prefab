@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49993214468cfc4e88d0fc4706e070e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2466033907667562758}
   maxHealth: 4
   currentHealth: 0
   invulnerabilityTime: 1
@@ -1540,6 +1541,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8182627445482262048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402269652514691181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8b53255f3892149938998f2e471e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkpointHandler: {fileID: 4168591034518890072}
 --- !u!1001 &5471604714218127872
 PrefabInstance:
   m_ObjectHideFlags: 0
