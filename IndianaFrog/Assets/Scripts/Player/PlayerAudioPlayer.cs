@@ -18,8 +18,17 @@ public class PlayerAudioPlayer : MonoBehaviour
         
     }
 
-    private void eventFootStep()
+    private void DeathSlam() {}
+    private void JumpStart() {}
+    private void JumpEnd() {}    
+    private void FootStep() 
     {
         footStep01.Play();
     }
+
+    private void SlideStart() {}
+    private void SlideEnd() {}
+    private void GrappleStart() {}
+    private void GrappleEnd() {}
+    private void TakeDamage() {}
 }
