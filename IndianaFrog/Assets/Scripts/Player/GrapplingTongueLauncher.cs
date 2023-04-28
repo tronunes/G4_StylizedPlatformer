@@ -44,8 +44,7 @@ public class GrapplingTongueLauncher : MonoBehaviour
         HideTongue();
 
         // Calculate how much the tongue middle needs to be scaled
-        // The 0.93f is just a scaler to fix the visuals
-        tongueMiddleScaler = 0.93f / tongueMid.GetChild(0).GetComponent<Renderer>().bounds.size.z;
+        tongueMiddleScaler = 1f / tongueMid.GetChild(0).GetComponent<Renderer>().localBounds.size.z;
     }
 
     void FixedUpdate()
