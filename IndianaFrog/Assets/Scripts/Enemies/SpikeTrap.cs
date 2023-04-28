@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpikeTrap : MonoBehaviour
 {
 	public GameObject spike;
+	public Animator animator;
 	public float spikeHeight = 0.5f;
 	public float trapTriggerTime = 2f;
 	public float spikesDuration = 1f;
@@ -62,7 +63,6 @@ public class SpikeTrap : MonoBehaviour
 			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeEndPosition, spikesSpeed * Time.deltaTime);
 		else if(!isTriggered && !allowActivation)
 			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeStartPosition, spikesRetractSpeed * Time.deltaTime);
-			
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -73,16 +73,17 @@ public class SpikeTrap : MonoBehaviour
 			{
 				//print("stepping on trap");
 				isActivated = true;
-				trapTimer = trapTriggerTime;				
-			}			
-		}			
+				trapTimer = trapTriggerTime;
+				animator.SetTrigger("Activate");
+			}
+		}
 	}
 
 	private IEnumerator DeactivateTrap()
 	{
 		//print("deactivation started");
 		yield return new WaitForSeconds(spikesDuration);
-		
+
 		isActivated = false;
 		isTriggered = false;
 		//print("spikes off...");
