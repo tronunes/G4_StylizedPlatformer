@@ -53,10 +53,26 @@ public class Enemy : MonoBehaviour
 
 		fireDelayTimer -= Time.deltaTime;
 		if(fireDelayTimer <= 0 && allowFiring)
-			Fire();
+			StartFireAnimation();
 	}
 
-	private void Fire()
+	private void StartFireAnimation()
+	{
+		fireDelayTimer = fireInterval;
+
+		// Case: Allow animating fire -> Animate
+		if (doAnimateShooting && animator.gameObject.activeSelf)
+		{
+			animator.SetTrigger("Shoot");
+		}
+		// Case: animation not allowed -> just fire
+		else
+		{
+			Fire();
+		}
+	}
+
+	public void Fire()
 	{
 		// dont perform checks if mask is set to static, so it doesnt track
 		// player and keeps firing at regular intervals
@@ -74,14 +90,6 @@ public class Enemy : MonoBehaviour
 
 		GameObject projectileInstance = Instantiate(projectile, firePoint.position, firePoint.rotation);
 		projectileInstance.GetComponent<Rigidbody>().velocity = projectileSpeed * firePoint.forward;
-
-		fireDelayTimer = fireInterval;
-
-		// Animate
-		if (doAnimateShooting && animator.gameObject.activeSelf)
-		{
-			animator.SetTrigger("Shoot");
-		}
 	}
 
 	private void Rotate()

@@ -127,6 +127,7 @@ MonoBehaviour:
   projectile: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
     type: 3}
   animator: {fileID: 4251207512885941002}
+  doAnimateShooting: 1
   isStaticEnemy: 1
   useOffsetInterval: 0
   fireInterval: 2
@@ -259,3 +260,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4991241983600128485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100245008307880794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f40918ea2bc39747a8a297aea6c04b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 5465245393515765779}
