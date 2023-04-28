@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
 	public Animator animator;
+	public ParticleSystem damageParticles;
 
 	[Header("HEALTH")]
 	public int maxHealth = 4;
@@ -54,6 +55,8 @@ public class PlayerHealth : MonoBehaviour
 
 				StartCoroutine(BecomeInvulnerable());
 			}
+
+			damageParticles.Play();
 		}
 	}
 
