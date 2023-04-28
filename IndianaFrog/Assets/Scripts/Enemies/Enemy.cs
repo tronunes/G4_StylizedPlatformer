@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 	[Header("LINKED OBJECTS")]
 	public Transform firePoint;
 	public GameObject projectile;
+	public Animator animator;
+	public bool doAnimateShooting = true;
 
 	[Header("MASK TYPE")]
 	public bool isStaticEnemy;
@@ -74,6 +76,12 @@ public class Enemy : MonoBehaviour
 		projectileInstance.GetComponent<Rigidbody>().velocity = projectileSpeed * firePoint.forward;
 
 		fireDelayTimer = fireInterval;
+
+		// Animate
+		if (doAnimateShooting && animator.gameObject.activeSelf)
+		{
+			animator.SetTrigger("Shoot");
+		}
 	}
 
 	private void Rotate()

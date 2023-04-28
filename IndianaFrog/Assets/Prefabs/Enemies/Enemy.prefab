@@ -126,6 +126,7 @@ MonoBehaviour:
   firePoint: {fileID: 5465245393102594629}
   projectile: {fileID: 1174446334904624749, guid: c581307650883c14b86fe546a8bbb40e,
     type: 3}
+  animator: {fileID: 4251207512885941002}
   isStaticEnemy: 1
   useOffsetInterval: 0
   fireInterval: 2
@@ -231,3 +232,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3758138223563357707}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4100245008307880794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 77bad590df543344794488a6fa7c1996,
+    type: 3}
+  m_PrefabInstance: {fileID: 3758138223563357707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4251207512885941002
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100245008307880794}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2f5d0e629abf3b74e8a2020ec3704c6f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
