@@ -11,6 +11,9 @@ public class TongueEnd : MonoBehaviour
     void Start()
     {
         tongueRb = gameObject.GetComponent<Rigidbody>();
+
+        // Orient the Tongue correctly
+        transform.LookAt(transform.position + tongueRb.velocity);
     }
 
     void OnCollisionEnter(Collision collision)
