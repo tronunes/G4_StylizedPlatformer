@@ -7,6 +7,7 @@ public class TongueEnd : MonoBehaviour
 {
     private GrapplingTongueLauncher launcher;
     private Rigidbody tongueRb;
+    public GameObject splashParticles;
 
     void Start()
     {
@@ -34,6 +35,9 @@ public class TongueEnd : MonoBehaviour
 
             // Start reeling the Frog
             launcher.StartReeling();
+
+            // Activate splash particles
+            splashParticles.SetActive(true);
         }
         // Case: Tongue hit surface to which it doesn't stick
         else
