@@ -37,7 +37,7 @@ public class TongueEnd : MonoBehaviour
             launcher.StartReeling();
 
             // Activate splash particles
-            splashParticles.SetActive(true);
+            Instantiate(splashParticles, transform.position + new Vector3(0f, 0.067f, 0.085f), transform.rotation);
         }
         // Case: Tongue hit surface to which it doesn't stick
         else
