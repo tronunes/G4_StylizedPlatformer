@@ -7,7 +7,8 @@ public class TongueEnd : MonoBehaviour
 {
     private GrapplingTongueLauncher launcher;
     private Rigidbody tongueRb;
-    public GameObject splashParticles;
+    public GameObject splashParticlesPrefab;
+    public Transform splashParticlesSpawnPoint;
 
     void Start()
     {
@@ -37,7 +38,7 @@ public class TongueEnd : MonoBehaviour
             launcher.StartReeling();
 
             // Activate splash particles
-            Instantiate(splashParticles, transform.position + new Vector3(0f, 0.067f, 0.085f), transform.rotation);
+            Instantiate(splashParticlesPrefab, splashParticlesSpawnPoint.position, transform.rotation);
         }
         // Case: Tongue hit surface to which it doesn't stick
         else
