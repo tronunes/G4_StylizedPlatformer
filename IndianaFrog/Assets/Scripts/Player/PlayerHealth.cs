@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
 	public Animator animator;
+	public ParticleSystem healthParticles;
+	public ParticleSystem damageParticles;
 
 	[Header("HEALTH")]
 	public int maxHealth = 4;
@@ -32,6 +34,8 @@ public class PlayerHealth : MonoBehaviour
 		featherManager.AddFeather(currentHealth, "AddHealth");
 		currentHealth += healthToAdd;
 		healthbar.SetHealth(currentHealth);
+
+		healthParticles.Play();
 	}
 
 	public void SubtractHealth(int healthToSubtract)
@@ -54,6 +58,8 @@ public class PlayerHealth : MonoBehaviour
 
 				StartCoroutine(BecomeInvulnerable());
 			}
+
+			damageParticles.Play();
 		}
 	}
 
