@@ -25,14 +25,24 @@ public class PlayerCameraController : MonoBehaviour
 
 
     [Header("Settings")]
-    private float horizontalRotateSpeedSetting = 3f;
-    private float verticalRotateSpeedSetting = 3f;
+    private float horizontalRotateSpeedSetting;
+    private float verticalRotateSpeedSetting;
 
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Listen to sensitivity setting changes
+        GameManager.instance.event_SensitivityChanged.AddListener(UpdateSensitivitySettings);
+
+        UpdateSensitivitySettings();
+    }
+
+    void OnDestroy()
+    {
+        GameManager.instance.event_SensitivityChanged.RemoveListener(UpdateSensitivitySettings);
     }
 
     void Update()
@@ -152,5 +162,11 @@ public class PlayerCameraController : MonoBehaviour
         currentTransitionTime = 0f;
         isZoomingIn = false;
         isZoomingOut = false;
+    }
+
+    public void UpdateSensitivitySettings()
+    {
+        horizontalRotateSpeedSetting = GameManager.instance.GetJoystickXSensitivity();
+        verticalRotateSpeedSetting = GameManager.instance.GetJoystickYSensitivity();
     }
 }

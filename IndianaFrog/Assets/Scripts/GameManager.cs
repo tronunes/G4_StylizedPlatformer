@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using UnityEngine.Audio;
 
 // A Singleton, prevent duplicates
@@ -15,8 +16,8 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
 
     //Input
-    private float joystickXSensitivity = 1f;
-    private float joystickYSensitivity = 1f;
+    private float joystickXSensitivity = 3f;
+    private float joystickYSensitivity = 3f;
     
     //Graphics Quality preset
     private int graphicsQuality = 0;
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
     private float audioMaster = 1f;
     private float audioFX = 1f;
     private float audioMusic= 1f;
+
+    //Events
+    public UnityEvent event_SensitivityChanged = new UnityEvent();
 
     private void Awake()
     {
@@ -78,11 +82,23 @@ public class GameManager : MonoBehaviour
     public void SetJoystickXSensitivity(float sensitivity)
     {
         joystickXSensitivity = sensitivity;
+        event_SensitivityChanged.Invoke();
     }
 
     public void SetJoystickYSensitivity(float sensitivity)
     {
         joystickYSensitivity = sensitivity;
+        event_SensitivityChanged.Invoke();
+    }
+
+    public float GetJoystickXSensitivity()
+    {
+        return joystickXSensitivity;
+    }
+
+    public float GetJoystickYSensitivity()
+    {
+        return joystickYSensitivity;
     }
 
     public void SetAudioMaster(float volumeMaster)

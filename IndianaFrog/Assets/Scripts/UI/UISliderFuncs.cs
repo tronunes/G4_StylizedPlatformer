@@ -31,11 +31,11 @@ public class UISliderFuncs : MonoBehaviour
         sliderAudioMusic.value = PlayerPrefs.GetFloat("VolumeMusic", 1f);
         SetMusicVol(PlayerPrefs.GetFloat("VolumeMusic", 1f));
 
-        sliderXsensitivity.value = PlayerPrefs.GetFloat("XSensitivity", 1f);
-        SetXSensitivity(PlayerPrefs.GetFloat("XSensitivity", 1f));
+        sliderXsensitivity.value = PlayerPrefs.GetFloat("XSensitivity", 3f);
+        SetXSensitivity(PlayerPrefs.GetFloat("XSensitivity", 3f));
 
-        sliderYsensitivity.value = PlayerPrefs.GetFloat("YSensitivity", 1f);
-        SetYSensitivity(PlayerPrefs.GetFloat("YSensitivity", 1f));
+        sliderYsensitivity.value = PlayerPrefs.GetFloat("YSensitivity", 3f);
+        SetYSensitivity(PlayerPrefs.GetFloat("YSensitivity", 3f));
     }
     
     public void SetQuality(float qualityFloat)

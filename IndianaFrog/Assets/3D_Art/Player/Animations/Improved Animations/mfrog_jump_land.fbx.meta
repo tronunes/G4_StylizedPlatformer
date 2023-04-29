@@ -57,10 +57,19 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.41401276
-        functionName: JumpEnd
+      - time: 0.11593047
+        functionName: SpawnRightFootDust
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: dba87f90223bcbc468b22efdbe6bc9d0,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5987481
+        functionName: SpawnLeftFootDust
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: dba87f90223bcbc468b22efdbe6bc9d0,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
