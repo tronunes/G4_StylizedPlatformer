@@ -6234,16 +6234,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frog
       objectReference: {fileID: 0}
-    - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226074901241009901, guid: 765147221b9d5804399e885852232e94,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 765147221b9d5804399e885852232e94, type: 3}
 --- !u!4 &556699002 stripped
