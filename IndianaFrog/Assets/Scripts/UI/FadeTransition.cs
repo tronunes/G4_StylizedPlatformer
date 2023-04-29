@@ -13,6 +13,7 @@ public class FadeTransition : MonoBehaviour
     public AnimationCurve transitionCurve; // A curve to make fading/unfading visually better and smoother
     private bool doFade = false; // When true, fading to black
     private bool doUnFade = false; // When true, unfading to transparent
+    public bool startFullyUnfaded = false; // For Menus, because we don't want Menus to unfade, only fade.
 
     [Header("Events")]
     public UnityEvent event_FadeFinished = new UnityEvent(); // Triggers when fully faded
@@ -25,9 +26,17 @@ public class FadeTransition : MonoBehaviour
         originalColor = fadeImage.color;
         transitionTimer = 0f;
 
-        // Start faded and immediately unfade
-        SetImageAlpha(1f);
-        UnFade();
+        if (startFullyUnfaded)
+        {
+            // Start fully unfaded
+            SetImageAlpha(0f);
+        }
+        else
+        {
+            // Start faded and immediately unfade
+            SetImageAlpha(1f);
+            UnFade();
+        }
     }
 
     void Update()
