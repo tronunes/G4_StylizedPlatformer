@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool inputLocked = false;
     private float inputHorizontalAxisValue;
     private float inputVerticalAxisValue;
-
+    public ParticleSystem slideDustParticles;
     private CharacterController characterController;
     private bool isZoomed = false;
     private Vector3 playerPreviousFramePosition;
@@ -261,6 +261,7 @@ public class PlayerMovement : MonoBehaviour
             slidingVelocity = slideStartVelocity;
             ChangeCharacterHeight(0.7f);
             animator.SetBool("Sliding", true);
+            slideDustParticles.Play();
         }
         else if (!slidingInput && slidingState) // Set the character's slidingState to false, reset its height and start the cooldown
         {
@@ -268,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
             slidingCooldown = 0.1f;
             ChangeCharacterHeight(1.5f);
             animator.SetBool("Sliding", false);
+            slideDustParticles.Stop();
         }
 
         // Progress cooldown if grounded
@@ -302,6 +304,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 ChangeCharacterHeight(1.5f);
                 animator.SetBool("Sliding", false);
+                slideDustParticles.Stop();
             }
         }
 
@@ -345,6 +348,7 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
             ChangeCharacterHeight(1.5f);
             animator.SetBool("Sliding", false);
+            slideDustParticles.Stop();
         }
 
         // If the player is currently in the middle of a wall jump, calculate the externalVelocity 
