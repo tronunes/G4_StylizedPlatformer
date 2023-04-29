@@ -52,6 +52,8 @@ MonoBehaviour:
   isRotating: 1
   animators:
   - {fileID: 5934188771808226677}
+  glowEffects:
+  - {fileID: 4545746651786022140}
 --- !u!136 &7506900183262052846
 CapsuleCollider:
   m_ObjectHideFlags: 0

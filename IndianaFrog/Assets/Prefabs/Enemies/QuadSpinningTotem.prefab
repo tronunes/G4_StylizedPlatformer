@@ -57,6 +57,11 @@ MonoBehaviour:
   - {fileID: 2469574951946006551}
   - {fileID: 1455123524751722686}
   - {fileID: 5517202105466644457}
+  glowEffects:
+  - {fileID: 6339040511733758479}
+  - {fileID: 5695492308077416862}
+  - {fileID: 8754547302153660727}
+  - {fileID: 2440616012018435680}
 --- !u!1001 &2218993866438986396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145,6 +150,12 @@ PrefabInstance:
 --- !u!4 &1581432623606057520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 2218993866438986396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2440616012018435680 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4545746651786022140, guid: e49964bdf3c00a94c8a5355d88d310ca,
     type: 3}
   m_PrefabInstance: {fileID: 2218993866438986396}
   m_PrefabAsset: {fileID: 0}
@@ -266,6 +277,12 @@ ParticleSystem:
 --- !u!4 &5571737378462410087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 5074389225677891019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8754547302153660727 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4545746651786022140, guid: e49964bdf3c00a94c8a5355d88d310ca,
     type: 3}
   m_PrefabInstance: {fileID: 5074389225677891019}
   m_PrefabAsset: {fileID: 0}
@@ -403,6 +420,12 @@ LineRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 7560831001649477363}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &6339040511733758479 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4545746651786022140, guid: e49964bdf3c00a94c8a5355d88d310ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 7560831001649477363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7193484460905395807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 808699312868229292, guid: e49964bdf3c00a94c8a5355d88d310ca,
@@ -509,6 +532,12 @@ Animator:
 --- !u!120 &5459433583961106498 stripped
 LineRenderer:
   m_CorrespondingSourceObject: {fileID: 4313328596998092064, guid: e49964bdf3c00a94c8a5355d88d310ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 8079396617629474146}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5695492308077416862 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4545746651786022140, guid: e49964bdf3c00a94c8a5355d88d310ca,
     type: 3}
   m_PrefabInstance: {fileID: 8079396617629474146}
   m_PrefabAsset: {fileID: 0}
