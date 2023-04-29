@@ -1561,6 +1561,11 @@ PrefabInstance:
       propertyPath: fireInterval
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
+        type: 3}
+      propertyPath: doAnimateShooting
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73, type: 3}
 --- !u!1001 &112250414
@@ -1809,6 +1814,11 @@ PrefabInstance:
         type: 3}
       propertyPath: projectileSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465245393515765779, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73,
+        type: 3}
+      propertyPath: doAnimateShooting
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bd69f9f94cfb0242bf9b3b5e248ad73, type: 3}

@@ -163,6 +163,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3691884476796882139}
     m_Modifications:
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a3fff2f4b1b7e848bfa1ffdfb8dd28d,
+        type: 3}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4443444324512044715, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -276,28 +312,20 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: '<style="Title">Art</style>
-
-
-        <size=85%><b>Lead</b></size>
-
-        <size=85%>Igor</size>
-
-
-        <size=85%><b>Members</b></size>
-
-        <size=85%>Matti;
-        Joni; Sergi </size>
-
-
-
-'
+      value: "<style=\"Title\">Art</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Igor
+        Vossotski</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Matti Vaittinen;
+        \nJoni K\xE4m\xE4r\xE4inen; \nSergi L\xF3pez</size>\n\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_fontSize
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -318,6 +346,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6319107162323078654}
     m_Modifications:
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1cc457af7dd6da04e8f9f4094c7cbe55,
+        type: 3}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4443444324512044715, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -435,6 +499,11 @@ PrefabInstance:
 
         <size=75%>Heikka</size>
 
+        <size=40%>Metropolia
+        University of Applied Sciences
+
+        Stadin AO</size>
+
 '
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
@@ -442,6 +511,11 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 72
       objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -462,6 +536,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3691884476796882139}
     m_Modifications:
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 41fa7e41dd7e0ab47a044b30e3b61bdb,
+        type: 3}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8784314
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.65882355
+      objectReference: {fileID: 0}
+    - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.65882355
+      objectReference: {fileID: 0}
     - target: {fileID: 4443444324512044715, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -575,23 +680,15 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: '<style="Title">Code</style>
-
-
-        <size=85%><b>Lead</b></size>
-
-        <size=85%>Mattias</size>
-
-
-        <size=85%><b>Members</b></size>
-
-        <size=85%>Niko;
-        Arttu; Riku</size>
-
-
-
-'
+      value: "<style=\"Title\">Code</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Mattias
+        M\xE4nnist\xF6</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Niko
+        Petlin; \nArttu Virtanen; \nRicardo Nunes</size>\n\n\n"
       objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
