@@ -19,6 +19,8 @@ public class PlayerHealth : MonoBehaviour
 	public HealthBar healthbar;
 	public FeatherManager featherManager;
 
+	public AudioSource frogDeath;
+
 	private bool canTakeDamage = true;
 
 
@@ -50,6 +52,7 @@ public class PlayerHealth : MonoBehaviour
 			if (currentHealth <= 0)
 			{
 				PlayDeathAnimation();
+				frogDeath.Play();
 			}
 			else
 			{
