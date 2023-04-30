@@ -308,6 +308,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // Make sure the slide dust particles don't appear in air
+        if (!IsGrounded())
+        {
+            slideDustParticles.Stop();
+        }
+
 
         // JUMP, CHARGE JUMP AND WALL JUMP
         // ===============================
