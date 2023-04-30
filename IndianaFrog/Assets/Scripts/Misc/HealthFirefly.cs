@@ -14,6 +14,7 @@ public class HealthFirefly : MonoBehaviour
     [Tooltip("Firefly movement radius")] [Range(0f, 1f)] public float movementRadius = 0.5f;
 
     public AudioSource fireFlyEat;
+    public AudioSource fireFlyBuzz;
 
     private float randomOffset; // Variations for the Perlin noise to make many Fireflies fly differently
     private bool isBeingReeledIn = false; // When true, the Firefly has been hit by a tongue and is being reeled in
@@ -90,6 +91,7 @@ public class HealthFirefly : MonoBehaviour
     private void DisableFirefly()
     {
         fireflyMesh.gameObject.SetActive(false);
+        fireFlyBuzz.Stop();
     }
 
     private void AddHealthToPlayer()

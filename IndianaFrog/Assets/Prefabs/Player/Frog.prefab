@@ -241,6 +241,7 @@ MonoBehaviour:
   invulnerabilityTime: 1
   healthbar: {fileID: 9058371691549743346}
   featherManager: {fileID: 1740473608759932506}
+  frogDamage: {fileID: 5450060300308037847}
   frogDeath: {fileID: 6861000144379445356}
 --- !u!114 &1740473608759932506
 MonoBehaviour:
@@ -16502,6 +16503,12 @@ AudioSource:
 --- !u!82 &3931228277601672272 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 7958067844715437397, guid: 0b2233d5dc750b548a60d7187e8c1509,
+    type: 3}
+  m_PrefabInstance: {fileID: 6412628618460250373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &5450060300308037847 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1395195829802893778, guid: 0b2233d5dc750b548a60d7187e8c1509,
     type: 3}
   m_PrefabInstance: {fileID: 6412628618460250373}
   m_PrefabAsset: {fileID: 0}
