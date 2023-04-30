@@ -9,6 +9,7 @@ public class EmblemDoor : MonoBehaviour
     [SerializeField] private Animator doorAnimator;
     [SerializeField] private Transform animatedEmblemParts; // Wrapper for the animated Emblem parts which fuse to the door
     [SerializeField] private GameObject dustParticles;
+    public AudioSource doorOpens;
 
 
     void Start()
@@ -45,6 +46,7 @@ public class EmblemDoor : MonoBehaviour
 
             // Play dust particles
             dustParticles.SetActive(true);
+            doorOpens.Play();
         }
     }
 
@@ -61,4 +63,5 @@ public class EmblemDoor : MonoBehaviour
             animatedEmblemParts.GetComponent<Animator>().SetTrigger("StartFusing");
         }
     }
+
 }
