@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class PlayerAudioPlayer : MonoBehaviour
 {
-    public AudioSource footStep01;
+    private bool hasAttached = false;
+
     public Animator animator;
-    private bool isWalking;
+
+    public AudioSource frogJump;
+    public AudioSource frogJumpCharge;
+    public AudioSource frogLand;
+    public AudioSource frogSlide;
+    public AudioSource tongueLaunch;
+    public AudioSource tongueReeling;
+    public AudioSource tongueAttach;
 
     private void Start()
     {
@@ -15,20 +23,87 @@ public class PlayerAudioPlayer : MonoBehaviour
 
     private void Update()
     {
-        
+        PlayReeling();
+
+        PlayCharging();   
     }
 
     private void DeathSlam() {}
-    private void JumpStart() {}
-    private void JumpEnd() {}    
-    private void FootStep() 
+    private void JumpStart() 
     {
-        footStep01.Play();
+        frogJump.Play();
     }
+    private void JumpEnd() 
+    {
+        frogLand.Play();
+    }    
 
-    private void SlideStart() {}
+    private void SlideStart() 
+    {
+        frogSlide.Play();
+    }
     private void SlideEnd() {}
-    private void GrappleStart() {}
+    private void GrappleStart() 
+    {
+        tongueLaunch.Play();
+    }
     private void GrappleEnd() {}
     private void TakeDamage() {}
+
+    private void PlayReeling()
+    {
+        if (animator.GetBool("Reeling"))
+        {
+            switch (tongueReeling.isPlaying)
+            {
+                case true:
+                    break;
+                case false:
+                    if ( !hasAttached ) 
+                    {
+                        PlayAttach();
+                        hasAttached = true;
+                    }
+                    tongueReeling.Play();
+                    break;
+            }
+        }
+        else
+        {
+            switch (tongueReeling.isPlaying)
+            {
+                case true:
+                    tongueReeling.Stop();
+                    hasAttached = false;
+                    break;
+                case false:
+                    break;
+            }
+        }
+    }
+
+    private void PlayCharging() 
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            frogJumpCharge.Play();
+        } 
+        else if (Input.GetButtonUp("Jump"))
+        {
+            frogJumpCharge.Stop();
+        } else {}
+    }
+
+    private void PlayAttach()
+    {
+        switch ( hasAttached )
+        {
+            case true: 
+                break;
+            case false:
+                tongueAttach.Play();
+                break;
+        }
+    }
+
 }
