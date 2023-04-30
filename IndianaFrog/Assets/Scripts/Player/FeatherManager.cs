@@ -8,10 +8,6 @@ public class FeatherManager : MonoBehaviour
     private GameObject hpFeather1;
     private GameObject hpFeather2;
 
-    //Selected feather based on hp that script will act on
-    private GameObject currentFeather;
-    private SkinnedMeshRenderer currentFeatherRenderer;
-
     [Header("FEATHER BLINKING")]
     [Tooltip("How many times feather blinks")]
     public int featherBlinkCount = 3; //how many times feather blinks
@@ -22,17 +18,16 @@ public class FeatherManager : MonoBehaviour
         hpFeather0 = GameObject.Find("hpFeather/hp0");
         hpFeather1 = GameObject.Find("hpFeather/hp1");
         hpFeather2 = GameObject.Find("hpFeather/hp2");
-        currentFeather = hpFeather2;
     }
 
     public void AddFeather(int currentHealth, string eventName)
     {
-        StartCoroutine(FeatherChange(currentHealth, eventName));
+        FeatherChange(currentHealth, eventName);
     }
 
     public void RemoveFeather(int currentHealth, string eventName)
     {
-        StartCoroutine(FeatherChange(currentHealth, eventName));
+        FeatherChange(currentHealth, eventName);
     }
 
     public void FeatherReset()
@@ -40,31 +35,29 @@ public class FeatherManager : MonoBehaviour
         hpFeather0.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
         hpFeather1.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
         hpFeather2.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-        currentFeather = hpFeather2;
     }
 
-    public IEnumerator FeatherChange(int currentHealth, string eventName)
+    private void FeatherChange(int currentHealth, string eventName)
     {
         switch (currentHealth)
         {
             case 3:
-                currentFeather = hpFeather2;
+                StartCoroutine(BlinkFeather(hpFeather2, eventName));
                 break;
             case 2:
-                currentFeather = hpFeather1;
+                StartCoroutine(BlinkFeather(hpFeather1, eventName));
                 break;
             case 1:
-                currentFeather = hpFeather0;
-                break;
-            default:
-                //player took last hit with no feathers
-                currentFeather = null;
+                StartCoroutine(BlinkFeather(hpFeather0, eventName));
                 break;
         }
+    }
 
-        if (currentFeather != null)
+    private IEnumerator BlinkFeather(GameObject feather, string eventName)
+    {
+        if (feather != null)
         {
-            currentFeatherRenderer = currentFeather.GetComponentInChildren<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer currentFeatherRenderer = feather.GetComponentInChildren<SkinnedMeshRenderer>();
 
             //Player lost hp
             if (eventName.Equals("SubtractHealth"))
@@ -97,6 +90,5 @@ public class FeatherManager : MonoBehaviour
                 currentFeatherRenderer.enabled = (true);
             }
         }
-
     }
 }
