@@ -357,8 +357,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVectorForward = Vector3.zero;
         Vector3 movementVectorRight = Vector3.zero;
 
-        // If the player has pressed down and released the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
-        if (jumpInput && chargeJumpTimer > 0 && isGrounded && slidingState)
+        // If the player has pressed the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
+        if (jumpInput && isGrounded && slidingState)
         {
             externalVelocity = Vector3.zero;
             slidingVelocity = 0f;
