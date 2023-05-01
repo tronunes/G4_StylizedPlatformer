@@ -16,9 +16,19 @@ public class LevelFinish : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            levelFinish.Play();
-            //add coroutine or condition to delay level load till sound is done
-            collider.gameObject.GetComponent<PlayerCheckpointHandler>().FinishLevel(nextScene, currentLevelNumber);
+            //collider.gameObject.GetComponent<PlayerCheckpointHandler>().FinishLevel(nextScene, currentLevelNumber);
+            StartCoroutine(StageEndCoroutine(collider));
+        }
+    }
+
+    IEnumerator StageEndCoroutine(Collider collider)
+    {
+        if ( !levelFinish.isPlaying )
+        {
+        levelFinish.Play();
+        yield return new WaitForSeconds( levelFinish.clip.length - 3.18f);
+
+        collider.gameObject.GetComponent<PlayerCheckpointHandler>().FinishLevel(nextScene, currentLevelNumber);
         }
     }
 }
