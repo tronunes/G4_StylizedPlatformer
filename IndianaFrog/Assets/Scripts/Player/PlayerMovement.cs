@@ -110,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         {
             chargingJump = false;
             slidingInput = false;
+            jumpInput = false;
             return;
         }
 
