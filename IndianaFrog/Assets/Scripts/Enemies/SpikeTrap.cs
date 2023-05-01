@@ -21,6 +21,7 @@ public class SpikeTrap : MonoBehaviour
 	private bool allowActivation = true;	// set true when the spikes have retracted to their starting position
 	private bool isActivated = false;		// if player has stepped on trap trigger
 	private bool isTriggered = false;		// if spikes are deployed already
+	private bool trapLaunchPlayed = false;
 	
 	private float trapTimer;
 
@@ -65,7 +66,11 @@ public class SpikeTrap : MonoBehaviour
         if (isTriggered)
         {
             spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeEndPosition, spikesSpeed * Time.deltaTime);
-			trapLaunch.Play();
+			if ( !trapLaunch.isPlaying && !trapLaunchPlayed)
+			{
+				trapLaunch.Play();
+				trapLaunchPlayed = true;
+			}
         }
         else if (!isTriggered && !allowActivation)
         {
@@ -95,6 +100,7 @@ public class SpikeTrap : MonoBehaviour
 
 		isActivated = false;
 		isTriggered = false;
+		trapLaunchPlayed = false;
 		//print("spikes off...");
 	}
 
