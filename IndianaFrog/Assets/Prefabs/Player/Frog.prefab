@@ -273,6 +273,7 @@ MonoBehaviour:
   circlingEmblemTop: {fileID: 7687471948421581299}
   circlingEmblemRight: {fileID: 4439797074729768805}
   circlingEmblemBottom: {fileID: 2614615362926567337}
+  emblemCollectSound: {fileID: 2263880409331104633}
 --- !u!1 &1698277716000211498
 GameObject:
   m_ObjectHideFlags: 0
@@ -16497,6 +16498,12 @@ Transform:
 --- !u!82 &1651148454624519054 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 5626180133481587339, guid: 0b2233d5dc750b548a60d7187e8c1509,
+    type: 3}
+  m_PrefabInstance: {fileID: 6412628618460250373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2263880409331104633 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5157977255673510524, guid: 0b2233d5dc750b548a60d7187e8c1509,
     type: 3}
   m_PrefabInstance: {fileID: 6412628618460250373}
   m_PrefabAsset: {fileID: 0}
