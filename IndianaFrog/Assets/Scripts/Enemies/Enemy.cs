@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
 	public float detectionRange = 5f;
 	public float rotateSpeed = 10;
 
+	public AudioSource enemySound;
+
 	private float fireDelayTimer;
 	private bool allowFiring = false;	// used for timing offset
 	private Transform target;
@@ -27,7 +29,15 @@ public class Enemy : MonoBehaviour
 	private Vector3 targetDirection;
 	private Quaternion lookRotation;
 	private Quaternion defaultRotation;
+	private GameObject player;
+	private float distanceToPlayer;
+	public float gruntPeriod;
 
+
+	private void Awake()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
 
 	private void Start()
 	{
@@ -44,6 +54,8 @@ public class Enemy : MonoBehaviour
 			StartCoroutine(Hold());
 		else
 			allowFiring = true;
+
+		StartCoroutine(PlayEnemySoundCoroutine());
 	}
 
 	private void Update()
@@ -54,6 +66,8 @@ public class Enemy : MonoBehaviour
 		fireDelayTimer -= Time.deltaTime;
 		if(fireDelayTimer <= 0 && allowFiring)
 			StartFireAnimation();
+
+		// if player is within detection range random chance play enemy grunt
 	}
 
 	private void StartFireAnimation()
@@ -132,5 +146,18 @@ public class Enemy : MonoBehaviour
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(this.transform.position, detectionRange);
+	}
+
+	private IEnumerator PlayEnemySoundCoroutine()
+	{
+        while (true)
+        {
+            distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer <= 30f && !enemySound.isPlaying)
+            {
+                enemySound.Play();
+            }
+            yield return new WaitForSeconds(gruntPeriod);
+        }
 	}
 }
