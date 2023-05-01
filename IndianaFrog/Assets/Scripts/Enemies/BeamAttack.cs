@@ -14,6 +14,7 @@ public class BeamAttack : MonoBehaviour
 
 	private Vector3 knockbackDirection;  // Unit vector in the direction of the player's center from the firePoint
 	[SerializeField] private float knockbackForce;  // Magnitude of the knockback
+	public AudioSource beamSound;
 
 	private EnemyTotem enemyTotem;
 
@@ -31,6 +32,10 @@ public class BeamAttack : MonoBehaviour
 			ActivateBeam();
 			if(!glowEffect.isPlaying)
 				glowEffect.Play();
+				if(!beamSound.isPlaying)
+				{
+					beamSound.Play();
+				}
 		}
 		else
 		{
@@ -42,6 +47,7 @@ public class BeamAttack : MonoBehaviour
 			{
 				glowEffect.Stop();
 				glowEffect.Clear();	// have to clear particles also after stopping, or they linger for their lifetime-duration
+				beamSound.Stop();
 			}
 		}
 	}
