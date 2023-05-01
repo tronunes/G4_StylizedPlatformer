@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isZoomed = false;
     private Vector3 playerPreviousFramePosition;
     private bool chargingJump = false;
+    private bool jumpInput = false;
     private Vector3 externalVelocity = Vector3.zero; // Alternative velocity to movement input velocity. Blocks movement input velocity. Only affects one frame.
     private Vector3 additionalVelocity = Vector3.zero; // Like externalVelocity, but doesn't block movement input velocity. Only affects one frame.
 
@@ -112,14 +113,24 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // Jump
-        if (Input.GetButtonDown("Jump"))
+        // Charge Jump
+        if (Input.GetButtonDown("ChargeJump"))
         {
             chargingJump = true;
         }
-        else if (Input.GetButtonUp("Jump"))
+        else if (Input.GetButtonUp("ChargeJump"))
         {
             chargingJump = false;
+        }
+
+        // Jump
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpInput = true;
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            jumpInput = false;
         }
 
         // Slide
@@ -166,6 +177,7 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
             slidingVelocity = 0f;
             slidingState = false;
+            jumpInput = false;
         } 
         // Exit knockbackState
         else if (knockbackState)
@@ -326,10 +338,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Progress jumpInputDecayTimer
-        if (!chargingJump && chargeJumpTimer > 0f)
+        if (!jumpInput && !chargingJump && chargeJumpTimer > 0f)
         {
             jumpInputDecayTimer += Time.fixedDeltaTime;
-        } else if (chargingJump)
+        } else if (chargingJump || jumpInput)
         {
             // Reset jumpInputDecayTimer if player presses down jump button again
             jumpInputDecayTimer = 0f;
@@ -346,7 +358,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVectorRight = Vector3.zero;
 
         // If the player has pressed down and released the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
-        if (!chargingJump && chargeJumpTimer > 0 && isGrounded && slidingState)
+        if (jumpInput && chargeJumpTimer > 0 && isGrounded && slidingState)
         {
             externalVelocity = Vector3.zero;
             slidingVelocity = 0f;
@@ -406,7 +418,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump if the jump button is let go of and there is any amount of charge
-            if (!chargingJump && chargeJumpTimer > 0 && (isGrounded || clingingState))
+            if (jumpInput && (isGrounded || clingingState))
             {
                 // Case: Wall jump
                 if (clingingState)
@@ -593,6 +605,7 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity = 0f;
         isGrounded = false;
 
+        jumpInput = false;
         chargingJump = false;
         chargeJumpTimer = 0f;
         jumpInputDecayTimer = 0f;
