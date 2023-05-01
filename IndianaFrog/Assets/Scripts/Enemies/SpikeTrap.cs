@@ -11,6 +11,9 @@ public class SpikeTrap : MonoBehaviour
 	public float spikesDuration = 1f;
 	public float spikesSpeed = 10f;
 	public float spikesRetractSpeed = 0.8f;	
+
+	public AudioSource trapActivate;
+	public AudioSource trapLaunch;
 	
 	private Vector3 spikeStartPosition;
 	private Vector3 spikeEndPosition;
@@ -59,10 +62,15 @@ public class SpikeTrap : MonoBehaviour
 
 	private void MoveSpikes()
 	{
-		if(isTriggered)
-			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeEndPosition, spikesSpeed * Time.deltaTime);
-		else if(!isTriggered && !allowActivation)
-			spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeStartPosition, spikesRetractSpeed * Time.deltaTime);
+        if (isTriggered)
+        {
+            spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeEndPosition, spikesSpeed * Time.deltaTime);
+			trapLaunch.Play();
+        }
+        else if (!isTriggered && !allowActivation)
+        {
+            spike.transform.position = Vector3.MoveTowards(spike.transform.position, spikeStartPosition, spikesRetractSpeed * Time.deltaTime);
+        }
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -75,6 +83,7 @@ public class SpikeTrap : MonoBehaviour
 				isActivated = true;
 				trapTimer = trapTriggerTime;
 				animator.SetTrigger("Activate");
+				trapActivate.Play();
 			}
 		}
 	}
