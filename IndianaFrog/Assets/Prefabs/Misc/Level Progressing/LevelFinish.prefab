@@ -5133,7 +5133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextScene: 
   currentLevelNumber: 0
-  portalSound: {fileID: 0}
+  portalSound: {fileID: 677919373415178208}
   levelFinish: {fileID: 201413331474572754}
 --- !u!65 &4268721254726934064
 BoxCollider:
@@ -5159,7 +5159,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8109845938851254333, guid: f84dc9ad60636c54cb99d987f162717f,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0464ea96815abb548920b59e6614bbf2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d10162ee3f8ff6f439a2a588019ed430, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

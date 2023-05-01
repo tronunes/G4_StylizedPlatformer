@@ -10,7 +10,6 @@ public class LevelFinish : MonoBehaviour
     [Tooltip("Used for saving Player's progress")]
     public int currentLevelNumber;
 
-    public AudioSource portalSound;
     public AudioSource levelFinish;
 
     void OnTriggerEnter(Collider collider)
