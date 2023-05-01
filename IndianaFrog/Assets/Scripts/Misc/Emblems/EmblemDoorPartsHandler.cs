@@ -8,6 +8,8 @@ public class EmblemDoorPartsHandler : MonoBehaviour
     public EmblemDoor emblemDoor;
     public GameObject emblemFuseParticles;
     public GameObject emblemHoverParticles;
+    public AudioSource doorActivates;
+    public AudioSource doorHasActivated;
 
     public void StartOpeningDoor()
     {
@@ -17,10 +19,12 @@ public class EmblemDoorPartsHandler : MonoBehaviour
     public void ActivateEmblemFuseParticles()
     {
         emblemFuseParticles.SetActive(true);
+        doorHasActivated.Play();
     }
 
     public void ActivateEmblemhoverParticles()
     {
         emblemHoverParticles.SetActive(true);
+        doorActivates.Play();
     }
 }
