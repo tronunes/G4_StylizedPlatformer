@@ -135,6 +135,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire
       objectReference: {fileID: 0}
+    - target: {fileID: 7547531502674972194, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.44716978
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547531502674972194, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.66324085
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547531502674972194, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547531502674972194, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 15915.494
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547531502674972194, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_ShadowRadius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698593749046066699, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 200000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698593749046066699, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: m_ShapeRadius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7698593749046066699, guid: 5e3f8b9f1ad519047879aec19de818d2,
+        type: 3}
+      propertyPath: useVolumetric
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e3f8b9f1ad519047879aec19de818d2, type: 3}
 --- !u!4 &127010496208465225 stripped
