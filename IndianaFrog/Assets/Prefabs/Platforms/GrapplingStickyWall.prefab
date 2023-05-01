@@ -150,7 +150,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fd6ad13e067c05f4392f06b81b1869d9, type: 2}
+      objectReference: {fileID: 2100000, guid: 9ef271835575a9d4aa740ef1f81d58cf, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 1ae481eebd24a2b47b28d541ec24140d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8421744311104621043, guid: 1cf6fba4b3334fd49836178a335ae2ea,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 1ae481eebd24a2b47b28d541ec24140d,
         type: 3}
       propertyPath: m_Name
@@ -180,8 +186,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 150, y: 149.99622, z: 9.317252}
-  m_Center: {x: 0, y: 74.1232, z: 4.1256633}
+  m_Size: {x: 150, y: 150.94576, z: 9.317252}
+  m_Center: {x: 0.00000004183508, y: -0.1485318, z: 4.125663}
 --- !u!114 &913589864492161636
 MonoBehaviour:
   m_ObjectHideFlags: 0
