@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c8a34ec1d9219488b032484bb34773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songVolume: 0.6
   songMainMenu: {fileID: 3872230355753262446}
   songLevel1: {fileID: 61792576962812099}
   songLevel2: {fileID: 1975942830029690452}
