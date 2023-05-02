@@ -474,10 +474,12 @@ public class PlayerMovement : MonoBehaviour
             // Forward / backward input
             if (inputVerticalAxisValue != 0f)
             {
+                // If there's input, add speed to a max of the input's magnitude
                 verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputVerticalAxisValue), Mathf.Abs(inputVerticalAxisValue));
             }
             else
             {
+                // Decrease speed if vertical input is 0f
                 verticalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(verticalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(verticalWalkSpeedPercentage);
             }
 
@@ -486,10 +488,12 @@ public class PlayerMovement : MonoBehaviour
             // Right / left input
             if (inputHorizontalAxisValue != 0f)
             {
+                // If there's input, add speed to a max of the input's magnitude
                 horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputHorizontalAxisValue), Mathf.Abs(inputHorizontalAxisValue));
             }
             else
             {
+                // Decrease speed if horizontal input is 0f
                 horizontalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(horizontalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(horizontalWalkSpeedPercentage);
             }
 
