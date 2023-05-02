@@ -55,7 +55,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4140984244457985791}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 6319107162323078654}
   - component: {fileID: 5643970593180611544}
   - component: {fileID: 2449303618180554325}
+  - component: {fileID: 1792502678369434249}
   m_Layer: 5
   m_Name: Menu_Credits
   m_TagString: Untagged
@@ -146,7 +147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 88115d3526434094ead77dcdb7578ea3, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -155,7 +156,20 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2.32
+--- !u!114 &1792502678369434249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802815592399956091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1001 &5844245350157018620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -172,27 +186,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 3a3fff2f4b1b7e848bfa1ffdfb8dd28d,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.8784314
+      value: 0.9019608
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.6603774
+      value: 0.122641504
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.6603774
+      value: 0.122641504
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.6603774
+      value: 0.122641504
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
@@ -312,9 +325,9 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: "<style=\"Title\">Art</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Igor
-        Vossotski</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Matti Vaittinen;
-        \nJoni K\xE4m\xE4r\xE4inen; \nSergi L\xF3pez</size>\n\n\n"
+      value: "<style=\"Title\">Art</style>\n\n<style=\"Title\"><size=85%><b>Lead</b></size></style>\n<size=77%>Igor
+        Vossotski</size>\n\n<style=\"Title\"><size=85%><b>Members</b></size></style>\n<size=77%>Matti
+        Vaittinen \nJoni K\xE4m\xE4r\xE4inen \nSergi L\xF3pez</size>\n\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
@@ -323,9 +336,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
+      propertyPath: m_margin.x
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_margin.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -355,27 +383,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1cc457af7dd6da04e8f9f4094c7cbe55,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.8784314
+      value: 0.9019608
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
@@ -545,27 +572,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 41fa7e41dd7e0ab47a044b30e3b61bdb,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.8784314
+      value: 0.9019608
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 819162064978940590, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.65882355
+      value: 0.12156863
       objectReference: {fileID: 0}
     - target: {fileID: 4443444324512044715, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
@@ -680,15 +706,30 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: "<style=\"Title\">Code</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Mattias
-        M\xE4nnist\xF6</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Niko
-        Petlin; \nArttu Virtanen; \nRicardo Nunes</size>\n\n\n"
+      value: "<style=\"Title\">Code</style>\n\n<style=\"Title\"><size=85%><b>Lead</b></size></style>\n<size=77%>Mattias
+        M\xE4nnist\xF6</size>\n\n<style=\"Title\"><size=85%><b>Members</b></size></style>\n<size=77%>Niko
+        Petlin \nArttu Virtanen \nRicardo Nunes</size>\n\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_margin.x
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
