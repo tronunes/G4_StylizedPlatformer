@@ -16,7 +16,7 @@ MonoBehaviour:
     supportShadowMask: 0
     supportSSR: 0
     supportSSRTransparent: 0
-    supportSSAO: 1
+    supportSSAO: 0
     supportSSGI: 0
     supportSubsurfaceScattering: 1
     sssSampleBudget:
@@ -25,7 +25,7 @@ MonoBehaviour:
         m_Id: With3Levels
     supportVolumetrics: 0
     supportVolumetricClouds: 0
-    supportLightLayers: 1
+    supportLightLayers: 0
     supportDistortion: 1
     supportTransparentBackface: 1
     supportTransparentDepthPrepass: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
       reflectionCubemapSize: 256
       reflectionCacheCompressed: 1
       reflectionProbeFormat: 74
-      skyReflectionSize: 256
+      skyReflectionSize: 128
       skyLightingOverrideLayerMask:
         serializedVersion: 2
         m_Bits: 0
@@ -77,19 +77,19 @@ MonoBehaviour:
       maxLocalVolumetricFogSize: 32
       maxLocalVolumetricFogOnScreen: 64
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 1
       directionalShadowsDepthBits: 16
-      shadowFilteringQuality: 1
+      shadowFilteringQuality: 0
       punctualLightShadowAtlas:
-        shadowAtlasResolution: 4096
+        shadowAtlasResolution: 1024
         shadowAtlasDepthBits: 16
         useDynamicViewportRescale: 1
       areaLightShadowAtlas:
-        shadowAtlasResolution: 2048
+        shadowAtlasResolution: 1024
         shadowAtlasDepthBits: 16
         useDynamicViewportRescale: 0
-      cachedPunctualLightShadowAtlas: 2048
-      cachedAreaLightShadowAtlas: 2048
+      cachedPunctualLightShadowAtlas: 512
+      cachedAreaLightShadowAtlas: 1024
       shadowResolutionDirectional:
         m_Values: 80000000000100000002000000040000
         m_SchemaId:
@@ -140,6 +140,7 @@ MonoBehaviour:
       singlePass: 1
       occlusionMesh: 1
       cameraJitter: 0
+      allowMotionBlur: 1
     postProcessQualitySettings:
       NearBlurSampleCount: 030000000400000004000000
       NearBlurMaxRadius:
@@ -161,7 +162,7 @@ MonoBehaviour:
       ChromaticAberrationMaxSamples: 03000000060000000c000000
     lightSettings:
       useContactShadow:
-        m_Values: 000101
+        m_Values: 000000
         m_SchemaId:
           m_Id: 
     maximumLODLevel:

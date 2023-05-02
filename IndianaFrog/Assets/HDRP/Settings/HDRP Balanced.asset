@@ -77,7 +77,7 @@ MonoBehaviour:
       maxLocalVolumetricFogSize: 32
       maxLocalVolumetricFogOnScreen: 64
     hdShadowInitParams:
-      maxShadowRequests: 128
+      maxShadowRequests: 64
       directionalShadowsDepthBits: 16
       shadowFilteringQuality: 1
       punctualLightShadowAtlas:
@@ -140,6 +140,7 @@ MonoBehaviour:
       singlePass: 1
       occlusionMesh: 1
       cameraJitter: 0
+      allowMotionBlur: 1
     postProcessQualitySettings:
       NearBlurSampleCount: 030000000400000005000000
       NearBlurMaxRadius:
