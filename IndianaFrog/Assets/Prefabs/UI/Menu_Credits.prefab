@@ -325,9 +325,9 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: "<style=\"Title\">Art</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Igor
-        Vossotski</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Matti Vaittinen;
-        \nJoni K\xE4m\xE4r\xE4inen; \nSergi L\xF3pez</size>\n\n\n"
+      value: "<style=\"Title\">Art</style>\n\n<style=\"Title\"><size=85%><b>Lead</b></size></style>\n<size=77%>Igor
+        Vossotski</size>\n\n<style=\"Title\"><size=85%><b>Members</b></size></style>\n<size=77%>Matti
+        Vaittinen \nJoni K\xE4m\xE4r\xE4inen \nSergi L\xF3pez</size>\n\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
@@ -336,9 +336,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
+      propertyPath: m_margin.x
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_margin.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
@@ -691,15 +706,30 @@ PrefabInstance:
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_text
-      value: "<style=\"Title\">Code</style>\n\n<size=85%><b>Lead</b></size>\n<size=77%>Mattias
-        M\xE4nnist\xF6</size>\n\n<size=85%><b>Members</b></size>\n<size=77%>Niko
-        Petlin; \nArttu Virtanen; \nRicardo Nunes</size>\n\n\n"
+      value: "<style=\"Title\">Code</style>\n\n<style=\"Title\"><size=85%><b>Lead</b></size></style>\n<size=77%>Mattias
+        M\xE4nnist\xF6</size>\n\n<style=\"Title\"><size=85%><b>Members</b></size></style>\n<size=77%>Niko
+        Petlin \nArttu Virtanen \nRicardo Nunes</size>\n\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_margin.x
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: d363aa738b0ce0a41b3a1ff2fe190391, type: 2}
+    - target: {fileID: 8841179491833235599, guid: 2a2f578951116d64598937e6278e9f87,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9128192286565808412, guid: 2a2f578951116d64598937e6278e9f87,
         type: 3}
       propertyPath: m_Name
