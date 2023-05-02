@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 10.20657, g: 4.8731956, b: 2.3338585, a: 1}
+  m_IndirectSpecularColor: {r: 10.206608, g: 4.844692, b: 2.2945747, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1828,6 +1828,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_Name
@@ -1907,6 +1912,11 @@ PrefabInstance:
     - target: {fileID: 432175199501098297, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
@@ -2292,6 +2302,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 866368871}
     m_Modifications:
+    - target: {fileID: 5902242739346522254, guid: fade7364cfb4b5d47bc951fec72e4303,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8037699820949332733, guid: fade7364cfb4b5d47bc951fec72e4303,
         type: 3}
       propertyPath: m_RootOrder
@@ -5313,6 +5328,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_Name
@@ -6260,6 +6280,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 866368871}
     m_Modifications:
+    - target: {fileID: 5902242739346522254, guid: fade7364cfb4b5d47bc951fec72e4303,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8037699820949332733, guid: fade7364cfb4b5d47bc951fec72e4303,
         type: 3}
       propertyPath: m_RootOrder
@@ -6384,6 +6409,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_Name
@@ -6457,6 +6487,11 @@ PrefabInstance:
     - target: {fileID: 432175199501098297, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
@@ -6627,6 +6662,11 @@ PrefabInstance:
     - target: {fileID: 432175199501098297, guid: 0d92d290f3d14de4d847edfae10c4c69,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254478212935913539, guid: 0d92d290f3d14de4d847edfae10c4c69,
+        type: 3}
+      propertyPath: m_Volume
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8351150554265601474, guid: 0d92d290f3d14de4d847edfae10c4c69,
