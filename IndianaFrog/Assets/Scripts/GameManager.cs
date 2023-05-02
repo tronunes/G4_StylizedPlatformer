@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private float joystickYSensitivity = 3f;
     
     //Graphics Quality preset
-    private int graphicsQuality = 0;
+    private int graphicsQuality = 1;
     
     //Audio Settings
     private float audioMaster = 1f;
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void SetQuality(int quality)
     {
-        if (quality >= 0 && quality <= 2)
+        if (quality >= 0 && quality <= 1)
         {
             graphicsQuality = quality;
             QualitySettings.SetQualityLevel(quality, true);
