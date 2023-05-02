@@ -474,7 +474,7 @@ public class PlayerMovement : MonoBehaviour
             // Forward / backward input
             if (inputVerticalAxisValue != 0f)
             {
-                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 7f * Time.fixedDeltaTime, -1f, 1f);
+                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 7f * Time.fixedDeltaTime, -Mathf.Abs(inputVerticalAxisValue), Mathf.Abs(inputVerticalAxisValue));
             }
             else
             {
@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
             // Right / left input
             if (inputHorizontalAxisValue != 0f)
             {
-                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 7f * Time.fixedDeltaTime, -1f, 1f);
+                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 7f * Time.fixedDeltaTime, -Mathf.Abs(inputHorizontalAxisValue), Mathf.Abs(inputHorizontalAxisValue));
             }
             else
             {
