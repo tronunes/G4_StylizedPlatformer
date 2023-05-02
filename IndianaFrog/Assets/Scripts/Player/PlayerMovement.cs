@@ -474,11 +474,11 @@ public class PlayerMovement : MonoBehaviour
             // Forward / backward input
             if (inputVerticalAxisValue != 0f)
             {
-                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 7f * Time.fixedDeltaTime, -Mathf.Abs(inputVerticalAxisValue), Mathf.Abs(inputVerticalAxisValue));
+                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputVerticalAxisValue), Mathf.Abs(inputVerticalAxisValue));
             }
             else
             {
-                verticalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(verticalWalkSpeedPercentage) - 20f * Time.fixedDeltaTime) * Mathf.Sign(verticalWalkSpeedPercentage);
+                verticalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(verticalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(verticalWalkSpeedPercentage);
             }
 
             movementVectorForward = verticalWalkSpeedPercentage * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
@@ -486,11 +486,11 @@ public class PlayerMovement : MonoBehaviour
             // Right / left input
             if (inputHorizontalAxisValue != 0f)
             {
-                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 7f * Time.fixedDeltaTime, -Mathf.Abs(inputHorizontalAxisValue), Mathf.Abs(inputHorizontalAxisValue));
+                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputHorizontalAxisValue), Mathf.Abs(inputHorizontalAxisValue));
             }
             else
             {
-                horizontalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(horizontalWalkSpeedPercentage) - 20f * Time.fixedDeltaTime) * Mathf.Sign(horizontalWalkSpeedPercentage);
+                horizontalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(horizontalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(horizontalWalkSpeedPercentage);
             }
 
             movementVectorRight = horizontalWalkSpeedPercentage * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
