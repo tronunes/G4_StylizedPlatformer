@@ -397,7 +397,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: a79e21d2c56fc364f96a826423b4d0e8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -406,9 +406,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 200
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -416,23 +416,59 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.022770438
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -51.638355
+      outSlope: -51.638355
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.4422328
+    - serializedVersion: 3
+      time: 0.03497798
+      value: 0.5
+      inSlope: -7.484352
+      outSlope: -7.484352
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8200507
+    - serializedVersion: 3
+      time: 0.09108175
+      value: 0.21368408
+      inSlope: -2.981472
+      outSlope: -2.981472
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.30891827
+      value: 0.026428223
+      inSlope: -0.107848264
+      outSlope: -0.107848264
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0.43246973
+    - serializedVersion: 3
+      time: 0.64952904
+      value: 0.010620117
+      inSlope: -0.11723435
+      outSlope: -0.11723435
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.033346657
+      outSlope: -0.033346657
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
