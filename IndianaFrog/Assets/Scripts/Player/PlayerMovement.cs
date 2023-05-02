@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public bool inputLocked = false;
     private float inputHorizontalAxisValue;
     private float inputVerticalAxisValue;
+    private float horizontalWalkSpeedPercentage;
+    private float verticalWalkSpeedPercentage;
     public ParticleSystem slideDustParticles;
     private CharacterController characterController;
     private bool isZoomed = false;
@@ -144,8 +146,8 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
-        inputVerticalAxisValue = Input.GetAxis("Vertical");
-        inputHorizontalAxisValue = Input.GetAxis("Horizontal");
+        inputVerticalAxisValue = Input.GetAxisRaw("Vertical");
+        inputHorizontalAxisValue = Input.GetAxisRaw("Horizontal");
     }
 
     void FixedUpdate()
@@ -440,6 +442,10 @@ public class PlayerMovement : MonoBehaviour
                     grapplingTongueLauncher.inputLocked = false;
                     chargeJumpTimer = 0f;
 
+                    // Reverse movement after wall jump
+                    horizontalWalkSpeedPercentage *= -1f;
+                    verticalWalkSpeedPercentage *= -1f;
+
                     // Animate Jump
                     animator.SetTrigger("Jump");
                 }
@@ -466,10 +472,32 @@ public class PlayerMovement : MonoBehaviour
             Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.fixedDeltaTime;
 
             // Forward / backward input
-            movementVectorForward = inputVerticalAxisValue * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
+            if (inputVerticalAxisValue != 0f)
+            {
+                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 5f * Time.fixedDeltaTime, -1f, 1f);
+            }
+            else
+            {
+                verticalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(verticalWalkSpeedPercentage) - 5f * Time.fixedDeltaTime) * Mathf.Sign(verticalWalkSpeedPercentage);
+            }
+
+            Debug.Log(verticalWalkSpeedPercentage);
+
+            movementVectorForward = verticalWalkSpeedPercentage * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
 
             // Right / left input
-            movementVectorRight = inputHorizontalAxisValue * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
+            if (inputHorizontalAxisValue != 0f)
+            {
+                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 5f * Time.fixedDeltaTime, -1f, 1f);
+            }
+            else
+            {
+                horizontalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(horizontalWalkSpeedPercentage) - 5f * Time.fixedDeltaTime) * Mathf.Sign(horizontalWalkSpeedPercentage);
+            }
+
+            Debug.Log(horizontalWalkSpeedPercentage);
+
+            movementVectorRight = horizontalWalkSpeedPercentage * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
 
             // Construct the movementVector from inputs
             movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
