@@ -220,7 +220,7 @@ Material:
     - _Metallic: 0
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
-    - _NoiseAmount: 2
+    - _NoiseAmount: 5
     - _NormalMapSpace: 0
     - _NormalScale: 1
     - _OpaqueCullMode: 2
@@ -235,7 +235,7 @@ Material:
     - _RefractionModel: 0
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
-    - _RippleDensity: 3
+    - _RippleDensity: 8
     - _RippleSpeed: 1
     - _RippleThickness: 3
     - _Smoothness: 0.5
