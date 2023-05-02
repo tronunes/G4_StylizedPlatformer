@@ -5169,7 +5169,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 18
+  MaxDistance: 38
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -5181,42 +5181,42 @@ AudioSource:
     - serializedVersion: 3
       time: 0.016666668
       value: 1
-      inSlope: -18.007198
-      outSlope: -18.007198
-      tangentMode: 0
+      inSlope: -6.375657
+      outSlope: -6.375657
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.07275433
-      value: 0.5040283
-      inSlope: -4.5017996
-      outSlope: -4.5017996
-      tangentMode: 0
+      time: 0.091930814
+      value: 0.5201416
+      inSlope: -4.1884575
+      outSlope: -4.1884575
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.21126641
-      value: 0.20567322
-      inSlope: -1.1254499
-      outSlope: -1.1254499
-      tangentMode: 0
+      time: 0.2551049
+      value: 0.19358826
+      inSlope: -1.3095818
+      outSlope: -1.3095818
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.44992235
-      value: 0.072631836
-      inSlope: -0.28136247
-      outSlope: -0.28136247
+      time: 0.49649218
+      value: 0.044433594
+      inSlope: -0.2578874
+      outSlope: -0.2578874
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33854428
     - serializedVersion: 3
       time: 0.8669773
-      value: 0.010131836
+      value: 0.0061035156
       inSlope: -0.07034062
       outSlope: -0.07034062
       tangentMode: 0
@@ -5293,7 +5293,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 0eabeb4eccfbb474bb23cc64cce48455, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
