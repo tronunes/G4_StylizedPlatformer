@@ -16,11 +16,14 @@ public class PlayerMovement : MonoBehaviour
     public bool inputLocked = false;
     private float inputHorizontalAxisValue;
     private float inputVerticalAxisValue;
+    private float horizontalWalkSpeedPercentage;
+    private float verticalWalkSpeedPercentage;
     public ParticleSystem slideDustParticles;
     private CharacterController characterController;
     private bool isZoomed = false;
     private Vector3 playerPreviousFramePosition;
     private bool chargingJump = false;
+    private bool jumpInput = false;
     private Vector3 externalVelocity = Vector3.zero; // Alternative velocity to movement input velocity. Blocks movement input velocity. Only affects one frame.
     private Vector3 additionalVelocity = Vector3.zero; // Like externalVelocity, but doesn't block movement input velocity. Only affects one frame.
 
@@ -109,17 +112,28 @@ public class PlayerMovement : MonoBehaviour
         {
             chargingJump = false;
             slidingInput = false;
+            jumpInput = false;
             return;
+        }
+
+        // Charge Jump
+        if (Input.GetButtonDown("ChargeJump"))
+        {
+            chargingJump = true;
+        }
+        else if (Input.GetButtonUp("ChargeJump"))
+        {
+            chargingJump = false;
         }
 
         // Jump
         if (Input.GetButtonDown("Jump"))
         {
-            chargingJump = true;
+            jumpInput = true;
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            chargingJump = false;
+            jumpInput = false;
         }
 
         // Slide
@@ -132,8 +146,8 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
         }
 
-        inputVerticalAxisValue = Input.GetAxis("Vertical");
-        inputHorizontalAxisValue = Input.GetAxis("Horizontal");
+        inputVerticalAxisValue = Input.GetAxisRaw("Vertical");
+        inputHorizontalAxisValue = Input.GetAxisRaw("Horizontal");
     }
 
     void FixedUpdate()
@@ -166,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
             slidingInput = false;
             slidingVelocity = 0f;
             slidingState = false;
+            jumpInput = false;
         } 
         // Exit knockbackState
         else if (knockbackState)
@@ -326,10 +341,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Progress jumpInputDecayTimer
-        if (!chargingJump && chargeJumpTimer > 0f)
+        if (!jumpInput && !chargingJump && chargeJumpTimer > 0f)
         {
             jumpInputDecayTimer += Time.fixedDeltaTime;
-        } else if (chargingJump)
+        } else if (chargingJump || jumpInput)
         {
             // Reset jumpInputDecayTimer if player presses down jump button again
             jumpInputDecayTimer = 0f;
@@ -345,8 +360,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVectorForward = Vector3.zero;
         Vector3 movementVectorRight = Vector3.zero;
 
-        // If the player has pressed down and released the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
-        if (!chargingJump && chargeJumpTimer > 0 && isGrounded && slidingState)
+        // If the player has pressed the jump button during a slide on the ground, end slide and return to normal non-externalVelocity move case
+        if (jumpInput && isGrounded && slidingState)
         {
             externalVelocity = Vector3.zero;
             slidingVelocity = 0f;
@@ -406,7 +421,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // Jump if the jump button is let go of and there is any amount of charge
-            if (!chargingJump && chargeJumpTimer > 0 && (isGrounded || clingingState))
+            if (jumpInput && (isGrounded || clingingState))
             {
                 // Case: Wall jump
                 if (clingingState)
@@ -426,6 +441,11 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                     chargeJumpTimer = 0f;
+                    jumpInput = false;
+
+                    // Reverse movement after wall jump
+                    horizontalWalkSpeedPercentage *= -1f;
+                    verticalWalkSpeedPercentage *= -1f;
 
                     // Animate Jump
                     animator.SetTrigger("Jump");
@@ -440,6 +460,7 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetTrigger("Jump");
 
                     chargeJumpTimer = 0f;
+                    jumpInput = false;
                 }
             }
 
@@ -453,10 +474,32 @@ public class PlayerMovement : MonoBehaviour
             Vector3 verticalMovementVector = Vector3.up * verticalVelocity * Time.fixedDeltaTime;
 
             // Forward / backward input
-            movementVectorForward = inputVerticalAxisValue * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
+            if (inputVerticalAxisValue != 0f)
+            {
+                // If there's input, add speed to a max of the input's magnitude
+                verticalWalkSpeedPercentage = Mathf.Clamp(verticalWalkSpeedPercentage + inputVerticalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputVerticalAxisValue), Mathf.Abs(inputVerticalAxisValue));
+            }
+            else
+            {
+                // Decrease speed if vertical input is 0f
+                verticalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(verticalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(verticalWalkSpeedPercentage);
+            }
+
+            movementVectorForward = verticalWalkSpeedPercentage * cameraLookTransform.forward * movementSpeed * Time.fixedDeltaTime;
 
             // Right / left input
-            movementVectorRight = inputHorizontalAxisValue * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
+            if (inputHorizontalAxisValue != 0f)
+            {
+                // If there's input, add speed to a max of the input's magnitude
+                horizontalWalkSpeedPercentage = Mathf.Clamp(horizontalWalkSpeedPercentage + inputHorizontalAxisValue * 5f * Time.fixedDeltaTime, -Mathf.Abs(inputHorizontalAxisValue), Mathf.Abs(inputHorizontalAxisValue));
+            }
+            else
+            {
+                // Decrease speed if horizontal input is 0f
+                horizontalWalkSpeedPercentage = Mathf.Clamp01(Mathf.Abs(horizontalWalkSpeedPercentage) - 10f * Time.fixedDeltaTime) * Mathf.Sign(horizontalWalkSpeedPercentage);
+            }
+
+            movementVectorRight = horizontalWalkSpeedPercentage * cameraLookTransform.right * movementSpeed * Time.fixedDeltaTime;
 
             // Construct the movementVector from inputs
             movementVector = Vector3.ClampMagnitude(movementVectorForward + movementVectorRight, movementSpeed * Time.fixedDeltaTime);
@@ -593,6 +636,7 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity = 0f;
         isGrounded = false;
 
+        jumpInput = false;
         chargingJump = false;
         chargeJumpTimer = 0f;
         jumpInputDecayTimer = 0f;
