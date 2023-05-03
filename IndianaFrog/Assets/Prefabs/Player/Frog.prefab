@@ -154,6 +154,7 @@ MonoBehaviour:
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
   grapplingTongueLauncher: {fileID: 1799006752889930577}
+  groundCheckScript: {fileID: 6314123820856467936}
   inputLocked: 0
   slideDustParticles: {fileID: 90369869850035246}
   movementSpeed: 6

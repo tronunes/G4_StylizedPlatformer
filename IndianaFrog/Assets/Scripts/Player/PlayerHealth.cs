@@ -52,6 +52,7 @@ public class PlayerHealth : MonoBehaviour
 
 			if (currentHealth <= 0)
 			{
+				animator.SetBool("IsAlive", false);
 				PlayDeathAnimation();
 				frogDeath.Play();
 			}
@@ -96,6 +97,7 @@ public class PlayerHealth : MonoBehaviour
 		currentHealth = maxHealth;
 		healthbar.SetMaxHealth(maxHealth);
 		featherManager.FeatherReset();
+		animator.SetBool("IsAlive", true);
 	}
 
 	public bool CanTakeDamage()

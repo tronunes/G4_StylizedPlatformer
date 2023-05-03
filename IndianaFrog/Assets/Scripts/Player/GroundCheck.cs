@@ -34,7 +34,15 @@ public class GroundCheck : MonoBehaviour
         // Ungrounded (i.e. not touching ground)
         if (!collider.gameObject.CompareTag("Player") && !collider.isTrigger)
         {
-            overlaps--;
+            if (overlaps > 0)
+            {
+                overlaps--;
+            }
+            else
+            {
+                overlaps = 0;
+            }
+
             if (overlaps == 0)
             {
                 playerMovement.SetGroundedState(false);
@@ -43,5 +51,10 @@ public class GroundCheck : MonoBehaviour
                 playerMovement.ClearParent();
             }
         }
+    }
+
+    public void ResetOverlaps()
+    {
+        overlaps = 0;
     }
 }
