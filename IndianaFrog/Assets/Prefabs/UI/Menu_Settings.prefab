@@ -1825,6 +1825,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
         type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 2154663136427195651}
@@ -2431,6 +2436,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
         type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
       objectReference: {fileID: 5031132679410609659}
@@ -2832,6 +2842,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TMPSlider_Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 5625523714204430269, guid: 56de04f5517e60a43a2d823e0cbd317a,
         type: 3}

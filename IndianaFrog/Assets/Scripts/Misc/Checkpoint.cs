@@ -7,11 +7,17 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] private Transform respawnTransform;
     public int checkpointIndex; // Indicates how far in the level the checkpoint is. A higher index checkpoint overrides a lower index.
     [SerializeField] private GameObject fireEffect;
+    public AudioSource fireLoop;
+    public AudioSource fireActivate;
+
+    private bool isActive = false;
 
 
     void Awake()
     {
         fireEffect.SetActive(false);
+        fireLoop.Stop();
+        isActive = false;
     }
 
     void OnDrawGizmos()
@@ -37,6 +43,12 @@ public class Checkpoint : MonoBehaviour
 
             // Activate the fire
             fireEffect.SetActive(true);
+            fireLoop.Play();
+            if ( !(isActive) ) 
+            {
+                fireActivate.Play();
+                isActive = true;
+            }
         }
     }
 

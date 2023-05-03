@@ -19,6 +19,9 @@ public class PlayerHealth : MonoBehaviour
 	public HealthBar healthbar;
 	public FeatherManager featherManager;
 
+	public AudioSource frogDamage;
+	public AudioSource frogDeath;
+
 	private bool canTakeDamage = true;
 
 
@@ -50,11 +53,13 @@ public class PlayerHealth : MonoBehaviour
 			if (currentHealth <= 0)
 			{
 				PlayDeathAnimation();
+				frogDeath.Play();
 			}
 			else
 			{
 				// Play animation
 				animator.SetTrigger("TakeDamage");
+				frogDamage.Play();
 
 				StartCoroutine(BecomeInvulnerable());
 			}
