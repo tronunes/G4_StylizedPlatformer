@@ -3,3 +3,6 @@ Metropolia/StadinAO collaboration project: stylized platformer game
 
 === Disclaimer ====
 Assets have been made with student license and should not be monetized.
+
+Audio Attribution: 
+See Audio Attribution file
