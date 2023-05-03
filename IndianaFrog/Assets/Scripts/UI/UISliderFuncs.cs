@@ -19,8 +19,8 @@ public class UISliderFuncs : MonoBehaviour
 
     private void UpdateFromPrefs()
     {
-        sliderQuality.value = (float)(PlayerPrefs.GetInt("GraphicsQuality", 0));
-        SetQuality((float)PlayerPrefs.GetInt("GraphicsQuality", 0));
+        sliderQuality.value = (float)(PlayerPrefs.GetInt("GraphicsQuality", 1));
+        SetQuality((float)PlayerPrefs.GetInt("GraphicsQuality", 1));
 
         sliderAudioMaster.value = PlayerPrefs.GetFloat("VolumeMaster", 1f);
         SetMasterVol(PlayerPrefs.GetFloat("VolumeMaster", 1f));

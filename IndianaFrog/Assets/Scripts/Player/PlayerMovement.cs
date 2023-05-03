@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 playerVelocity = Vector3.zero; // Serialized for debugging
     [SerializeField] private bool isGrounded;
     [SerializeField] private GrapplingTongueLauncher grapplingTongueLauncher;
+    [SerializeField] private GroundCheck groundCheckScript;
     public bool inputLocked = false;
     private float inputHorizontalAxisValue;
     private float inputVerticalAxisValue;
@@ -649,6 +650,7 @@ public class PlayerMovement : MonoBehaviour
         slingshotState = false;
 
         frogMesh.localRotation = Quaternion.identity;
+        groundCheckScript.ResetOverlaps();
     }
 
     private void ChangeCharacterHeight(float newHeight)
