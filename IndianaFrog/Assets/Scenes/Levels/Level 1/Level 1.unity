@@ -35078,7 +35078,12 @@ PrefabInstance:
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_text
-      value: Use a Charge Jump by holding down the Jump button
+      value: Charge up your jump to reach higher by holding down "Left Control"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -0.6657319
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280424, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -35113,7 +35118,7 @@ PrefabInstance:
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -91.99
+      value: -91.533
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -35123,7 +35128,7 @@ PrefabInstance:
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -128.03
+      value: -127.789
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
