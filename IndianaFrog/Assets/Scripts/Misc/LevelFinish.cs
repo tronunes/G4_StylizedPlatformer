@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class LevelFinish : MonoBehaviour
 {
     [Tooltip("The name of the scene to load when the Player collides with this object")]
@@ -25,6 +26,7 @@ public class LevelFinish : MonoBehaviour
     {
         if ( !levelFinish.isPlaying )
         {
+        collider.gameObject.GetComponent<PlayerCheckpointHandler>().EnableOrDisablePlayerInput(false);
         levelFinish.Play();
         yield return new WaitForSeconds( levelFinish.clip.length - 3.18f);
 
