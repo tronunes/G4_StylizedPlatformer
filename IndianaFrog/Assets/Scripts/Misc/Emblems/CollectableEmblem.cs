@@ -16,6 +16,7 @@ public class CollectableEmblem : MonoBehaviour
 {
     public EmblemPartChoices visiblePartModel;
     public GameObject collectParticlesPrefab; // Prefab of the particle effect which is spawned when the Emblem is collected
+    public AudioSource emblemShimmer;
 
     void OnTriggerEnter(Collider collider)
     {
@@ -28,6 +29,7 @@ public class CollectableEmblem : MonoBehaviour
             // Activate particles
             Instantiate(collectParticlesPrefab, transform.position + Vector3.up, Quaternion.identity);
 
+            emblemShimmer.Stop();
             Destroy(gameObject);
         }
     }

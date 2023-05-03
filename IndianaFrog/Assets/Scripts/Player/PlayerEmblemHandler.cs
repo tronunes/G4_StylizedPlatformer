@@ -13,6 +13,8 @@ public class PlayerEmblemHandler : MonoBehaviour
     [SerializeField] private GameObject circlingEmblemRight;
     [SerializeField] private GameObject circlingEmblemBottom;
 
+    public AudioSource emblemCollectSound;
+
     void Start()
     {
         HideCirclingEmblems();
@@ -25,6 +27,7 @@ public class PlayerEmblemHandler : MonoBehaviour
 
         UpdateEmblemsUI(partType);
         UpdateCirclingEmblems(partType);
+        emblemCollectSound.Play();
     }
 
     void UpdateEmblemsUI(EmblemPartChoices partType)

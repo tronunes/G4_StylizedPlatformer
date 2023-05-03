@@ -55,6 +55,8 @@ public class UI : MonoBehaviour
     [Header("Fading Effect")]
     [SerializeField] private FadeTransition menuFadeTransitionHandler;
 
+    public AudioSource buttonClick;
+
     void Awake()
     {
         //intialize knowledge about the scene
@@ -382,5 +384,10 @@ public class UI : MonoBehaviour
 
         // Start fading
         menuFadeTransitionHandler.Fade();
+    }
+
+    public void PlayButton()
+    {
+        buttonClick.Play();
     }
 }
