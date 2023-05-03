@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 260.33643, g: 101.835205, b: 7.3409805, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12379,7 +12379,7 @@ PrefabInstance:
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_text
-      value: Slide under obstacles by pressing "Shift"
+      value: Slide under obstacles by pressing "Shift" or "Button 2"
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280424, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -12399,7 +12399,7 @@ PrefabInstance:
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -48.14
+      value: -47.34
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -12409,7 +12409,7 @@ PrefabInstance:
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -121.41
+      value: -121.76
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280427, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -20394,10 +20394,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2105239656}
     m_Modifications:
+    - target: {fileID: 1112489960273644948, guid: 40895bdae13ea2b40962c994c6964ec8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.19
+      objectReference: {fileID: 0}
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_text
-      value: Jump by pressing "Space"
+      value: Jump by pressing "Space" on keyboard or "Button 1" on controller
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280424, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -31944,7 +31949,7 @@ PrefabInstance:
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_text
-      value: Zoom in by holding down right click
+      value: Zoom in by holding down "Right Click" or "LT"
       objectReference: {fileID: 0}
     - target: {fileID: 1112489961764280424, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
@@ -32348,6 +32353,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1341443029626044291, guid: 09db373f90ee176498610114e4ffdd23,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1341443029626044291, guid: 09db373f90ee176498610114e4ffdd23,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -32398,7 +32408,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2363294937432123762, guid: 09db373f90ee176498610114e4ffdd23,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363294937432123762, guid: 09db373f90ee176498610114e4ffdd23,
+        type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363294937432123762, guid: 09db373f90ee176498610114e4ffdd23,
+        type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2609810630040039313, guid: 09db373f90ee176498610114e4ffdd23,
@@ -35078,7 +35098,7 @@ PrefabInstance:
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
       propertyPath: m_text
-      value: Charge up your jump to reach higher by holding down "Left Control"
+      value: Charge up your jump to reach higher by holding down "Left Ctrl" or "LB1"
       objectReference: {fileID: 0}
     - target: {fileID: 1112489960273644951, guid: 40895bdae13ea2b40962c994c6964ec8,
         type: 3}
