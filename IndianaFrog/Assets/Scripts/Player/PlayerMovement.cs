@@ -441,6 +441,7 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetBool("WallClinging", false);
                     grapplingTongueLauncher.inputLocked = false;
                     chargeJumpTimer = 0f;
+                    jumpInput = false;
 
                     // Reverse movement after wall jump
                     horizontalWalkSpeedPercentage *= -1f;
@@ -459,6 +460,7 @@ public class PlayerMovement : MonoBehaviour
                     animator.SetTrigger("Jump");
 
                     chargeJumpTimer = 0f;
+                    jumpInput = false;
                 }
             }
 
