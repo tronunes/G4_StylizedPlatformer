@@ -84,11 +84,11 @@ public class PlayerAudioPlayer : MonoBehaviour
 
     private void PlayCharging() 
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("ChargeJump"))
         {
             frogJumpCharge.Play();
         } 
-        else if (Input.GetButtonUp("Jump"))
+        else if (Input.GetButtonUp("ChargeJump"))
         {
             frogJumpCharge.Stop();
         } else {}
